@@ -1,0 +1,1 @@
+"C:\Users\Marcin\Documents\love-11.3-win64\love.exe" "game"
