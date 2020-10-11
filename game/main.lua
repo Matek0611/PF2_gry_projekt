@@ -4,10 +4,10 @@ local globals = require("globals")
 local gamemode = require("gamemode")
 local splash = require("splash")
 local translation = require("translation")
+local loading = require("loading")
 
 function love.load() 
-    love.window.setTitle(GAME_PRINT_NAME)
-    love.window.setMode(1280, 720, {resizable=true, minwidth=800, minheight=600, msaa=2})
+    love.window.setMode(1280, 720, {resizable=true, minwidth=800, minheight=600, msaa=3})
     love.graphics.setDefaultFilter("nearest", "nearest")
     love.graphics.setBackgroundColor(color(255, 1))
 
@@ -22,7 +22,9 @@ function love.load()
 end
 
 function love.draw()
-    if gm == GM_SPLASH and SPLASH_VISIBLE then
+    if LoadingScreen:isLoading() then
+        LoadingScreen:draw()
+    elseif gm == GM_SPLASH and SPLASH_VISIBLE then
         splashDraw()
     elseif gm == GM_MENU then 
         menuDraw()
@@ -34,7 +36,9 @@ function love.draw()
 end
 
 function love.update(dt)
-    if gm == GM_SPLASH and SPLASH_VISIBLE then
+    if LoadingScreen:isLoading() then
+        LoadingScreen:update(dt)
+    elseif gm == GM_SPLASH and SPLASH_VISIBLE then
         splashUpdate(dt)
     elseif gm == GM_MENU then 
         menuUpdate(dt)

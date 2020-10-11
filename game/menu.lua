@@ -1,7 +1,9 @@
 local Button = require("libs/basics/Button")
 local globals = require("globals")
+local Scenes = require("libs/basics/Scenes")
 
 btnPlay, btnNewGame, btnOpts, btnAbout, btnExit = nil, nil, nil, nil, nil 
+menuScenes = Scenes:new()
 
 TEXT_BTN_CONTINUE = "Kontynuuj"
 TEXT_BTN_NEWGAME = "Nowa gra"
@@ -11,7 +13,7 @@ TEXT_BTN_EXIT = "Wyjdź z gry"
 
 MENU_BG_COLOR = color(30, 1)
 
-local BTN_WIDTH, BTN_HEIGHT, BTN_TOPEX = 200, 50, 150
+local BTN_WIDTH, BTN_HEIGHT, BTN_TOPEX = 200, 50, 200
 
 local function btnExitClick(sender)
     love.event.quit(0)
@@ -61,6 +63,8 @@ end
 
 function menuDraw()
     bgDraw()
+
+    drawLargeLogo(love.graphics.getWidth() / 2, 120)
 
     setFont("math", 15)
     love.graphics.setColor(color(255, 1))

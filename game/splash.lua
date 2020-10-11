@@ -12,7 +12,7 @@ stw = nil
 endof = false
 
 function splashInit()
-    splashy.addSplash(love.graphics.newImage("assets/img/test.png"), 2, -1, 5)
+    splashy.addSplash(love.graphics.newImage("assets/img/logo.png"), 2, 0, 5)
     splashy.onComplete(function() 
         endof = true
         subjectdata.r, subjectdata.g, subjectdata.b, subjectdata.a = love.graphics.getBackgroundColor()
@@ -33,7 +33,11 @@ function splashUpdate(dt)
     if endof then
         local tu = stw:update(dt)
         if tu then
-            gm = GM_MENU
+            LoadingScreen.onFinish = (function () 
+                menuUpdate()
+                gm = GM_MENU
+            end)
+            LoadingScreen:setLoading(true)
         end
     else
         splashy.update(dt)
