@@ -25,6 +25,7 @@ function splashDraw()
     if endof then
         love.graphics.setBackgroundColor(subjectdata.rgba)
     else
+        love.graphics.setBackgroundColor(gray(255, 1))
         splashy.draw()
     end
 end

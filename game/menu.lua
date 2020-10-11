@@ -1,9 +1,12 @@
 local Button = require("libs/basics/Button")
 local globals = require("globals")
 local Scenes = require("libs/basics/Scenes")
+local Scene = require("libs/basics/Scene")
+local options = require("options")
 
 btnPlay, btnNewGame, btnOpts, btnAbout, btnExit = nil, nil, nil, nil, nil 
-menuScenes = Scenes:new()
+MenuScenes = Scenes:new()
+MenuScenes.drawAll = true
 
 TEXT_BTN_CONTINUE = "Kontynuuj"
 TEXT_BTN_NEWGAME = "Nowa gra"
@@ -11,12 +14,20 @@ TEXT_BTN_OPTS = "Opcje"
 TEXT_BTN_ABOUT = "O grze"
 TEXT_BTN_EXIT = "Wyjdź z gry"
 
-MENU_BG_COLOR = color(30, 1)
+MENU_BG_COLOR = gray(30, 1)
 
 local BTN_WIDTH, BTN_HEIGHT, BTN_TOPEX = 200, 50, 200
 
 local function btnExitClick(sender)
     love.event.quit(0)
+end
+
+local function btnOptsClick(sender)
+    MenuScenes:setActive(3)
+end
+
+local function btnOptsBackMenuClick(sender)
+    MenuScenes:setActive(2)
 end
 
 local function buttonsInit()
@@ -27,9 +38,18 @@ local function buttonsInit()
     btnAbout = Button:new(love.graphics.getWidth() / 2, BTN_TOPEX+280, BTN_WIDTH, BTN_HEIGHT)
     btnExit = Button:new(love.graphics.getWidth() / 2, BTN_TOPEX+340, BTN_WIDTH, BTN_HEIGHT)
     btnExit.onClick = btnExitClick
+    btnOpts.onClick = btnOptsClick
 end
 
 local function buttonsUpdate(dt)
+    btnPlay:update(dt)
+    btnNewGame:update(dt)
+    btnOpts:update(dt)
+    btnAbout:update(dt)
+    btnExit:update(dt)
+end
+
+local function buttonsiUpdate()
     local left = love.graphics.getWidth() / 2
     btnPlay.position.x = left
     btnNewGame.position.x = left
@@ -37,11 +57,9 @@ local function buttonsUpdate(dt)
     btnAbout.position.x = left
     btnExit.position.x = left
 
-    btnPlay:update(dt)
-    btnNewGame:update(dt)
-    btnOpts:update(dt)
-    btnAbout:update(dt)
-    btnExit:update(dt)
+    if btnOptsBack.onClick ~= btnOptsBackMenuClick then 
+        btnOptsBack.onClick = btnOptsBackMenuClick
+    end
 end
 
 local function buttonsDraw()
@@ -56,26 +74,39 @@ local function bgDraw()
     love.graphics.setBackgroundColor(MENU_BG_COLOR)
 end
 
-function menuInit()
-    buttonsInit()
-
-end
-
-function menuDraw()
-    bgDraw()
-
+local function menuHomeDraw()
     drawLargeLogo(love.graphics.getWidth() / 2, 120)
-
-    setFont("math", 15)
-    love.graphics.setColor(color(255, 1))
-    love.graphics.printf("(" .. STR_VERSION .. ": " .. GAME_VERSION .. ")", 0, love.graphics.getHeight() - love.graphics.getFont():getHeight() - 10, love.graphics.getWidth() - 10, "right")
 
     buttonsDraw()
 end
 
-function menuUpdate(dt)
+local function menuHomeUpdate(dt)
     buttonsUpdate(dt)
+end
 
+local function menuHomeiUpdate(dt)
+    buttonsiUpdate(dt)
+end
+
+function menuInit()
+    local sc = Scene:new("home", menuHomeDraw, menuHomeUpdate, menuHomeiUpdate)
+    sc.canDrawAll = true
+    MenuScenes:addScene(sc)
+    MenuScenes:addScene(OptionsScene)
+    MenuScenes:setActive(2)
+    buttonsInit()
+end
+
+function menuDraw()
+    bgDraw()
+    
+    MenuScenes:draw()
+
+    drawVersion()
+end
+
+function menuUpdate(dt)
+    MenuScenes:update(dt)
 end
 
 function menuTranslate()

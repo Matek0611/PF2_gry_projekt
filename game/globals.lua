@@ -1,20 +1,17 @@
 GAME_PRINT_NAME = "Koglomoglowy Uciekinier"
 GAME_PRINT_NAME_SP = "Koglomoglowy,Uciekinier"
-GAME_VERSION = "1.1 alpha"
+GAME_VERSION = "1.2 alpha"
 
 STR_VERSION = "wersja"
 STR_DEBUGMODE = " (tryb debugowania)"
 
 LOADSCR_TEXT1 = "Ładowanie"
 
-DEBUG_MODE = true
-OPTS_FPS_ON = false --przenieść do ustawień
+LoadingHints = {}
 
-LoadingHints = {
-    "Robiąc coś, masz to",
-    "To drugie",
-    "To jest bardzo długi tekst. To jest bardzo długi tekst. To jest bardzo długi tekst. To jest bardzo długi tekst. "
-}
+function scale(value)
+    return love.window.toPixels(value)
+end
 
 function setFont(name, size)
     size = size or 16
@@ -73,9 +70,17 @@ function drawLargeLogo(x, y)
     love.graphics.setFont(pf)
 end
 
-function color(r, g, b, a)
-    return {r / 255, (r or g) / 255, (r or b) / 255, a or 1}
+function drawVersion()
+    setFont("math", 15)
+    love.graphics.setColor(gray(255, 1))
+    love.graphics.printf("(" .. STR_VERSION .. ": " .. GAME_VERSION .. ")", 0, love.graphics.getHeight() - love.graphics.getFont():getHeight() - 10, love.graphics.getWidth() - 10, "right")  
 end
+
+function color(r, g, b, a)
+    return {r / 255, (g or r) / 255, (b or r) / 255, a or 1}
+end
+
+GAME_COLOR_ACCENT = color(255, 163, 22, 1)
 
 function gray(l, a)
     return {l / 255, l / 255, l / 255, a or 1}
@@ -87,20 +92,40 @@ function getPrevColor()
 end
 
 function split(pString, pPattern)
-    local Table = {}  -- NOTE: use {n = 0} in Lua-5.0
+    local Table = {}  
     local fpat = "(.-)" .. pPattern
     local last_end = 1
     local s, e, cap = pString:find(fpat, 1)
     while s do
-       if s ~= 1 or cap ~= "" then
-      table.insert(Table,cap)
-       end
-       last_end = e+1
-       s, e, cap = pString:find(fpat, last_end)
+        if s ~= 1 or cap ~= "" then
+        table.insert(Table,cap)
+        end
+        last_end = e+1
+        s, e, cap = pString:find(fpat, last_end)
     end
     if last_end <= #pString then
-       cap = pString:sub(last_end)
-       table.insert(Table, cap)
+        cap = pString:sub(last_end)
+        table.insert(Table, cap)
     end
     return Table
- end
+end
+
+local moonshine = require("libs/moonshine")
+
+blurEffect = moonshine(moonshine.effects.boxblur)
+
+__mpx, __mpy = -1, -1
+
+function mouseIsPressed(x, y)
+    return __mpx == x and __mpy == y
+end
+
+function love.mousepressed(x, y, button, istouch)
+    if button == 1 then 
+        __mpx = x
+        __mpy = y
+    else
+        __mpx = -1
+        __mpy = -1
+    end
+end

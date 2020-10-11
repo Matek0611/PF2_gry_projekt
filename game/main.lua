@@ -5,11 +5,13 @@ local gamemode = require("gamemode")
 local splash = require("splash")
 local translation = require("translation")
 local loading = require("loading")
+local options = require("options")
 
 function love.load() 
     love.window.setMode(1280, 720, {resizable=true, minwidth=800, minheight=600, msaa=3})
+    love.window.setIcon(love.image.newImageData("assets/img/ikona1.png"))
     love.graphics.setDefaultFilter("nearest", "nearest")
-    love.graphics.setBackgroundColor(color(255, 1))
+    love.graphics.setBackgroundColor(gray(255, 1))
 
     if SPLASH_VISIBLE then
         splashInit()
@@ -22,6 +24,8 @@ function love.load()
 end
 
 function love.draw()
+    blurEffect.resize(love.graphics.getWidth(), love.graphics.getHeight())
+
     if LoadingScreen:isLoading() then
         LoadingScreen:draw()
     elseif gm == GM_SPLASH and SPLASH_VISIBLE then

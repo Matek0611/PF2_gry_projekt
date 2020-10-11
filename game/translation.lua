@@ -1,5 +1,6 @@
 local menu = require("menu")
 local globals = require("globals")
+local options = require("options")
 
 function translateAll(lang)
     lang = lang or "pl"
@@ -20,6 +21,19 @@ function translateAll(lang)
         STR_VERSION = "version"
         STR_DEBUGMODE = " (debug mode)"
         LOADSCR_TEXT1 = "Loading"
+        LoadingHints = {
+            "Robiąc coś, masz to e",
+            "To drugie e",
+            "e To jest bardzo długi tekst. To jest bardzo długi tekst. To jest bardzo długi tekst. To jest bardzo długi tekst. "
+        }
+
+        --options
+        OPTS_BTN_BACK = "Back"
+
+        OPTS_PAGE_GAME = "GAMEPLAY"
+        OPTS_PAGE_CONTROLS = "CONTROLS"
+        OPTS_PAGE_VIDEO = "VIDEO"
+        OPTS_PAGE_AUDIO = "AUDIO"
     else --if lang == "pl" then
         --game
         GAME_PRINT_NAME = "Koglomoglowy Uciekinier"
@@ -36,6 +50,19 @@ function translateAll(lang)
         STR_VERSION = "wersja"
         STR_DEBUGMODE = " (tryb debugowania)"
         LOADSCR_TEXT1 = "Ładowanie"
+        LoadingHints = {
+            "Robiąc coś, masz to",
+            "To drugie",
+            "To jest bardzo długi tekst. To jest bardzo długi tekst. To jest bardzo długi tekst. To jest bardzo długi tekst. "
+        }
+
+        --options
+        OPTS_BTN_BACK = "Powrót"
+
+        OPTS_PAGE_GAME = "ROZGRYWKA"
+        OPTS_PAGE_CONTROLS = "STEROWANIE"
+        OPTS_PAGE_VIDEO = "OBRAZ"
+        OPTS_PAGE_AUDIO = "DŹWIĘK"
     end
 
     menuTranslate()
