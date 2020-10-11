@@ -1,2 +1,2 @@
-# PF2_gry_projekt
-Gra na projekt
+# Koglomoglowy Uciekinier
+Gra na projekt z przedmiotu PF2 Programowanie gier
