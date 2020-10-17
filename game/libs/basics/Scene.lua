@@ -10,6 +10,7 @@ function Scene:initialize(name, ev_draw, ev_update, ev_iupdate)
     self.oniUpdate = ev_iupdate
     self.canDrawAll = false
     self.onShow = nil
+    self.scenes = nil
 end
 
 function Scene:show()

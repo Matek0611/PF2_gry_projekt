@@ -15,7 +15,8 @@ function Scenes:initialize()
 end
 
 function Scenes:addScene(scene)
-    table.insert(self.list, scene)
+    local id = #self.list + 1
+    self.list[id] = scene
 end
 
 function Scenes:setActive(id)

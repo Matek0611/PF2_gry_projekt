@@ -9,7 +9,8 @@ BTN_WHITE_THEME = {
         normal = gray(255, 1),
         hover = gray(200, 1),
         down = gray(170, 1),
-        disabled = gray(150, 0.8)
+        disabled = gray(150, 0.8),
+        check = gray(0, 1)
     },
     font = {
         normal = gray(10, 1),
@@ -27,7 +28,8 @@ BTN_BLACK_THEME = {
         normal = gray(50, 1),
         hover = gray(70, 1),
         down = gray(35, 1),
-        disabled = gray(150, 0.8)
+        disabled = gray(150, 0.8),
+        check = gray(255, 1)
     },
     font = {
         normal = gray(255, 1),
@@ -45,7 +47,8 @@ BTN_WHITE_THEME_ACCENT = {
         normal = gray(255, 1),
         hover = gray(200, 1),
         down = GAME_COLOR_ACCENT,
-        disabled = gray(150, 0.8)
+        disabled = gray(150, 0.8),
+        check = gray(0, 1)
     },
     font = {
         normal = gray(10, 1),
@@ -63,7 +66,8 @@ BTN_BLACK_THEME_ACCENT = {
         normal = gray(50, 1),
         hover = gray(70, 1),
         down = GAME_COLOR_ACCENT,
-        disabled = gray(150, 0.8)
+        disabled = gray(150, 0.8),
+        check = gray(255, 1)
     },
     font = {
         normal = gray(255, 1),
@@ -95,6 +99,10 @@ function Button:initialize(x, y, w, h, text)
     self.down = false
     self.colors = BTN_WHITE_THEME
     self.fontname = "header"
+    self.checkbox = false
+    self.textpos = "center"
+    self.downeffect = true
+    self.checked = false
 end
 
 function Button:toggle()
@@ -122,8 +130,9 @@ function Button:draw()
     local state = self.__state
     setFont(self.fontname, 20)
     local f = love.graphics.getFont()
-    local _, lines = f:getWrap(self.text, self.width)
+    local _, lines = f:getWrap(self.text, self.width - (self.checkbox and 35 or 0))
     local fh = f:getHeight()
+    local exh = 0
     
     if state == "disabled" then
         curc.face = self.colors.face.disabled
@@ -134,15 +143,25 @@ function Button:draw()
     elseif state == "hover" then
         curc.face = self.colors.face.hover
         curc.font = self.colors.font.hover
+        exh = self.downeffect and 1.5 or 0
     elseif state == "down" then
         curc.face = self.colors.face.down
-        curc.font = self.colors.font.down
+        curc.font = self.colors.font.down 
     end
 
     love.graphics.setColor(curc.face)
-    love.graphics.rectangle("fill", self.position.x - self.width / 2, self.position.y - self.height / 2, self.width, self.height, self.rx, self.ry)
+    if self.checkbox then
+        love.graphics.rectangle("fill", self.position.x - self.width / 2 + 1, self.position.y - 12 + exh, 24, 24, 5, 5)
+        love.graphics.setColor(self.colors.face.check)
+        if self.checked then 
+            love.graphics.ellipse("fill", self.position.x - self.width / 2 + 1 + 12, self.position.y + exh, 5, 5) 
+        end
+    else
+        love.graphics.rectangle("fill", self.position.x - self.width / 2, self.position.y - self.height / 2 + exh, self.width, self.height, self.rx, self.ry)
+    end
+    
     love.graphics.setColor(curc.font)
-    love.graphics.printf(self.text, self.position.x - self.width / 2, self.position.y - fh / 2 * #lines, self.width, "center")
+    love.graphics.printf(self.text, self.position.x - self.width / 2 + (self.checkbox and 35 or 0), self.position.y - fh / 2 * #lines + exh, self.width - (self.checkbox and 35 or 0), self.textpos)
 
     love.graphics.setColor(r, g, b, a)
     love.graphics.setFont(oldf)
@@ -162,14 +181,17 @@ function Button:update(dt)
         self.__state = "disabled"
     elseif self.down then 
         self.__state = "down"
-    elseif inb then
-        if leftclick then
-            self.__state = "down"
-        elseif mouseIsPressed(x, y) then
+    elseif inb then       
+        if mouseIsPressed(x, y) then
+            self.__state = "hover"
+            if self.checkbox then
+                self.checked = not self.checked
+            end
             if self.onClick ~= nil then
                 self.onClick(self)
-            end
-            self.__state = "hover"
+            end           
+        elseif leftclick then
+            self.__state = "down"
         else
             self.__state = "hover"
         end  
