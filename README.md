@@ -17,4 +17,4 @@ __Język__: Lua
 
 __Data rozpoczęcia tworzenia:__ 8.10.2020
 
-__Data planowanego zakończenia:__ 15.12.2020
+__Data planowanego zakończenia:__ ??.01.2021
