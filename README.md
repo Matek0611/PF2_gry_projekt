@@ -1,7 +1,7 @@
 # &nbsp;<img src="https://github.com/Matek0611/PF2_gry_projekt/blob/main/game/assets/img/ikona1.png" width="24" height="24" title="Logo gry">  Koglomoglowy Uciekinier 
 Gra na projekt z przedmiotu PF2 Programowanie gier
 
-__Dokumentacja:__ [tutaj (dokument/projekt_gry.md)](#dokument/projekt_gry.md) 
+__Dokumentacja:__ [tutaj (dokument/projekt_gry.md)](/dokument/projekt_gry.md) 
 
 ---
 
