@@ -4,7 +4,7 @@ __Autor__: Marcin Stefanowicz
 
 ## Spis treści
 
-1. [Informacje wstępne](#infowst)
+1. [Informacje wstępne](#1informacje-wstepne)
 
     1.1. [Krótko o grze](#krotkogrz)
 
@@ -28,9 +28,9 @@ __Autor__: Marcin Stefanowicz
 
 ----
 
-### 1. [Informacje wstępne]()
+### 1. Informacje wstępne
 
-#### 1.1 [Krótko o grze]
+#### 1.1 Krótko o grze
 
 _Koglomoglowy Uciekinier_ to gra, w której wcielamy się jednym z kilku bohaterów 
 i przemierzamy piętra z wieloma pokojami
