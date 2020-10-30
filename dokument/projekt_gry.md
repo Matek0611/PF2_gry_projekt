@@ -6,25 +6,25 @@ __Autor__: Marcin Stefanowicz
 
 1. [Informacje wstępne](#1-informacje-wstępne)
 
-    1.1. [Krótko o grze](#krotkogrz)
+    1.1. [Krótko o grze](#11-krótko-o-grze)
 
-    1.2. [Silnik, język skryptowy, edytor](#sjezed)
+    1.2. [Silnik, język skryptowy, edytor](#12-silnik-język-skryptowy-edytor)
 
-    1.3. [Inspiracja](#inspir)
+    1.3. [Inspiracja](#13-inspiracja)
 
-2. [Elementy gry](#elgry)
+2. [Elementy gry](#2-elementy-gry)
 
-    2.1. [Interfejs użytkownika](#interfuz)
+    2.1. [Interfejs użytkownika](#21-interfejs-użytkownika)
     
-    2.2. [Grafika](#grafika)
+    2.2. [Grafika](#22-grafika)
     
-    2.3. [Poziomy](#poziomy)
+    2.3. [Poziomy](#23-poziomy)
     
-    2.4. [Postacie](#postacie)
+    2.4. [Postacie](#24-postacie)
     
-    2.5. [Świat](#swiat)
+    2.5. [Świat](#25-świat)
     
-3. [Lista pomysłów i rzeczy wykonanych](#listapomirzw)
+3. [Lista pomysłów i rzeczy wykonanych](#3-lista-pomysłów-i-rzeczy-wykonanych)
 
 ----
 
