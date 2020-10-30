@@ -6,11 +6,13 @@ __Autor__: Marcin Stefanowicz
 
 1. [Informacje wstępne](#infowst)
 
-    1.1. [Silnik, język skryptowy, edytor](#sjezed)
+    1.1. [Krótko o grze](#krotkogrz)
 
-    1.2. [Inspiracja](#inspir)
+    1.2. [Silnik, język skryptowy, edytor](#sjezed)
+
+    1.3. [Inspiracja](#inspir)
     
-    1.3. [Grafika](#grafika)
+    1.4. [Grafika](#grafika)
 
 2. [Elementy gry](#elgry)
 
@@ -23,3 +25,14 @@ __Autor__: Marcin Stefanowicz
     2.4. [Świat](#swiat)
     
 3. [Lista pomysłów i rzeczy wykonanych](#listapomirzw)
+
+----
+
+### 1. Informacje wstępne
+
+#### 1.1 Krótko o grze
+
+
+
+#### 1.2 Silnik, język skryptowy, edytor
+
