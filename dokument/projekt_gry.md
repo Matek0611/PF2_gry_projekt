@@ -4,7 +4,7 @@ __Autor__: Marcin Stefanowicz
 
 ## Spis treści
 
-1. [Informacje wstępne](#1informacje-wstepne)
+1. [Informacje wstępne](#1-informacje-wstępne)
 
     1.1. [Krótko o grze](#krotkogrz)
 
