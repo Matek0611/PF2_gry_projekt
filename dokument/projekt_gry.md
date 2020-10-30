@@ -1,4 +1,4 @@
-# &nbsp;<img src="https://github.com/Matek0611/PF2_gry_projekt/blob/main/game/assets/img/ikona1.png" width="24" height="24" title="Logo gry"> Koglomoglowy uciekinier
+# &nbsp;<img src="https://github.com/Matek0611/PF2_gry_projekt/blob/main/game/assets/img/ikona1.png" width="24" height="24" title="Logo gry"> Koglomoglowy Uciekinier
 
 __Autor__: Marcin Stefanowicz
 
@@ -9,6 +9,8 @@ __Autor__: Marcin Stefanowicz
     1.1. [Silnik, język skryptowy, edytor](#sjezed)
 
     1.2. [Inspiracja](#inspir)
+    
+    1.3. [Grafika](#grafika)
 
 2. [Elementy gry](#elgry)
 
