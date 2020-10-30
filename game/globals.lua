@@ -1,6 +1,6 @@
 GAME_PRINT_NAME = "Koglomoglowy Uciekinier"
 GAME_PRINT_NAME_SP = "Koglomoglowy,Uciekinier"
-GAME_VERSION = "1.2 alpha"
+GAME_VERSION = "1.3 alpha"
 
 STR_VERSION = "wersja"
 STR_DEBUGMODE = " (tryb debugowania)"
@@ -36,7 +36,7 @@ function drawFPS()
 
     love.graphics.setColor(1, 0, 0, 1)
     setFont("math", 20)
-    local db = (DEBUG_MODE and STR_DEBUGMODE or "") 
+    local db = (GLOBAL_OPTIONS.DEBUG_MODE and STR_DEBUGMODE or "") 
     love.graphics.print(" " .. tostring(love.timer.getFPS() .. db), 0, 0)
     
     love.graphics.setColor(r, g, b, a)
@@ -120,7 +120,7 @@ function mouseIsPressed(x, y)
     return __mpx == x and __mpy == y
 end
 
-function love.mousepressed(x, y, button, istouch)
+function love.mousereleased(x, y, button)
     if button == 1 then 
         __mpx = x
         __mpy = y

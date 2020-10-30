@@ -38,7 +38,7 @@ BTN_BLACK_THEME = {
         disabled = gray(0, 1)
     },
     shadow = {
-        default = gray(0, 0.5)
+        default = gray(255, 0.5)
     }
 }
 
@@ -57,7 +57,7 @@ BTN_WHITE_THEME_ACCENT = {
         disabled = gray(0, 1)
     },
     shadow = {
-        default = gray(0, 0.5)
+        default = GAME_COLOR_ACCENT
     }
 }
 
@@ -76,7 +76,7 @@ BTN_BLACK_THEME_ACCENT = {
         disabled = gray(0, 1)
     },
     shadow = {
-        default = gray(0, 0.5)
+        default = GAME_COLOR_ACCENT
     }
 }
 
@@ -97,12 +97,14 @@ function Button:initialize(x, y, w, h, text)
     self.onClick = nil
     self.__state = "normal"
     self.down = false
+    self.candown = false
     self.colors = BTN_WHITE_THEME
     self.fontname = "header"
     self.checkbox = false
     self.textpos = "center"
     self.downeffect = true
     self.checked = false
+    self.prevlclick = false
 end
 
 function Button:toggle()
@@ -132,6 +134,7 @@ function Button:draw()
     local f = love.graphics.getFont()
     local _, lines = f:getWrap(self.text, self.width - (self.checkbox and 35 or 0))
     local fh = f:getHeight()
+    local EXHVAL = 1.5
     local exh = 0
     
     if state == "disabled" then
@@ -143,25 +146,30 @@ function Button:draw()
     elseif state == "hover" then
         curc.face = self.colors.face.hover
         curc.font = self.colors.font.hover
-        exh = self.downeffect and 1.5 or 0
-    elseif state == "down" then
+        exh = self.downeffect and EXHVAL or 0
+    elseif state == "down" or self.checked then
         curc.face = self.colors.face.down
         curc.font = self.colors.font.down 
-    end
+    end     
 
     love.graphics.setColor(curc.face)
     if self.checkbox then
-        love.graphics.rectangle("fill", self.position.x - self.width / 2 + 1, self.position.y - 12 + exh, 24, 24, 5, 5)
+        love.graphics.rectangle("fill", self.position.x - self.width / 2 + 1 + exh, self.position.y - 12 + exh, 24, 24, 5, 5)
         love.graphics.setColor(self.colors.face.check)
         if self.checked then 
-            love.graphics.ellipse("fill", self.position.x - self.width / 2 + 1 + 12, self.position.y + exh, 5, 5) 
+            love.graphics.ellipse("fill", self.position.x - self.width / 2 + 1 + 12 + exh, self.position.y + exh, 5, 5) 
         end
     else
-        love.graphics.rectangle("fill", self.position.x - self.width / 2, self.position.y - self.height / 2 + exh, self.width, self.height, self.rx, self.ry)
+        if self.shadow then
+            love.graphics.setColor(self.colors.shadow.default)
+            love.graphics.rectangle("fill", self.position.x - self.width / 2 + EXHVAL, self.position.y - self.height / 2 + EXHVAL, self.width, self.height, self.rx, self.ry)
+            love.graphics.setColor(curc.face)
+        end
+        love.graphics.rectangle("fill", self.position.x - self.width / 2 + exh, self.position.y - self.height / 2 + exh, self.width, self.height, self.rx, self.ry)
     end
     
     love.graphics.setColor(curc.font)
-    love.graphics.printf(self.text, self.position.x - self.width / 2 + (self.checkbox and 35 or 0), self.position.y - fh / 2 * #lines + exh, self.width - (self.checkbox and 35 or 0), self.textpos)
+    love.graphics.printf(self.text, self.position.x - self.width / 2 + (self.checkbox and 35 or 0) + exh, self.position.y - fh / 2 * #lines + exh, self.width - (self.checkbox and 35 or 0), self.textpos)
 
     love.graphics.setColor(r, g, b, a)
     love.graphics.setFont(oldf)
@@ -179,25 +187,34 @@ function Button:update(dt)
     
     if not self.enabled then
         self.__state = "disabled"
-    elseif self.down then 
-        self.__state = "down"
-    elseif inb then       
-        if mouseIsPressed(x, y) then
-            self.__state = "hover"
-            if self.checkbox then
-                self.checked = not self.checked
-            end
+    elseif self.checkbox then 
+        if inb and not leftclick and self.prevlclick then
+            self.checked = not self.checked
             if self.onClick ~= nil then
                 self.onClick(self)
-            end           
-        elseif leftclick then
-            self.__state = "down"
+            end
+            self.__state = "hover"
+        else
+            self.__state = inb and "hover" or "normal"
+        end
+    elseif self.down then 
+        self.__state = "down"
+    elseif inb then   
+        if leftclick and not self.candown then
+            self.__state = "down" 
+        elseif self.prevlclick and not leftclick then
+            if self.onClick ~= nil then
+                self.onClick(self)
+            end
+            self.__state = "hover"        
         else
             self.__state = "hover"
         end  
     else 
         self.__state = "normal"
     end
+
+    self.prevlclick = leftclick
 end
 
 function Button:setPosition(x, y)

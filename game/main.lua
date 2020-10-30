@@ -13,6 +13,8 @@ function love.load()
     love.graphics.setDefaultFilter("nearest", "nearest")
     love.graphics.setBackgroundColor(gray(255, 1))
 
+    ManageOpts:load()
+
     if SPLASH_VISIBLE then
         splashInit()
     else
@@ -20,7 +22,11 @@ function love.load()
     end
     menuInit()
 
-    translateAll()
+    translateAll("en")
+end
+
+function love.quit()
+    ManageOpts:save()
 end
 
 function love.draw()
@@ -32,9 +38,11 @@ function love.draw()
         splashDraw()
     elseif gm == GM_MENU then 
         menuDraw()
+    elseif gm == GM_MAP then 
+        
     end
 
-    if DEBUG_MODE or OPTS_FPS_ON then
+    if GLOBAL_OPTIONS.DEBUG_MODE or GLOBAL_OPTIONS.OPTS_FPS_ON then
         drawFPS()
     end
 end

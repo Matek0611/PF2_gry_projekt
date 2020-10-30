@@ -39,6 +39,11 @@ local function buttonsInit()
     btnExit = Button:new(love.graphics.getWidth() / 2, BTN_TOPEX+340, BTN_WIDTH, BTN_HEIGHT)
     btnExit.onClick = btnExitClick
     btnOpts.onClick = btnOptsClick
+    btnPlay.colors = BTN_WHITE_THEME_ACCENT
+    btnNewGame.colors = BTN_WHITE_THEME_ACCENT
+    btnOpts.colors = BTN_WHITE_THEME_ACCENT
+    btnAbout.colors = BTN_WHITE_THEME_ACCENT
+    btnExit.colors = BTN_WHITE_THEME_ACCENT
 end
 
 local function buttonsUpdate(dt)

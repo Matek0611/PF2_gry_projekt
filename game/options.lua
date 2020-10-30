@@ -1,10 +1,52 @@
+local Class = require("libs/basics/middleclass")
 local Button = require("libs/basics/Button")
 local Scene = require("libs/basics/Scene")
 local Scenes = require("libs/basics/Scenes")
 local globals = require("globals")
+local tserial = require("libs/tserial")
 
-DEBUG_MODE = true
-OPTS_FPS_ON = false
+-- zmienne globalne z opcjami
+
+GLOBAL_OPTIONS = {
+    DEBUG_MODE = true,
+    
+    OPTS_FPS_ON = false,
+    OPTS_LANG = "pl"
+}
+
+-- klasa zarządzania opcjami
+
+local OptionsManagement = Class("OptionsManagement")
+
+function OptionsManagement:initialize()
+    self.filename = "kmu.opts"
+end
+
+function OptionsManagement:save()
+    --[[local opts = {}
+    for i, v in pairs(GLOBAL_OPTIONS) do
+        if i ~= "__index" then
+            opts[i] = v
+        end
+    end
+    local t = Tserial.pack(opts, nil, true)
+    love.filesystem.write(self.filename, t)]]
+end
+
+function OptionsManagement:load()
+    --[[if love.filesystem.getInfo(self.filename) then
+        local opts = love.filesystem.read(self.filename)
+        local t = Tserial.unpack(opts, true)
+
+        for i, v in pairs(t) do
+            GLOBAL_OPTIONS[i] = v
+        end
+    end]]
+end
+
+ManageOpts = OptionsManagement:new()
+
+-- menu opcji
 
 OPTS_BTN_BACK = "Powrót"
 
@@ -26,24 +68,31 @@ OPTS_ROW_H = 25
 btnPageGame = Button:new(0, 0, PAGE_BTN_WIDTH, PAGE_BTN_HEIGHT, OPTS_PAGE_GAME)
 btnPageGame.colors = BTN_BLACK_THEME_ACCENT
 btnPageGame.fontname = "text"
+btnPageGame.candown = true
 btnPageControls = Button:new(0, 0, PAGE_BTN_WIDTH, PAGE_BTN_HEIGHT, OPTS_PAGE_CONTROLS)
 btnPageControls.colors = BTN_BLACK_THEME_ACCENT
 btnPageControls.fontname = "text"
+btnPageControls.candown = true
 btnPageVideo = Button:new(0, 0, PAGE_BTN_WIDTH, PAGE_BTN_HEIGHT, OPTS_PAGE_VIDEO)
 btnPageVideo.colors = BTN_BLACK_THEME_ACCENT
 btnPageVideo.fontname = "text"
+btnPageVideo.candown = true
 btnPageAudio = Button:new(0, 0, PAGE_BTN_WIDTH, PAGE_BTN_HEIGHT, OPTS_PAGE_AUDIO)
 btnPageAudio.colors = BTN_BLACK_THEME_ACCENT
 btnPageAudio.fontname = "text"
+btnPageAudio.candown = true
 
 OptionsActive = 1
 
 OPTS_PAGE_GAME_BTN_FPS = "Pokazuj ilość klatek na sekundę"
 local sc1btnFPS = Button:new(0, 0, 100, OPTS_ROW_H, OPTS_PAGE_GAME_BTN_FPS)
 sc1btnFPS.fontname = "text"
-sc1btnFPS.colors = BTN_BLACK_THEME
+sc1btnFPS.colors = BTN_BLACK_THEME_ACCENT
 sc1btnFPS.textpos = "left"
 sc1btnFPS.checkbox = true
+sc1btnFPS.onClick = (function (sender) 
+    GLOBAL_OPTIONS.OPTS_FPS_ON = sender.checked
+end)
 
 local function optionsPagesDraw()
     if OptionsActive == 1 then
