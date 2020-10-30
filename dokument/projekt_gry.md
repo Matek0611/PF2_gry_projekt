@@ -11,28 +11,29 @@ __Autor__: Marcin Stefanowicz
     1.2. [Silnik, język skryptowy, edytor](#sjezed)
 
     1.3. [Inspiracja](#inspir)
-    
-    1.4. [Grafika](#grafika)
 
 2. [Elementy gry](#elgry)
 
     2.1. [Interfejs użytkownika](#interfuz)
     
-    2.2. [Poziomy](#poziomy)
+    2.2. [Grafika](#grafika)
     
-    2.3. [Postacie](#postacie)
+    2.3. [Poziomy](#poziomy)
     
-    2.4. [Świat](#swiat)
+    2.4. [Postacie](#postacie)
+    
+    2.5. [Świat](#swiat)
     
 3. [Lista pomysłów i rzeczy wykonanych](#listapomirzw)
 
 ----
 
-### 1. Informacje wstępne
+### 1. [Informacje wstępne]()
 
-#### 1.1 Krótko o grze
+#### 1.1 [Krótko o grze]
 
-
+_Koglomoglowy Uciekinier_ to gra, w której wcielamy się jednym z kilku bohaterów 
+i przemierzamy piętra z wieloma pokojami
 
 #### 1.2 Silnik, język skryptowy, edytor
 
