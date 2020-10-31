@@ -80,7 +80,7 @@ w rodziale trzecim.
 
 #### 2.4. Postacie
 
-Lista postaci:
+Lista bohaterów:
 
 |Imię             |Życie       |Krótki opis                       |
 |:----------------|:----------:|:---------------------------------|
@@ -89,7 +89,7 @@ Lista postaci:
 |Antywola         | 8 tm       |Jemu nic się nie chce.|
 |Pusia del Bejduls| 1 tc x9    |Kot jak to kot ma 9 żyć.|
 
-Rodzaje życia postaci:
+Rodzaje życia bohatera:
 
 |Typ serduszka     |Skrót   |Kolor            | Jednorazowe uderzenie przeciwnika |Cechy szczególne                                              |
 |:----------------:|:------:|:---------------:|----------------------------------:|:-------------------------------------------------------------|
@@ -99,9 +99,9 @@ Rodzaje życia postaci:
 |smolaste          | s      |czarny           | - 0,5 pż                          |Po zużyciu w całym pokoju przeciwnicy otrzymają obrażenia równe 2x obrażenia bohatera.|
 |tęczowe           | tc     |różnokolorowy    | - 1 pż                            |Po zużyciu w całym pokoju przeciwnicy zostaną zabici albo zagadka zostanie rozwiązana.|
 
-\*__pż__ - punkty życia (1 pż = 1 serduszko)
+_\*__pż__ - punkty życia (1 pż = 1 serduszko)_
 
-Statystyki dla każdej postaci:
+Statystyki dla każdego bohatera:
 
 - _życie_ (min. 1 serduszko),
 
@@ -109,17 +109,31 @@ Statystyki dla każdej postaci:
 
 - _strzały_ (1 - 50 pocisków/s)
 
+- _obrażenia_ (0.01 - 200)
+
 - _szczęście_ (0 - 100%)
 
 - _monety_ (0 - 1000)
 
+- _latanie_ (tak/nie)
+
+- _komnata pociechy_ (0 - 100%)
+
+W rozgrywce pojawiać się będą również przeciwnicy oraz pokoje zagadek.
+
 #### 2.5. Przedmioty do zdobycia
 
-Lista ta się pewnie się powiększy, ale na pewno pojawi się te 5 przedmiotów do zdobycia:
+Lista ta się pewnie się powiększy, ale na pewno pojawi się te 10 przedmiotów do zdobycia:
 
 |Nazwa                 |Podpis                  | Co robi?             |
 |----------------------|------------------------|----------------------|
 |Żyćko                 |Krwistego serduszka nigdy dość!|+ 1 k|
 |Eurasy i dolary       |Tu jest jakby luksusowo...|+ 25 monet|
 |Pięciolistna koniczyna|A kto powiedział, że musi być cztero?|+ 5% szczęścia|
-||||
+|Święte oleje          |No przecież dla przyjemności nikt nie pije, tylko jak mus!|+ 25% szybkości poruszania się|
+|Do nieba              |Do nieba, nieba, do piekła ... Łuhuuu pójdę tam, gdzie się da!|+ latanie|
+|Puk, puk!             |Krecik puka w taborecik!|strzały + 15, obrażenia - 50%|
+|WŻTR                  |Wszak Żyjem Tylko Raz!|zamienia wszystkie obecne serca na tymczasowe + jedno tęczowe|
+|Pif, paf, puuuuuf!    |Miś im w ucho!|+ (49%\*obecne + 1) obrażeń, + 5% strzały|
+|Złoty król            |Królu złoty, czyś ty się nie zapędził?|- 20% wszystkie statystyki|
+|Liczymy-zobaczymy     |Warto dodać 0? Nie warto. Zatem - koło fortuny!|+ losowe % do każdej statystyki|
