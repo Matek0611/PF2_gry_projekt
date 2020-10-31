@@ -78,4 +78,11 @@ w rodziale trzecim.
 
 #### 2.4. Postacie
 
+Lista postaci:
 
+|Imię             |Krótki opis                       |
+|-----------------|----------------------------------|
+|Solska           | |
+|Myniek           | |
+|Antywola         | |
+|Pusia del Bejduls| |
