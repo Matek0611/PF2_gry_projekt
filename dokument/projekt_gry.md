@@ -123,7 +123,7 @@ W rozgrywce pojawiać się będą również przeciwnicy oraz pokoje zagadek.
 
 #### 2.5. Przedmioty do zdobycia
 
-Lista ta się pewnie się powiększy, ale na pewno pojawi się te 10 przedmiotów do zdobycia:
+Lista ta pewnie się powiększy, ale na pewno pojawi się te 10 przedmiotów do zdobycia:
 
 |Nazwa                 |Podpis                  | Co robi?             |
 |----------------------|------------------------|----------------------|
