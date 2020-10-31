@@ -18,11 +18,13 @@ __Autor__: Marcin Stefanowicz
     
     2.2. [Grafika](#22-grafika)
     
-    2.3. [Poziomy](#23-poziomy)
+    2.3. [Muzyka](#23-muzyka)
     
-    2.4. [Postacie](#24-postacie)
+    2.4. [Poziomy](#24-poziomy)
     
-    2.5. [Świat](#25-świat)
+    2.5. [Postacie](#25-postacie)
+    
+    2.6. [Świat](#26-świat)
     
 3. [Lista pomysłów i rzeczy wykonanych](#3-lista-pomysłów-i-rzeczy-wykonanych)
 
@@ -39,9 +41,18 @@ przedziwnymi stworzeniami. Celem jest ucieczka z tego labiryntu niespodzianek.
 #### 1.2 Silnik, język skryptowy, edytor
 
 __Silnik__: LÖVE (Love2d) 11.3
+
 __Język skryptowy__: Lua
+
 __Edytor__: Visual Studio Code
 
-### 1.3 Inspiracja
+#### 1.3 Inspiracja
+
+Pomysł na tą grę zrodził się mi podczas grania w grę _The Binding of Isaac: Rebirth_.
+W niej przedzieramy się jednym z wybranych bohaterów przez ogrom pokoi po poszczególnych 
+poziomach, pokonując przy tym bossów i mniejszych przeciwników. Uznałem, że zrobię coś
+w podobnej formie, ale po mojemu i bez wątków religijnych i specjalnej fabuły.
+
+### 2. Elementy gry
 
 
