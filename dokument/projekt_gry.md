@@ -84,7 +84,7 @@ Lista bohaterów:
 
 |Imię             |Życie       |Krótki opis                       |
 |:----------------|:----------:|:---------------------------------|
-|Sieśka           | 3 k        |Najzwyklejsza postać z krwii i kości.|
+|Sieśka           | 3 k        |Najzwyklejsza postać z krwi i kości.|
 |Myniek           | 2 k, 1 b   |Uwielbia słodkie zagadki.|
 |Antywola         | 8 tm       |Jemu nic się nie chce.|
 |Pusia del Bejduls| 1 tc x9    |Kot jak to kot ma 9 żyć.|
