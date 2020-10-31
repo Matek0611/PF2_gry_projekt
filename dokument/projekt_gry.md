@@ -20,9 +20,9 @@ __Autor__: Marcin Stefanowicz
     
     2.3. [Muzyka](#23-muzyka)
     
-    2.4. [Poziomy](#24-poziomy)
+    2.4. [Postacie](#24-postacie)
     
-    2.5. [Postacie](#25-postacie)
+    2.5. [Poziomy](#25-poziomy)
     
     2.6. [Świat](#26-świat)
     
@@ -66,5 +66,16 @@ niektóre elementy, przyciski itp. Pewne rzeczy z tego mechanizmu zaimplementuj�
 a reszta będzie korzystać z gotowych rozwiązań.
 
 #### 2.2. Grafika
+
+Grafikę rastrową zamierzam wykonać w programie GIMP, natomiast myślę, że większość
+jednak będzie ,,rysowana kodem". Postaram się również zastosować shadery (świetlne,
+rozmycia itd.).
+
+#### 2.3. Muzyka
+
+Wykorzystam jakąś gotową muzykę i efekty dźwiękowe. Informacje o nich pojawią się 
+w rodziale trzecim.
+
+#### 2.4. Postacie
 
 
