@@ -101,8 +101,25 @@ Rodzaje życia postaci:
 
 \*__pż__ - punkty życia (1 pż = 1 serduszko)
 
+Statystyki dla każdej postaci:
+
+- _życie_ (min. 1 serduszko),
+
+- _poruszanie się_ (0.1 - 20 kratek/s)
+
+- _strzały_ (1 - 50 pocisków/s)
+
+- _szczęście_ (0 - 100%)
+
+- _monety_ (0 - 1000)
+
 #### 2.5. Przedmioty do zdobycia
 
 Lista ta się pewnie się powiększy, ale na pewno pojawi się te 5 przedmiotów do zdobycia:
 
-
+|Nazwa                 |Podpis                  | Co robi?             |
+|----------------------|------------------------|----------------------|
+|Żyćko                 |Krwistego serduszka nigdy dość!|+ 1 k|
+|Eurasy i dolary       |Tu jest jakby luksusowo...|+ 25 monet|
+|Pięciolistna koniczyna|A kto powiedział, że musi być cztero?|+ 5% szczęścia|
+||||
