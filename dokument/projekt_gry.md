@@ -32,13 +32,17 @@ __Autor__: Marcin Stefanowicz
 
 ### 1. Informacje wstępne
 
-#### 1.1 Krótko o grze
+#### 1.1. Krótko o grze
 
 _Koglomoglowy Uciekinier_ to gra, w której wcielamy się w jednego z kilku bohaterów 
 i przemierzamy różne pokoje skrywające a to zagadki, a to walki z niespodziewanymi,
-przedziwnymi stworzeniami. Celem jest ucieczka z tego labiryntu niespodzianek.
+przedziwnymi stworzeniami. Celem jest ucieczka z tego labiryntu niespodzianek. <br>
+Nietypowa nazwa na grę przyszła mi do głowy podczas rozmowy o tym projekcie z moją przyjaciółką, 
+gdzie w pewnym momencie przypomniała mi się jedna z moich ulubionych polskich serii filmów 
+_Kogel-mogel_ (a dokładniej - _Miszmasz, czyli kogel-mogel 3_). Nie ukrywam, że w grze pojawią 
+się smaczki i nawiązania do _Kogla-mogla_, a może się i zdarzyć, że będzie nimi przesiąknięta.
 
-#### 1.2 Silnik, język skryptowy, edytor
+#### 1.2. Silnik, język skryptowy, edytor
 
 __Silnik__: LÖVE (Love2d) 11.3
 
@@ -46,13 +50,15 @@ __Język skryptowy__: Lua
 
 __Edytor__: Visual Studio Code
 
-#### 1.3 Inspiracja
+#### 1.3. Inspiracja
 
 Pomysł na tą grę zrodził się mi podczas grania w grę _The Binding of Isaac: Rebirth_.
 W niej przedzieramy się jednym z wybranych bohaterów przez ogrom pokoi po poszczególnych 
 poziomach, pokonując przy tym bossów i mniejszych przeciwników. Uznałem, że zrobię coś
-w podobnej formie, ale po mojemu i bez wątków religijnych i specjalnej fabuły.
+w podobnej formie, ale tak po mojemu i bez wątków religijnych i specjalnej fabuły.
 
 ### 2. Elementy gry
+
+#### 2.1. Interfejs użytkownika
 
 
