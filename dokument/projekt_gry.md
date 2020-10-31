@@ -32,8 +32,16 @@ __Autor__: Marcin Stefanowicz
 
 #### 1.1 Krótko o grze
 
-_Koglomoglowy Uciekinier_ to gra, w której wcielamy się jednym z kilku bohaterów 
-i przemierzamy piętra z wieloma pokojami
+_Koglomoglowy Uciekinier_ to gra, w której wcielamy się w jednego z kilku bohaterów 
+i przemierzamy różne pokoje skrywające a to zagadki, a to walki z niespodziewanymi,
+przedziwnymi stworzeniami. Celem jest ucieczka z tego labiryntu niespodzianek.
 
 #### 1.2 Silnik, język skryptowy, edytor
+
+__Silnik__: LÖVE (Love2d) 11.3
+__Język skryptowy__: Lua
+__Edytor__: Visual Studio Code
+
+### 1.3 Inspiracja
+
 
