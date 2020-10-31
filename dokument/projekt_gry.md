@@ -84,12 +84,12 @@ Lista postaci:
 
 |Imię             |Życie       |Krótki opis                       |
 |:----------------|:----------:|:---------------------------------|
-|Sieśka           | 3 k        |  |
-|Myniek           | 2 k, 1 b   |  |
-|Antywola         | 8 tm       |  |
-|Pusia del Bejduls| 1 tc x9    | Kot |
+|Sieśka           | 3 k        |Najzwyklejsza postać z krwii i kości.|
+|Myniek           | 2 k, 1 b   |Uwielbia słodkie zagadki.|
+|Antywola         | 8 tm       |Jemu nic się nie chce.|
+|Pusia del Bejduls| 1 tc x9    |Kot jak to kot ma 9 żyć.|
 
-Rodzaje życja postaci:
+Rodzaje życia postaci:
 
 |Typ serduszka     |Skrót   |Kolor            | Jednorazowe uderzenie przeciwnika |Cechy szczególne                                              |
 |:----------------:|:------:|:---------------:|----------------------------------:|:-------------------------------------------------------------|
@@ -97,10 +97,12 @@ Rodzaje życja postaci:
 |bezowe            | b      |biały            | - 0,5 pż                          |Po zużyciu w całym pokoju przeciwnicy zostaną spowolnieni.|
 |tymczasowe        | tm     |zielony          | - 1 pż                            |Brak|
 |smolaste          | s      |czarny           | - 0,5 pż                          |Po zużyciu w całym pokoju przeciwnicy otrzymają obrażenia równe 2x obrażenia bohatera.|
-|tęczowe           | tc     |różnokolorowy    | - 1 pż                            |Po zużyciu w całym pokoju przeciwnicy zostaną zabici albo zagadka zostanie rozwiązana.
+|tęczowe           | tc     |różnokolorowy    | - 1 pż                            |Po zużyciu w całym pokoju przeciwnicy zostaną zabici albo zagadka zostanie rozwiązana.|
 
 \*__pż__ - punkty życia (1 pż = 1 serduszko)
 
 #### 2.5. Przedmioty do zdobycia
+
+Lista ta się pewnie się powiększy, ale na pewno pojawi się te 5 przedmiotów do zdobycia:
 
 
