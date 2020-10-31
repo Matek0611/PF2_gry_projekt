@@ -137,3 +137,19 @@ Lista ta się pewnie się powiększy, ale na pewno pojawi się te 10 przedmiotó
 |Pif, paf, puuuuuf!    |Miś im w ucho!|+ (49%\*obecne + 1) obrażeń, + 5% strzały|
 |Złoty król            |Królu złoty, czyś ty się nie zapędził?|- 20% wszystkie statystyki|
 |Liczymy-zobaczymy     |Warto dodać 0? Nie warto. Zatem - koło fortuny!|+ losowe % do każdej statystyki|
+
+#### 2.6. Poziomy
+
+Będzie 10 poziomów, gdzie po każdym będzie wielki pokój zagadek.
+
+#### 2.7. Świat
+
+Świat przedstawiony będzie labiryntem pokoi zawierających zagadki, wrogów, a także inne niespodzianki.
+
+### 3. Lista pomysłów i rzeczy wykonanych
+
+- [x] ekran ładowania
+- [x] menu główne
+- [ ] opcje
+- [ ] generowanie losowego świata
+
