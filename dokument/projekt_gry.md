@@ -85,17 +85,19 @@ Lista postaci:
 |Imię             |Życie       |Krótki opis                       |
 |:----------------|:----------:|:---------------------------------|
 |Sieśka           | 3 k        |  |
-|Myniek           | 2 k 1 b    |  |
-|Antywola         | 8 k        |  |
-|Pusia del Bejduls| 1 b x9     | Kot |
+|Myniek           | 2 k, 1 b   |  |
+|Antywola         | 8 tm       |  |
+|Pusia del Bejduls| 1 tc x9    | Kot |
 
 Rodzaje życja postaci:
 
-|Typ serduszka     |Skrót   |Wygląd/kolor     | Jednorazowe uderzenie przeciwnika |Cechy szczególne                                              |
+|Typ serduszka     |Skrót   |Kolor            | Jednorazowe uderzenie przeciwnika |Cechy szczególne                                              |
 |:----------------:|:------:|:---------------:|----------------------------------:|:-------------------------------------------------------------|
 |krwiste           | k      |czerwony         | - 0,5 pż                          |Jeśli straci się jedno całe to zostaje pusty kontener (tylko i wyłącznie tyczy się to tego typu serduszka).|
-|bezowe            | b      |biały            | - 0,5 pż                          |Po zużyciu w całym pokoju przeciwnicy zostaną spowolnieni|
-|             |
+|bezowe            | b      |biały            | - 0,5 pż                          |Po zużyciu w całym pokoju przeciwnicy zostaną spowolnieni.|
+|tymczasowe        | tm     |zielony          | - 1 pż                            |Brak|
+|smolaste          | s      |czarny           | - 0,5 pż                          |Po zużyciu w całym pokoju przeciwnicy otrzymają obrażenia równe 2x obrażenia bohatera.|
+|tęczowe           | tc     |różnokolorowy    | - 1 pż                            |Po zużyciu w całym pokoju przeciwnicy zostaną zabici albo zagadka zostanie rozwiązana.
 
 \*__pż__ - punkty życia (1 pż = 1 serduszko)
 
