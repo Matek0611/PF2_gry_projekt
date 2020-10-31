@@ -55,10 +55,16 @@ __Edytor__: Visual Studio Code
 Pomysł na tą grę zrodził się mi podczas grania w grę _The Binding of Isaac: Rebirth_.
 W niej przedzieramy się jednym z wybranych bohaterów przez ogrom pokoi po poszczególnych 
 poziomach, pokonując przy tym bossów i mniejszych przeciwników. Uznałem, że zrobię coś
-w podobnej formie, ale tak po mojemu i bez wątków religijnych i specjalnej fabuły.
+w podobnej formie, ale tak po mojemu i bez wątków religijnych oraz specjalnej fabuły.
 
 ### 2. Elementy gry
 
 #### 2.1. Interfejs użytkownika
+
+Interfejs użytkownika wykorzystuje mechanizm scen, by można było ponownie wykorzystać 
+niektóre elementy, przyciski itp. Pewne rzeczy z tego mechanizmu zaimplementuję sam,
+a reszta będzie korzystać z gotowych rozwiązań.
+
+#### 2.2. Grafika
 
 
