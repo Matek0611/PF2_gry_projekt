@@ -22,9 +22,11 @@ __Autor__: Marcin Stefanowicz
     
     2.4. [Postacie](#24-postacie)
     
-    2.5. [Poziomy](#25-poziomy)
+    2.5. [Przedmioty do zdobycia](#25-przedmioty-do-zdobycia)
     
-    2.6. [Świat](#26-świat)
+    2.6. [Poziomy](#26-poziomy)
+    
+    2.7. [Świat](#27-świat)
     
 3. [Lista pomysłów i rzeczy wykonanych](#3-lista-pomysłów-i-rzeczy-wykonanych)
 
@@ -80,9 +82,23 @@ w rodziale trzecim.
 
 Lista postaci:
 
-|Imię             |Krótki opis                       |
-|-----------------|----------------------------------|
-|Solska           | |
-|Myniek           | |
-|Antywola         | |
-|Pusia del Bejduls| |
+|Imię             |Życie       |Krótki opis                       |
+|:----------------|:----------:|:---------------------------------|
+|Sieśka           | 3 k        |  |
+|Myniek           | 2 k 1 b    |  |
+|Antywola         | 8 k        |  |
+|Pusia del Bejduls| 1 b x9     | Kot |
+
+Rodzaje życja postaci:
+
+|Typ serduszka     |Skrót   |Wygląd/kolor     | Jednorazowe uderzenie przeciwnika |Cechy szczególne                                              |
+|:----------------:|:------:|:---------------:|----------------------------------:|:-------------------------------------------------------------|
+|krwiste           | k      |czerwony         | - 0,5 pż                          |Jeśli straci się jedno całe to zostaje pusty kontener (tylko i wyłącznie tyczy się to tego typu serduszka).|
+|bezowe            | b      |biały            | - 0,5 pż                          |Po zużyciu w całym pokoju przeciwnicy zostaną spowolnieni|
+|             |
+
+\*__pż__ - punkty życia (1 pż = 1 serduszko)
+
+#### 2.5. Przedmioty do zdobycia
+
+
