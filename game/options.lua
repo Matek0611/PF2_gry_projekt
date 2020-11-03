@@ -3,7 +3,7 @@ local Button = require("libs/basics/Button")
 local Scene = require("libs/basics/Scene")
 local Scenes = require("libs/basics/Scenes")
 local globals = require("globals")
-local tserial = require("libs/tserial")
+local savedata = require("libs/savedata")
 
 -- zmienne globalne z opcjami
 
@@ -11,7 +11,8 @@ GLOBAL_OPTIONS = {
     DEBUG_MODE = true,
     
     OPTS_FPS_ON = false,
-    OPTS_LANG = "pl"
+    OPTS_LANG = "pl",
+    OPTS_
 }
 
 -- klasa zarządzania opcjami
@@ -19,29 +20,17 @@ GLOBAL_OPTIONS = {
 local OptionsManagement = Class("OptionsManagement")
 
 function OptionsManagement:initialize()
-    self.filename = "kmu.opts"
+    self.filename = "opcje.kmu"
 end
 
 function OptionsManagement:save()
-    --[[local opts = {}
-    for i, v in pairs(GLOBAL_OPTIONS) do
-        if i ~= "__index" then
-            opts[i] = v
-        end
-    end
-    local t = Tserial.pack(opts, nil, true)
-    love.filesystem.write(self.filename, t)]]
+    --savedata.save(GLOBAL_OPTIONS, self.filename)
 end
 
 function OptionsManagement:load()
-    --[[if love.filesystem.getInfo(self.filename) then
-        local opts = love.filesystem.read(self.filename)
-        local t = Tserial.unpack(opts, true)
-
-        for i, v in pairs(t) do
-            GLOBAL_OPTIONS[i] = v
-        end
-    end]]
+    if love.filesystem.getInfo(self.filename) then
+        GLOBAL_OPTIONS = savedata.load(self.filename)
+    end
 end
 
 ManageOpts = OptionsManagement:new()
@@ -90,6 +79,7 @@ sc1btnFPS.fontname = "text"
 sc1btnFPS.colors = BTN_BLACK_THEME_ACCENT
 sc1btnFPS.textpos = "left"
 sc1btnFPS.checkbox = true
+sc1btnFPS.checked = GLOBAL_OPTIONS.OPTS_FPS_ON
 sc1btnFPS.onClick = (function (sender) 
     GLOBAL_OPTIONS.OPTS_FPS_ON = sender.checked
 end)

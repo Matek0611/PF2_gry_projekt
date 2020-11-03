@@ -6,6 +6,7 @@ local splash = require("splash")
 local translation = require("translation")
 local loading = require("loading")
 local options = require("options")
+local newgame = require("newgame")
 
 function love.load() 
     love.window.setMode(1280, 720, {resizable=true, minwidth=800, minheight=600, msaa=3})
@@ -22,7 +23,7 @@ function love.load()
     end
     menuInit()
 
-    translateAll("en")
+    translateAll(GLOBAL_OPTIONS.OPTS_LANG)
 end
 
 function love.quit()
@@ -38,6 +39,8 @@ function love.draw()
         splashDraw()
     elseif gm == GM_MENU then 
         menuDraw()
+    elseif gm == GM_NEW_GAME then 
+
     elseif gm == GM_MAP then 
         
     end

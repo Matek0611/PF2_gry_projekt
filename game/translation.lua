@@ -34,6 +34,28 @@ function translateAll(lang)
         OPTS_PAGE_CONTROLS = "CONTROLS"
         OPTS_PAGE_VIDEO = "VIDEO"
         OPTS_PAGE_AUDIO = "AUDIO"
+
+        --heros
+        --Sieśka
+        HERO_SIESKA = {
+            NAME = "Sieśka",
+            DESC = "The most ordinary creature of flesh and blood."
+        }
+        --Myniek
+        HERO_MYNIEK = {
+            NAME = "Myniek",
+            DESC = "He likes sweet mysteries."
+        }
+        --Antywola
+        HERO_ANTYWOLA = {
+            NAME = "Antywola",
+            DESC = "He doesn't want to do anything."
+        }
+        --Pusia del Bejduls
+        HERO_PUSIA = {
+            NAME = "Pusia del Bejduls",
+            DESC = "This cat as the normal cats has 9 lives."
+        }
     else --if lang == "pl" then
         --game
         GAME_PRINT_NAME = "Koglomoglowy Uciekinier"
@@ -63,6 +85,28 @@ function translateAll(lang)
         OPTS_PAGE_CONTROLS = "STEROWANIE"
         OPTS_PAGE_VIDEO = "OBRAZ"
         OPTS_PAGE_AUDIO = "DŹWIĘK"
+
+        --heros
+        --Sieśka
+        HERO_SIESKA = {
+            NAME = "Sieśka",
+            DESC = "Najzwyklejsza postać z krwi i kości."
+        }
+        --Myniek
+        HERO_MYNIEK = {
+            NAME = "Myniek",
+            DESC = "Uwielbia słodkie zagadki."
+        }
+        --Antywola
+        HERO_ANTYWOLA = {
+            NAME = "Antywola",
+            DESC = "Jemu nic się nie chce."
+        }
+        --Pusia del Bejduls
+        HERO_PUSIA = {
+            NAME = "Pusia del Bejduls",
+            DESC = "Kot jak to kot ma 9 żyć."
+        }
     end
 
     menuTranslate()
