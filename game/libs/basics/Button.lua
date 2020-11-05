@@ -1,6 +1,7 @@
 local Class = require("libs/basics/middleclass")
 local Vector2d = require("libs/basics/Vector2d")
 local globals = require("globals")
+local music = require("music")
 
 local Button = Class("Button")
 
@@ -105,6 +106,7 @@ function Button:initialize(x, y, w, h, text)
     self.downeffect = true
     self.checked = false
     self.prevlclick = false
+    self.clicksound = true
 end
 
 function Button:toggle()
@@ -205,6 +207,9 @@ function Button:update(dt)
         elseif self.prevlclick and not leftclick then
             if self.onClick ~= nil then
                 self.onClick(self)
+            end
+            if self.clicksound then
+                ManageMusic:play("click")
             end
             self.__state = "hover"        
         else

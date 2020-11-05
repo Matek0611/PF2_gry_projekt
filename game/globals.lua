@@ -43,9 +43,25 @@ function drawFPS()
     love.graphics.setFont(oldf)
 end
 
-function drawLargeLogo(x, y)
-    x = x or 0
-    y = y or 0
+MOUSE_MOVE_X = 0
+MOUSE_MOVE_Y = 0
+
+function love.mousemoved(x, y, dx, dy, istouch) 
+    MOUSE_MOVE_X = x
+    MOUSE_MOVE_Y = y
+end
+
+function drawLargeLogo(x, y, ifanim)
+    ifanim = ifanim or false
+
+    x = (x or 0)
+    y = (y or 0)
+
+    if ifanim then
+        x = x + (MOUSE_MOVE_X - love.graphics.getWidth() / 2)*0.065
+        y = y + (MOUSE_MOVE_Y - love.graphics.getHeight() / 2)*0.065
+    end
+
     local pc = getPrevColor()
     local pf = love.graphics.getFont()
     local lst = split(GAME_PRINT_NAME_SP, ",")

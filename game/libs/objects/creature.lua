@@ -1,6 +1,7 @@
+local Class = require("libs/basics/middleclass")
 local BasicObject = require("libs/objects/basicobject")
 
-local Creature = BasicObject()
+local Creature = Class("Creature", BasicObject)
 
 function Creature:initialize(defname, defdescription)
     self.name = ""
@@ -18,6 +19,7 @@ function Creature:initialize(defname, defdescription)
     self.bullets_color = nil
     self.damage = 0.5
     self.fly = false
+    self.canmove = true
 end
 
 function Creature:draw()
@@ -32,10 +34,10 @@ function Creature:update(dt)
     end
     if self.onUpdateStrings ~= nil then
         if self.name ~= self.deftxt.n or self.description ~= self.deftxt.d then
-            self.onUpdateStrings(n, d)
-            self.name = n or ""
-            self.description = d or ""
-            self.deftxt = {n = n or "", d = d or ""}
+            local str = self.onUpdateStrings(n, d)
+            self.name = str[1] or ""
+            self.description = str[2] or ""
+            self.deftxt = {n = str[1] or "", d = str[2] or ""}
         end
     end
 end

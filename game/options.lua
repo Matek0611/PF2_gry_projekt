@@ -4,6 +4,7 @@ local Scene = require("libs/basics/Scene")
 local Scenes = require("libs/basics/Scenes")
 local globals = require("globals")
 local savedata = require("libs/savedata")
+local music = require("music")
 
 -- zmienne globalne z opcjami
 

@@ -62,7 +62,7 @@ function Loading:draw()
     love.graphics.setColor(gray(255, al))
     love.graphics.rectangle("fill", love.graphics.getWidth() / 3 + 5, love.graphics.getHeight() - topp + fh - 20 + 5, (love.graphics.getWidth() / 3 - 5*2) * (1 - self.data.position / self.defpos), 20 - 5*2, 5, 5)
 
-    drawLargeLogo(love.graphics.getWidth() / 2, love.graphics.getHeight() / 3)
+    drawLargeLogo(love.graphics.getWidth() / 2, love.graphics.getHeight() / 3, false)
 
     if not self.isClosing then
         local ccc = getPrevColor()

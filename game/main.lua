@@ -7,6 +7,7 @@ local translation = require("translation")
 local loading = require("loading")
 local options = require("options")
 local newgame = require("newgame")
+local music = require("music")
 
 function love.load() 
     love.window.setMode(1280, 720, {resizable=true, minwidth=800, minheight=600, msaa=3})
@@ -24,9 +25,12 @@ function love.load()
     menuInit()
 
     translateAll(GLOBAL_OPTIONS.OPTS_LANG)
+
+    ManageMusic:play("loading")
 end
 
 function love.quit()
+    ManageMusic:stop()
     ManageOpts:save()
 end
 

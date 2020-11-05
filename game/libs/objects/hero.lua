@@ -1,6 +1,7 @@
+local Class = require("libs/basics/middleclass")
 local Creature = require("libs/objects/creature")
 
-local Hero = Creature("", "")
+local Hero = Class("Hero", Creature)
 
 function Hero:initialize()
     self.luck = 0

@@ -3,6 +3,7 @@ local globals = require("globals")
 local Scenes = require("libs/basics/Scenes")
 local Scene = require("libs/basics/Scene")
 local options = require("options")
+local newgame = require("newgame")
 
 btnPlay, btnNewGame, btnOpts, btnAbout, btnExit = nil, nil, nil, nil, nil 
 MenuScenes = Scenes:new()
@@ -30,6 +31,10 @@ local function btnOptsBackMenuClick(sender)
     MenuScenes:setActive(2)
 end
 
+local function btnNewGameClick(sender)
+    MenuScenes:setActive(4)
+end
+
 local function buttonsInit()
     btnPlay = Button:new(love.graphics.getWidth() / 2, BTN_TOPEX+100, BTN_WIDTH, BTN_HEIGHT)
     btnPlay.enabled = false
@@ -39,6 +44,7 @@ local function buttonsInit()
     btnExit = Button:new(love.graphics.getWidth() / 2, BTN_TOPEX+340, BTN_WIDTH, BTN_HEIGHT)
     btnExit.onClick = btnExitClick
     btnOpts.onClick = btnOptsClick
+    btnNewGame.onClick = btnNewGameClick
     btnPlay.colors = BTN_WHITE_THEME_ACCENT
     btnNewGame.colors = BTN_WHITE_THEME_ACCENT
     btnOpts.colors = BTN_WHITE_THEME_ACCENT
@@ -80,7 +86,7 @@ local function bgDraw()
 end
 
 local function menuHomeDraw()
-    drawLargeLogo(love.graphics.getWidth() / 2, 120)
+    drawLargeLogo(love.graphics.getWidth() / 2, 120, true)
 
     buttonsDraw()
 end
@@ -98,6 +104,7 @@ function menuInit()
     sc.canDrawAll = true
     MenuScenes:addScene(sc)
     MenuScenes:addScene(OptionsScene)
+    MenuScenes:addScene(NewGameScene)
     MenuScenes:setActive(2)
     buttonsInit()
 end
