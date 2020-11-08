@@ -10,6 +10,8 @@ local newgame = require("newgame")
 local music = require("music")
 
 function love.load() 
+    math.randomseed(os.time())
+
     love.window.setMode(1280, 720, {resizable=true, minwidth=800, minheight=600, msaa=3})
     love.window.setIcon(love.image.newImageData("assets/img/ikona1.png"))
     love.graphics.setDefaultFilter("nearest", "nearest")

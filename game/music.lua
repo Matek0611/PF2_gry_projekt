@@ -12,7 +12,7 @@ function Music:initialize()
 
     self.click = love.audio.newSource(self.path .. "Pen Clicking.mp3", "stream")
 
-    self.volume = 0.5
+    self.volume = 0.9
 end
 
 function Music:play(what)

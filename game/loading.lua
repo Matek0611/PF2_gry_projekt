@@ -1,6 +1,8 @@
 local Class = require("libs/basics/middleclass")
 local tween = require("libs/splashy/tween")
 local globals = require("globals")
+local ptext = require("libs/floatingtext/effects/PopupText")
+local ptextm = require("libs/floatingtext/effects/PopupTextManager")
 
 local Loading = Class("Loading")
 
@@ -8,6 +10,7 @@ __dot_count = 1
 __dot_delay = 0
 __hint_id = 1
 __hint_delay = 0
+__rot_delay = 0
 
 local function randdots()
     if __dot_count > 2 then 
@@ -30,7 +33,31 @@ function Loading:initialize()
     self.stw = nil
     self.onFinish = nil
     self.dots = ""
+    self.rotation = 0
     self:reset()
+end
+
+function Loading:setupeffects()
+    self.ptextm = PopupTextManager()
+    local pf = love.graphics.getFont()
+    setFont("text", 20)
+    -- self.ptextm:addPopup({
+    --     text = "Example Text",
+    --     font = love.graphics.getFont(),
+    --     color = {r = 1, g = 0, b = 0, a = 1},
+    --     x = 200,
+    --     y = 200,
+    --     scaleX = 4,
+    --     scaleY = 4,
+    --     circular = {totalAngle = math.pi, radiusX = 40, radiusY = 40},
+    --     blendMode = 'add',
+    --     fadeIn = {start = 0.2, finish = 0.7},
+    --     fadeOut = {start = 0.7, finish = 8},
+    --     dX = 40,
+    --     dY = 40,
+    --     duration = 8
+    -- })
+    love.graphics.setFont(pf)
 end
 
 function Loading:draw()
@@ -57,20 +84,26 @@ function Loading:draw()
     setFont("text", 18)
     love.graphics.printf(LoadingHints[__hint_id], (love.graphics.getWidth() - love.graphics.getWidth() / 3) / 2, love.graphics.getHeight() - topp + fh + 20, love.graphics.getWidth() / 3, "center")
 
-    love.graphics.setColor(gray(0, al))
-    love.graphics.rectangle("fill", love.graphics.getWidth() / 3, love.graphics.getHeight() - topp + fh - 20, love.graphics.getWidth() / 3, 20, 10, 10)
-    love.graphics.setColor(gray(255, al))
-    love.graphics.rectangle("fill", love.graphics.getWidth() / 3 + 5, love.graphics.getHeight() - topp + fh - 20 + 5, (love.graphics.getWidth() / 3 - 5*2) * (1 - self.data.position / self.defpos), 20 - 5*2, 5, 5)
+    -- love.graphics.setColor(gray(0, al))
+    -- love.graphics.rectangle("fill", love.graphics.getWidth() / 3, love.graphics.getHeight() - topp + fh - 20, love.graphics.getWidth() / 3, 20, 10, 10)
+    -- love.graphics.setColor(gray(255, al))
+    -- love.graphics.rectangle("fill", love.graphics.getWidth() / 3 + 5, love.graphics.getHeight() - topp + fh - 20 + 5, (love.graphics.getWidth() / 3 - 5*2) * (1 - self.data.position / self.defpos), 20 - 5*2, 5, 5)
 
     drawLargeLogo(love.graphics.getWidth() / 2, love.graphics.getHeight() / 3, false)
+
+    self.ptextm:render()
+
+    local imgload = love.graphics.newImage("assets/img/ladowanie.png")
+    love.graphics.draw(imgload, love.graphics.getWidth() - 300*0.2, love.graphics.getHeight() - 300*0.2, math.deg(self.rotation), 0.2, 0.2, 0.5*300, 0.5*300)
 
     if not self.isClosing then
         local ccc = getPrevColor()
         ccc[4] = self.flame_alpha
         love.graphics.setColor(ccc)
     end
-    local img = love.graphics.newImage("assets/img/flame.png")
-    love.graphics.draw(img, love.graphics.getWidth() - 45, love.graphics.getHeight() - 50, 0, 0.2, 0.2)
+    
+    local imgflame = love.graphics.newImage("assets/img/flame.png")
+    love.graphics.draw(imgflame, love.graphics.getWidth() - 300*0.2, love.graphics.getHeight() - 300*0.2 - 15, 0, 0.3, 0.3)
 
     love.graphics.setColor(pc)
     love.graphics.setFont(pf)
@@ -78,6 +111,8 @@ end
 
 function Loading:update(dt)
     if not self.active then return end
+
+    self.ptextm:update(dt)
 
     if self.data.position <= 0 then
         self.data.position = 0
@@ -108,6 +143,10 @@ function Loading:update(dt)
             while hd == __hint_id do hd = love.math.random(1, #LoadingHints) end
             __hint_id = hd
         end
+
+        __rot_delay = (__rot_delay + 1) % 2
+        if __rot_delay == 0 then self.rotation = (self.rotation + 1) % 360 end
+
         if self.flame_grow then
             self.flame_alpha = self.flame_alpha + love.math.random() / 30
             if self.flame_alpha > 1 then 
@@ -136,6 +175,7 @@ function Loading:reset()
     self.stw = nil
     self.flame_alpha = 1
     self.flame_grow = false
+    self:setupeffects()
 end
 
 function Loading:isLoading()
