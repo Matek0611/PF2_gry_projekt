@@ -37,9 +37,9 @@ function Scene:update(dt)
     end
 end
 
-function Scene:iupdate()
+function Scene:iupdate(dt)
     if self.oniUpdate ~= nil then
-        self.oniUpdate()
+        self.oniUpdate(dt)
     end
 end
 

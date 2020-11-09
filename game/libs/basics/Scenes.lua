@@ -43,9 +43,9 @@ end
 
 function Scenes:update(dt)
     for i, s in ipairs(self.list) do
-        s:iupdate()
+        s:iupdate(dt)
     end
-    self.list[self.active]:update()
+    self.list[self.active]:update(dt)
 end
 
 return Scenes
