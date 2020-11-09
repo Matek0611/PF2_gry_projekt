@@ -71,25 +71,14 @@ function Loading:draw()
         al = self.data.alpha
     end
 
-    love.graphics.setColor(gray(50, al))
-    love.graphics.rectangle("fill", 0, 0, love.graphics.getWidth(), love.graphics.getHeight())
+    love.graphics.draw(gradientMesh("vertical", color(106, 71, 0, al), gray(20, al)), 0, 0, 0, love.graphics.getDimensions())
 
-    local topp = love.graphics.getHeight() / 3.5
-    love.graphics.setColor(gray(255, al))
-    local fh = love.graphics.getFont():getHeight()
-    setFont("header", 25)
-    love.graphics.printf(LOADSCR_TEXT1 .. " " .. self.dots, 0, love.graphics.getHeight() - topp - 5 - fh, love.graphics.getWidth(), "center")
-    fh = love.graphics.getFont():getHeight() + 35
+    love.graphics.setColor(color(255, 163, 22, al))
+    drawLargeLogo(love.graphics.getWidth() / 2, love.graphics.getHeight() / 3, false)
+
     love.graphics.setColor(gray(200, al))
     setFont("text", 18)
-    love.graphics.printf(LoadingHints[__hint_id], (love.graphics.getWidth() - love.graphics.getWidth() / 3) / 2, love.graphics.getHeight() - topp + fh + 20, love.graphics.getWidth() / 3, "center")
-
-    -- love.graphics.setColor(gray(0, al))
-    -- love.graphics.rectangle("fill", love.graphics.getWidth() / 3, love.graphics.getHeight() - topp + fh - 20, love.graphics.getWidth() / 3, 20, 10, 10)
-    -- love.graphics.setColor(gray(255, al))
-    -- love.graphics.rectangle("fill", love.graphics.getWidth() / 3 + 5, love.graphics.getHeight() - topp + fh - 20 + 5, (love.graphics.getWidth() / 3 - 5*2) * (1 - self.data.position / self.defpos), 20 - 5*2, 5, 5)
-
-    drawLargeLogo(love.graphics.getWidth() / 2, love.graphics.getHeight() / 3, false)
+    love.graphics.printf(LoadingHints[__hint_id], (love.graphics.getWidth() - love.graphics.getWidth() / 3) / 2, love.graphics.getHeight() - love.graphics.getFont():getHeight()*4 - 15, love.graphics.getWidth() / 3, "center")
 
     self.ptextm:render()
 
@@ -103,7 +92,7 @@ function Loading:draw()
     end
     
     local imgflame = love.graphics.newImage("assets/img/flame.png")
-    love.graphics.draw(imgflame, love.graphics.getWidth() - 300*0.2, love.graphics.getHeight() - 300*0.2 - 15, 0, 0.3, 0.3)
+    love.graphics.draw(imgflame, love.graphics.getWidth() - 300*0.2 - 0.125*121*0.5, love.graphics.getHeight() - 300*0.2 - 0.125*158*0.5, 0, 0.125, 0.125)
 
     love.graphics.setColor(pc)
     love.graphics.setFont(pf)
@@ -144,7 +133,7 @@ function Loading:update(dt)
             __hint_id = hd
         end
 
-        __rot_delay = (__rot_delay + 1) % 2
+        __rot_delay = (__rot_delay + 1) % 3
         if __rot_delay == 0 then self.rotation = (self.rotation + 1) % 360 end
 
         if self.flame_grow then

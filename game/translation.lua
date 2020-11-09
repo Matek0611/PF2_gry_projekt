@@ -17,6 +17,10 @@ function translateAll(lang)
         TEXT_BTN_ABOUT = "About"
         TEXT_BTN_EXIT = "Exit"
 
+        --about
+        TEXT_ABOUT_AUTHOR = "Author"
+        TEXT_ABOUT_MUSIC = "Music"
+
         --globals
         STR_VERSION = "version"
         STR_DEBUGMODE = " (debug mode)"
@@ -67,6 +71,10 @@ function translateAll(lang)
         TEXT_BTN_OPTS = "Opcje"
         TEXT_BTN_ABOUT = "O grze"
         TEXT_BTN_EXIT = "Wyjdź z gry"
+
+        --about
+        TEXT_ABOUT_AUTHOR = "Autor"
+        TEXT_ABOUT_MUSIC = "Muzyka"
 
         --globals
         STR_VERSION = "wersja"

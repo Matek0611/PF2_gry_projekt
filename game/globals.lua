@@ -1,6 +1,8 @@
 GAME_PRINT_NAME = "Koglomoglowy Uciekinier"
 GAME_PRINT_NAME_SP = "Koglomoglowy,Uciekinier"
-GAME_VERSION = "1.3 alpha"
+GAME_VERSION = "1.4 alpha"
+GAME_AUTHOR = "Marcin Stefanowicz"
+GAME_MUSIC = "Dan Henig\nDJ Freedem\nPatrick Patrikios\nDJ Williams\nKwon\nVans in Japan"
 
 STR_VERSION = "wersja"
 STR_DEBUGMODE = " (tryb debugowania)"
@@ -86,9 +88,9 @@ function drawLargeLogo(x, y, ifanim)
     love.graphics.setFont(pf)
 end
 
-function drawVersion()
+function drawVersion(color)
     setFont("math", 15)
-    love.graphics.setColor(gray(255, 1))
+    love.graphics.setColor(color or gray(255, 1))
     love.graphics.printf("(" .. STR_VERSION .. ": " .. GAME_VERSION .. ")", 0, love.graphics.getHeight() - love.graphics.getFont():getHeight() - 10, love.graphics.getWidth() - 10, "right")  
 end
 
@@ -100,6 +102,12 @@ GAME_COLOR_ACCENT = color(255, 163, 22, 1)
 
 function gray(l, a)
     return {l / 255, l / 255, l / 255, a or 1}
+end
+
+function changealpha(c, alpha) 
+    local r, g, b, a = c[1], c[2], c[3], c[4]
+    a = alpha
+    return {r, g, b, a} 
 end
 
 function getPrevColor()
@@ -145,3 +153,47 @@ function love.mousereleased(x, y, button)
         __mpy = -1
     end
 end
+
+local COLOR_MUL = love._version >= "11.0" and 1 or 255
+ 
+function gradientMesh(dir, ...)
+    -- Check for direction
+    local isHorizontal = true
+    if dir == "vertical" then
+        isHorizontal = false
+    elseif dir ~= "horizontal" then
+        error("bad argument #1 to 'gradient' (invalid value)", 2)
+    end
+ 
+    -- Check for colors
+    local colorLen = select("#", ...)
+    if colorLen < 2 then
+        error("color list is less than two", 2)
+    end
+ 
+    -- Generate mesh
+    local meshData = {}
+    if isHorizontal then
+        for i = 1, colorLen do
+            local color = select(i, ...)
+            local x = (i - 1) / (colorLen - 1)
+ 
+            meshData[#meshData + 1] = {x, 1, x, 1, color[1], color[2], color[3], color[4] or (1 * COLOR_MUL)}
+            meshData[#meshData + 1] = {x, 0, x, 0, color[1], color[2], color[3], color[4] or (1 * COLOR_MUL)}
+        end
+    else
+        for i = 1, colorLen do
+            local color = select(i, ...)
+            local y = (i - 1) / (colorLen - 1)
+ 
+            meshData[#meshData + 1] = {1, y, 1, y, color[1], color[2], color[3], color[4] or (1 * COLOR_MUL)}
+            meshData[#meshData + 1] = {0, y, 0, y, color[1], color[2], color[3], color[4] or (1 * COLOR_MUL)}
+        end
+    end
+ 
+    -- Resulting Mesh has 1x1 image size
+    return love.graphics.newMesh(meshData, "strip", "static")
+end
+
+kursor_glowny = love.mouse.newCursor(love.image.newImageData("assets/img/cursor_arrow_icon24.png"), 0, 0)
+love.mouse.setCursor(kursor_glowny)
