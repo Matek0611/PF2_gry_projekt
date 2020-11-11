@@ -1,8 +1,6 @@
 local Class = require("libs/basics/middleclass")
 local tween = require("libs/splashy/tween")
 local globals = require("globals")
-local ptext = require("libs/floatingtext/effects/PopupText")
-local ptextm = require("libs/floatingtext/effects/PopupTextManager")
 
 local Loading = Class("Loading")
 
@@ -37,29 +35,6 @@ function Loading:initialize()
     self:reset()
 end
 
-function Loading:setupeffects()
-    self.ptextm = PopupTextManager()
-    local pf = love.graphics.getFont()
-    setFont("text", 20)
-    -- self.ptextm:addPopup({
-    --     text = "Example Text",
-    --     font = love.graphics.getFont(),
-    --     color = {r = 1, g = 0, b = 0, a = 1},
-    --     x = 200,
-    --     y = 200,
-    --     scaleX = 4,
-    --     scaleY = 4,
-    --     circular = {totalAngle = math.pi, radiusX = 40, radiusY = 40},
-    --     blendMode = 'add',
-    --     fadeIn = {start = 0.2, finish = 0.7},
-    --     fadeOut = {start = 0.7, finish = 8},
-    --     dX = 40,
-    --     dY = 40,
-    --     duration = 8
-    -- })
-    love.graphics.setFont(pf)
-end
-
 function Loading:draw()
     if not self.active then return end
 
@@ -80,8 +55,6 @@ function Loading:draw()
     setFont("text", 18)
     love.graphics.printf(LoadingHints[__hint_id], (love.graphics.getWidth() - love.graphics.getWidth() / 3) / 2, love.graphics.getHeight() - love.graphics.getFont():getHeight()*4 - 15, love.graphics.getWidth() / 3, "center")
 
-    self.ptextm:render()
-
     local imgload = love.graphics.newImage("assets/img/ladowanie.png")
     love.graphics.draw(imgload, love.graphics.getWidth() - 300*0.2, love.graphics.getHeight() - 300*0.2, math.deg(self.rotation), 0.2, 0.2, 0.5*300, 0.5*300)
 
@@ -100,8 +73,6 @@ end
 
 function Loading:update(dt)
     if not self.active then return end
-
-    self.ptextm:update(dt)
 
     if self.data.position <= 0 then
         self.data.position = 0
@@ -164,7 +135,6 @@ function Loading:reset()
     self.stw = nil
     self.flame_alpha = 1
     self.flame_grow = false
-    self:setupeffects()
 end
 
 function Loading:isLoading()

@@ -4,6 +4,8 @@ local Scene = require("libs/basics/Scene")
 local Scenes = require("libs/basics/Scenes")
 local globals = require("globals")
 local gamemode = require("gamemode")
+local Hero = require("libs/objects/hero")
+local herosdesc = require("libs/heros/herosdesc")
 local hSieska = require("libs/heros/sieska")
 
 local wSieska = hSieska:new()
@@ -17,11 +19,17 @@ btnReturn.onClick = (function(sender)
 end)
 
 local function NewGameSceneDraw()
+    love.graphics.draw(gradientMesh("vertical", gray(100, 1), gray(20, 1)), 0, 0, 0, love.graphics.getDimensions())
+
     btnReturn:draw()
+
+    aktywna:drawHearts(50, 50)
 end
 
-local function NewGameSceneUpdate()
+local function NewGameSceneUpdate(dt)
     btnReturn:update(dt)
+
+    aktywna:update(dt)
 end
 
 local function NewGameSceneiUpdate()

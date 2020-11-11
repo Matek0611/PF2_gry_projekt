@@ -35,7 +35,7 @@ function splashUpdate(dt)
         local tu = stw:update(dt)
         if tu then
             LoadingScreen.onFinish = (function () 
-                menuUpdate()
+                menuUpdate(dt)
                 gm = GM_MENU
             end)
             LoadingScreen:setLoading(true)

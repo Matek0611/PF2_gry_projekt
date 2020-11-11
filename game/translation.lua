@@ -12,7 +12,7 @@ function translateAll(lang)
 
         --menu
         TEXT_BTN_CONTINUE = "Continue"
-        TEXT_BTN_NEWGAME = "New Game"
+        TEXT_BTN_NEWGAME = "New Escape"
         TEXT_BTN_OPTS = "Options"
         TEXT_BTN_ABOUT = "About"
         TEXT_BTN_EXIT = "Exit"
@@ -67,7 +67,7 @@ function translateAll(lang)
 
         --menu
         TEXT_BTN_CONTINUE = "Kontynuuj"
-        TEXT_BTN_NEWGAME = "Nowa gra"
+        TEXT_BTN_NEWGAME = "Nowa ucieczka"
         TEXT_BTN_OPTS = "Opcje"
         TEXT_BTN_ABOUT = "O grze"
         TEXT_BTN_EXIT = "Wyjdź z gry"

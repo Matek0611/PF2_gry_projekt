@@ -41,7 +41,7 @@ PARTICLES_5:setLinearAcceleration(-50, -50, 50, 50)
 PARTICLES_5:setColors(1, 1, 1, 1, 1, 1, 1, 0)
 
 TEXT_BTN_CONTINUE = "Kontynuuj"
-TEXT_BTN_NEWGAME = "Nowa gra"
+TEXT_BTN_NEWGAME = "Nowa ucieczka"
 TEXT_BTN_OPTS = "Opcje"
 TEXT_BTN_ABOUT = "O grze"
 TEXT_BTN_EXIT = "Wyjdź z gry"
