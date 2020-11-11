@@ -4,6 +4,7 @@ local BasicObject = require("libs/objects/basicobject")
 local Creature = Class("Creature", BasicObject)
 
 function Creature:initialize(defname, defdescription)
+    BasicObject.initialize(self, "")
     self.name = ""
     self.description = ""
     self.deftxt = {n = defname or "", d = defdescription or ""}
