@@ -5,6 +5,7 @@ local herosdesc = require("libs/heros/herosdesc")
 local Sieska = Class("Sieska", Hero)
 
 function Sieska:initialize()
+    Hero.initialize(self)
     self.deftxt = {n = HERO_SIESKA.NAME, d = HERO_SIESKA.DESC}
     self.name = HERO_SIESKA.NAME
     self.description = HERO_SIESKA.DESC
