@@ -1,6 +1,7 @@
 local menu = require("menu")
 local globals = require("globals")
 local options = require("options")
+local newgame = require("newgame")
 
 function translateAll(lang)
     lang = lang or "pl"
@@ -13,6 +14,7 @@ function translateAll(lang)
         --menu
         TEXT_BTN_CONTINUE = "Continue"
         TEXT_BTN_NEWGAME = "New Escape"
+        TEXT_BTN_STATS = "Stats"
         TEXT_BTN_OPTS = "Options"
         TEXT_BTN_ABOUT = "About"
         TEXT_BTN_EXIT = "Exit"
@@ -60,6 +62,10 @@ function translateAll(lang)
             NAME = "Pusia del Bejduls",
             DESC = "This cat as the normal cats has 9 lives."
         }
+
+        --new game
+        TEXT_NEWGAME_TITLE = "Start a New Escape"
+        TEXT_NEWGAME_HEADER = "Who are you going to start a new escape with today?"
     else --if lang == "pl" then
         --game
         GAME_PRINT_NAME = "Koglomoglowy Uciekinier"
@@ -68,6 +74,7 @@ function translateAll(lang)
         --menu
         TEXT_BTN_CONTINUE = "Kontynuuj"
         TEXT_BTN_NEWGAME = "Nowa ucieczka"
+        TEXT_BTN_STATS = "Statystyki"
         TEXT_BTN_OPTS = "Opcje"
         TEXT_BTN_ABOUT = "O grze"
         TEXT_BTN_EXIT = "Wyjdź z gry"
@@ -115,6 +122,10 @@ function translateAll(lang)
             NAME = "Pusia del Bejduls",
             DESC = "Kot jak to kot ma 9 żyć."
         }
+
+        --new game
+        TEXT_NEWGAME_TITLE = "Rozpocznij nową ucieczkę"
+        TEXT_NEWGAME_HEADER = "Z którym bohaterem zaczniesz dziś nową ucieczkę?"
     end
 
     menuTranslate()

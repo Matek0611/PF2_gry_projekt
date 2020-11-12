@@ -11,6 +11,11 @@ LOADSCR_TEXT1 = "Ładowanie"
 
 LoadingHints = {}
 
+local ItemEffect = require("libs/basics/ItemEffect")
+
+GlobalTextItemEffect = ItemEffect:new(0, 0, 0, 10, 1, 1)
+GlobalTextItemEffect:start()
+
 function scale(value)
     return love.window.toPixels(value)
 end
@@ -62,6 +67,8 @@ function drawLargeLogo(x, y, ifanim)
     if ifanim then
         x = x + (MOUSE_MOVE_X - love.graphics.getWidth() / 2)*0.065
         y = y + (MOUSE_MOVE_Y - love.graphics.getHeight() / 2)*0.065
+    else
+        y = y + GlobalTextItemEffect.currenty
     end
 
     local pc = getPrevColor()
@@ -197,3 +204,11 @@ end
 
 kursor_glowny = love.mouse.newCursor(love.image.newImageData("assets/img/cursor_arrow_icon24.png"), 0, 0)
 love.mouse.setCursor(kursor_glowny)
+
+function dup2tab(table)
+    r = {}
+    for k, v in pairs(table) do
+        r[k] = v
+    end
+    return r
+end

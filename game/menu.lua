@@ -5,7 +5,7 @@ local Scene = require("libs/basics/Scene")
 local options = require("options")
 local newgame = require("newgame")
 
-btnPlay, btnNewGame, btnOpts, btnAbout, btnExit = nil, nil, nil, nil, nil 
+btnPlay, btnNewGame, btnStats, btnOpts, btnAbout, btnExit = nil, nil, nil, nil, nil 
 MenuScenes = Scenes:new()
 MenuScenes.drawAll = true
 
@@ -42,13 +42,14 @@ PARTICLES_5:setColors(1, 1, 1, 1, 1, 1, 1, 0)
 
 TEXT_BTN_CONTINUE = "Kontynuuj"
 TEXT_BTN_NEWGAME = "Nowa ucieczka"
+TEXT_BTN_STATS = "Statystyki"
 TEXT_BTN_OPTS = "Opcje"
 TEXT_BTN_ABOUT = "O grze"
 TEXT_BTN_EXIT = "Wyjdź z gry"
 
 MENU_BG_COLOR = gray(30, 1)
 
-local BTN_WIDTH, BTN_HEIGHT, BTN_TOPEX = 200, 50, 200
+local BTN_WIDTH, BTN_HEIGHT, BTN_TOPEX = 200, 50, 150
 
 local function btnExitClick(sender)
     love.event.quit(0)
@@ -66,6 +67,10 @@ local function btnNewGameClick(sender)
     MenuScenes:setActive(4)
 end
 
+local function btnStatsClick(sender)
+    MenuScenes:setActive(6)
+end
+
 local function btnAboutClick(sender)
     MenuScenes:setActive(5)
 end
@@ -74,15 +79,18 @@ local function buttonsInit()
     btnPlay = Button:new(love.graphics.getWidth() / 2, BTN_TOPEX+100, BTN_WIDTH, BTN_HEIGHT)
     btnPlay.enabled = false
     btnNewGame = Button:new(love.graphics.getWidth() / 2, BTN_TOPEX+160, BTN_WIDTH, BTN_HEIGHT)
-    btnOpts = Button:new(love.graphics.getWidth() / 2, BTN_TOPEX+220, BTN_WIDTH, BTN_HEIGHT)
-    btnAbout = Button:new(love.graphics.getWidth() / 2, BTN_TOPEX+280, BTN_WIDTH, BTN_HEIGHT)
-    btnExit = Button:new(love.graphics.getWidth() / 2, BTN_TOPEX+340, BTN_WIDTH, BTN_HEIGHT)
+    btnStats = Button:new(love.graphics.getWidth() / 2, BTN_TOPEX+220, BTN_WIDTH, BTN_HEIGHT)
+    btnOpts = Button:new(love.graphics.getWidth() / 2, BTN_TOPEX+280, BTN_WIDTH, BTN_HEIGHT)
+    btnAbout = Button:new(love.graphics.getWidth() / 2, BTN_TOPEX+340, BTN_WIDTH, BTN_HEIGHT)
+    btnExit = Button:new(love.graphics.getWidth() / 2, BTN_TOPEX+400, BTN_WIDTH, BTN_HEIGHT)
     btnExit.onClick = btnExitClick
     btnOpts.onClick = btnOptsClick
     btnNewGame.onClick = btnNewGameClick
+    btnStats.onClick = btnStatsClick
     btnAbout.onClick = btnAboutClick
     btnPlay.colors = BTN_WHITE_THEME_ACCENT
     btnNewGame.colors = BTN_WHITE_THEME_ACCENT
+    btnStats.colors = BTN_WHITE_THEME_ACCENT
     btnOpts.colors = BTN_WHITE_THEME_ACCENT
     btnAbout.colors = BTN_WHITE_THEME_ACCENT
     btnExit.colors = BTN_WHITE_THEME_ACCENT
@@ -91,6 +99,7 @@ end
 local function buttonsUpdate(dt)
     btnPlay:update(dt)
     btnNewGame:update(dt)
+    btnStats:update(dt)
     btnOpts:update(dt)
     btnAbout:update(dt)
     btnExit:update(dt)
@@ -100,6 +109,7 @@ local function buttonsiUpdate()
     local left = love.graphics.getWidth() / 2
     btnPlay.position.x = left
     btnNewGame.position.x = left
+    btnStats.position.x = left
     btnOpts.position.x = left
     btnAbout.position.x = left
     btnExit.position.x = left
@@ -112,6 +122,7 @@ end
 local function buttonsDraw()
     btnPlay:draw()
     btnNewGame:draw()
+    btnStats:draw()
     btnOpts:draw()
     btnAbout:draw()
     btnExit:draw()
@@ -159,13 +170,13 @@ local function menuAboutDraw()
     love.graphics.printf(GAME_PRINT_NAME .. "  " .. GAME_VERSION, 110, 90, love.graphics.getWidth() - 220, "center")
     love.graphics.setColor(GAME_COLOR_ACCENT)
     setFont("header", 30)
-    love.graphics.printf(TEXT_ABOUT_AUTHOR, 110, 90 + 35 + 30, love.graphics.getWidth() - 220, "center")
+    love.graphics.printf(TEXT_ABOUT_AUTHOR, 110, 90 + 35 + 30 + GlobalTextItemEffect.currenty, love.graphics.getWidth() - 220, "center")
     love.graphics.setColor(gray(0, 1))
     setFont("text", 20)
     love.graphics.printf(GAME_AUTHOR, 110, 205, love.graphics.getWidth() - 220, "center")
     love.graphics.setColor(GAME_COLOR_ACCENT)
     setFont("header", 30)
-    love.graphics.printf(TEXT_ABOUT_MUSIC, 110, 225 + 30, love.graphics.getWidth() - 220, "center")
+    love.graphics.printf(TEXT_ABOUT_MUSIC, 110, 225 + 30 + GlobalTextItemEffect.currenty, love.graphics.getWidth() - 220, "center")
     love.graphics.setColor(gray(0, 1))
     setFont("text", 20)
     love.graphics.printf(GAME_MUSIC, 110, 255 + 30*2, love.graphics.getWidth() - 220, "center")
@@ -183,6 +194,39 @@ local function menuAboutiUpdate()
     btnReturn:setPosition(love.graphics.getWidth() / 2, love.graphics.getHeight() - 50 - 10)
 end
 
+local function menuStatsDraw()
+    love.graphics.setColor(gray(255, 1))
+    love.graphics.rectangle("fill", 100, 80, love.graphics.getWidth() - 200, love.graphics.getHeight() - 200, 10, 10)
+    
+    love.graphics.setColor(gray(0, 1))
+    -- setFont("header", 35)
+    -- love.graphics.printf(GAME_PRINT_NAME .. "  " .. GAME_VERSION, 110, 90, love.graphics.getWidth() - 220, "center")
+    -- love.graphics.setColor(GAME_COLOR_ACCENT)
+    -- setFont("header", 30)
+    -- love.graphics.printf(TEXT_ABOUT_AUTHOR, 110, 90 + 35 + 30, love.graphics.getWidth() - 220, "center")
+    -- love.graphics.setColor(gray(0, 1))
+    -- setFont("text", 20)
+    -- love.graphics.printf(GAME_AUTHOR, 110, 205, love.graphics.getWidth() - 220, "center")
+    -- love.graphics.setColor(GAME_COLOR_ACCENT)
+    -- setFont("header", 30)
+    -- love.graphics.printf(TEXT_ABOUT_MUSIC, 110, 225 + 30, love.graphics.getWidth() - 220, "center")
+    -- love.graphics.setColor(gray(0, 1))
+    -- setFont("text", 20)
+    -- love.graphics.printf(GAME_MUSIC, 110, 255 + 30*2, love.graphics.getWidth() - 220, "center")
+
+    love.graphics.setColor(MENU_BG_COLOR)
+
+    btnReturn:draw()
+end
+
+local function menuStatsUpdate(dt)
+    btnReturn:update(dt)
+end
+
+local function menuStatsiUpdate()
+    btnReturn:setPosition(love.graphics.getWidth() / 2, love.graphics.getHeight() - 50 - 10)
+end
+
 function menuInit()
     local sc = Scene:new("home", menuHomeDraw, menuHomeUpdate, menuHomeiUpdate)
     -- sc.canDrawAll = true
@@ -193,6 +237,9 @@ function menuInit()
     MenuScenes:addScene(NewGameScene)
 
     sc = Scene:new("about", menuAboutDraw, menuAboutUpdate, menuAboutiUpdate)
+    MenuScenes:addScene(sc)
+
+    sc = Scene:new("stats", menuStatsDraw, menuStatsUpdate, menuStatsiUpdate)
     MenuScenes:addScene(sc)
 
     MenuScenes:setActive(2)
@@ -214,6 +261,7 @@ end
 function menuTranslate()
     btnPlay.text = TEXT_BTN_CONTINUE
     btnNewGame.text = TEXT_BTN_NEWGAME
+    btnStats.text = TEXT_BTN_STATS
     btnOpts.text = TEXT_BTN_OPTS
     btnAbout.text = TEXT_BTN_ABOUT
     btnExit.text = TEXT_BTN_EXIT

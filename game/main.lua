@@ -57,6 +57,8 @@ function love.draw()
 end
 
 function love.update(dt)
+    GlobalTextItemEffect:update(dt)
+
     if LoadingScreen:isLoading() then
         LoadingScreen:update(dt)
     elseif gm == GM_SPLASH and SPLASH_VISIBLE then
