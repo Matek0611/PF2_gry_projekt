@@ -13,6 +13,8 @@ function Creature:initialize(defname, defdescription)
     self.onDraw = nil
     self.onUpdate = nil
 
+    self.body = nil
+
     self.life = 1
     self.speed = 1
     self.bullets = 1
