@@ -1,6 +1,6 @@
 GAME_PRINT_NAME = "Koglomoglowy Uciekinier"
 GAME_PRINT_NAME_SP = "Koglomoglowy,Uciekinier"
-GAME_VERSION = "1.5 alpha"
+GAME_VERSION = "1.6 alpha"
 GAME_AUTHOR = "Marcin Stefanowicz"
 GAME_MUSIC = "Dan Henig\nDJ Freedem\nPatrick Patrikios\nDJ Williams\nKwon\nVans in Japan"
 
@@ -10,6 +10,13 @@ STR_DEBUGMODE = " (tryb debugowania)"
 LOADSCR_TEXT1 = "Ładowanie"
 
 LoadingHints = {}
+
+function math.round(x, n)
+    n = math.pow(10, n or 0)
+    x = x * n
+    if x >= 0 then x = math.floor(x + 0.5) else x = math.ceil(x - 0.5) end
+    return x / n
+end
 
 local ItemEffect = require("libs/basics/ItemEffect")
 

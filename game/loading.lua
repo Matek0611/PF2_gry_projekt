@@ -4,6 +4,15 @@ local globals = require("globals")
 
 local Loading = Class("Loading")
 
+local PARTICLES_1 = love.graphics.newParticleSystem(love.graphics.newImage("assets/img/particle1.png"), 1000)
+PARTICLES_1:setParticleLifetime(1, 9)
+PARTICLES_1:setEmissionRate(100)
+PARTICLES_1:setSizes(0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1)
+PARTICLES_1:setSizeVariation(0.2)
+PARTICLES_1:setLinearAcceleration(10, 10, 55, -80)
+PARTICLES_1:setColors(1, 1, 1, 1, 1, 1, 1, 0)
+PARTICLES_1:setSpeed(0.1, 5)
+
 __dot_count = 1
 __dot_delay = 0
 __hint_id = 1
@@ -46,7 +55,10 @@ function Loading:draw()
         al = self.data.alpha
     end
 
-    love.graphics.draw(gradientMesh("vertical", color(106, 71, 0, al), gray(20, al)), 0, 0, 0, love.graphics.getDimensions())
+    love.graphics.draw(gradientMesh("vertical", gray(30, al), color(35, 21, 0, al)), 0, 0, 0, love.graphics.getDimensions())
+
+    PARTICLES_1:setColors(al, al, al, al, al, al, al, 0)
+    love.graphics.draw(PARTICLES_1, love.graphics.getWidth() / 2, love.graphics.getHeight())
 
     love.graphics.setColor(color(255, 163, 22, al))
     drawLargeLogo(love.graphics.getWidth() / 2, love.graphics.getHeight() / 3, false)
@@ -121,6 +133,8 @@ function Loading:update(dt)
             end
         end
     end
+
+    PARTICLES_1:update(dt or 0)
 end 
 
 function Loading:reset()
@@ -135,6 +149,7 @@ function Loading:reset()
     self.stw = nil
     self.flame_alpha = 1
     self.flame_grow = false
+    self:updateSize()
 end
 
 function Loading:isLoading()
@@ -144,6 +159,10 @@ end
 function Loading:setLoading(value)
     self.active = value
     self:reset()
+end
+
+function Loading:updateSize()
+    PARTICLES_1:setEmissionArea("normal", love.graphics.getWidth() / 2, 10, 0, false)
 end
 
 LoadingScreen = Loading:new()

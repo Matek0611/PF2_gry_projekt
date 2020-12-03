@@ -2,7 +2,6 @@
 GM_SPLASH = 0
 GM_MENU = 1
 GM_OPTS = 2
-GM_NEW_GAME = 3
 GM_MAP = 100
 
 --aktualny tryb gry (przy inicjalizacji jest to GM_SPLASH)

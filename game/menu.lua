@@ -4,6 +4,7 @@ local Scenes = require("libs/basics/Scenes")
 local Scene = require("libs/basics/Scene")
 local options = require("options")
 local newgame = require("newgame")
+local translation = require("translation")
 
 btnPlay, btnNewGame, btnStats, btnOpts, btnAbout, btnExit = nil, nil, nil, nil, nil 
 MenuScenes = Scenes:new()
@@ -12,40 +13,38 @@ MenuScenes.drawAll = true
 local PARTICLES_1 = love.graphics.newParticleSystem(love.graphics.newImage("assets/img/particle1.png"), 100)
 PARTICLES_1:setParticleLifetime(1, 8)
 PARTICLES_1:setEmissionRate(5)
-PARTICLES_1:setSizeVariation(1)
+PARTICLES_1:setSizes(1, 0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3)
+PARTICLES_1:setSizeVariation(0.2)
 PARTICLES_1:setLinearAcceleration(-50, -50, 50, 50)
 PARTICLES_1:setColors(1, 1, 1, 1, 1, 1, 1, 0)
 local PARTICLES_2 = love.graphics.newParticleSystem(love.graphics.newImage("assets/img/particle1.png"), 100)
 PARTICLES_2:setParticleLifetime(1, 8)
 PARTICLES_2:setEmissionRate(5)
-PARTICLES_2:setSizeVariation(1)
+PARTICLES_2:setSizes(1, 0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3)
+PARTICLES_2:setSizeVariation(0.2)
 PARTICLES_2:setLinearAcceleration(-50, -50, 50, 50)
 PARTICLES_2:setColors(1, 1, 1, 1, 1, 1, 1, 0)
 local PARTICLES_3 = love.graphics.newParticleSystem(love.graphics.newImage("assets/img/particle1.png"), 100)
 PARTICLES_3:setParticleLifetime(1, 8)
 PARTICLES_3:setEmissionRate(5)
-PARTICLES_3:setSizeVariation(1)
+PARTICLES_3:setSizes(1, 0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3)
+PARTICLES_3:setSizeVariation(0.2)
 PARTICLES_3:setLinearAcceleration(-50, -50, 50, 50)
 PARTICLES_3:setColors(1, 1, 1, 1, 1, 1, 1, 0)
 local PARTICLES_4 = love.graphics.newParticleSystem(love.graphics.newImage("assets/img/particle1.png"), 100)
 PARTICLES_4:setParticleLifetime(1, 8)
 PARTICLES_4:setEmissionRate(5)
-PARTICLES_4:setSizeVariation(1)
+PARTICLES_4:setSizes(1, 0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3)
+PARTICLES_4:setSizeVariation(0.2)
 PARTICLES_4:setLinearAcceleration(-50, -50, 50, 50)
 PARTICLES_4:setColors(1, 1, 1, 1, 1, 1, 1, 0)
 local PARTICLES_5 = love.graphics.newParticleSystem(love.graphics.newImage("assets/img/particle1.png"), 100)
 PARTICLES_5:setParticleLifetime(1, 8)
 PARTICLES_5:setEmissionRate(5)
-PARTICLES_5:setSizeVariation(1)
+PARTICLES_5:setSizes(1, 0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3)
+PARTICLES_5:setSizeVariation(0.2)
 PARTICLES_5:setLinearAcceleration(-50, -50, 50, 50)
 PARTICLES_5:setColors(1, 1, 1, 1, 1, 1, 1, 0)
-
-TEXT_BTN_CONTINUE = "Kontynuuj"
-TEXT_BTN_NEWGAME = "Nowa ucieczka"
-TEXT_BTN_STATS = "Statystyki"
-TEXT_BTN_OPTS = "Opcje"
-TEXT_BTN_ABOUT = "O grze"
-TEXT_BTN_EXIT = "Wyjdź z gry"
 
 MENU_BG_COLOR = gray(30, 1)
 
@@ -149,6 +148,7 @@ local function menuHomeUpdate(dt)
     PARTICLES_2:update(dt or 0)
     PARTICLES_3:update(dt or 0)
     PARTICLES_4:update(dt or 0)
+    PARTICLES_5:update(dt or 0)
     buttonsUpdate(dt)
 end
 

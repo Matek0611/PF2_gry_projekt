@@ -5,7 +5,7 @@ local Music = Class("Music")
 function Music:initialize()
     self.path = "assets/music/"
     
-    self.loading_and_menu = love.audio.newSource(self.path .. "Berlin at Night - Dan Henig.mp3", "stream")
+    self.loading_and_menu = love.audio.newSource(self.path .. "Cover - Patrick Patrikios.mp3", "stream")
     self.loading_and_menu:setLooping(true)
 
     self.swoosh = love.audio.newSource(self.path .. "Swoosh.mp3", "stream")

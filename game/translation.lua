@@ -1,7 +1,15 @@
-local menu = require("menu")
 local globals = require("globals")
 local options = require("options")
-local newgame = require("newgame")
+
+TEXT_BTN_CONTINUE = "Kontynuuj"
+TEXT_BTN_NEWGAME = "Nowa ucieczka"
+TEXT_BTN_STATS = "Statystyki"
+TEXT_BTN_OPTS = "Opcje"
+TEXT_BTN_ABOUT = "O grze"
+TEXT_BTN_EXIT = "Wyjdź z gry"
+
+TEXT_NEWGAME_TITLE = "Rozpocznij nową ucieczkę"
+TEXT_NEWGAME_HEADER = "Z którym bohaterem zaczniesz dziś nową ucieczkę?"
 
 function translateAll(lang)
     lang = lang or "pl"

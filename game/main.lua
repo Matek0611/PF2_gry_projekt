@@ -8,6 +8,7 @@ local loading = require("loading")
 local options = require("options")
 local newgame = require("newgame")
 local music = require("music")
+local world = require("world")
 
 function love.load() 
     math.randomseed(os.time())
@@ -16,6 +17,7 @@ function love.load()
     love.window.setIcon(love.image.newImageData("assets/img/ikona1.png"))
     love.graphics.setDefaultFilter("nearest", "nearest")
     love.graphics.setBackgroundColor(gray(255, 1))
+    -- love.window.setFullscreen(true, "exclusive")
 
     ManageOpts:load()
 
@@ -45,10 +47,8 @@ function love.draw()
         splashDraw()
     elseif gm == GM_MENU then 
         menuDraw()
-    elseif gm == GM_NEW_GAME then 
-
     elseif gm == GM_MAP then 
-        
+        ActiveWorld:draw()
     end
 
     if GLOBAL_OPTIONS.DEBUG_MODE or GLOBAL_OPTIONS.OPTS_FPS_ON then
@@ -65,5 +65,15 @@ function love.update(dt)
         splashUpdate(dt)
     elseif gm == GM_MENU then 
         menuUpdate(dt)
+    elseif gm == GM_MAP then
+        ActiveWorld:update(dt)
+    end
+end
+
+function love.resize(w, h)
+    if LoadingScreen:isLoading() then
+        LoadingScreen:updateSize()
+    elseif gm == GM_MAP then
+        ActiveWorld:updateSize()
     end
 end
