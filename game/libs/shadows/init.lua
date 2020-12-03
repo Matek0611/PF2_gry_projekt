@@ -8,6 +8,7 @@ package.preload["shadows.LightWorld"]		=	assert(love.filesystem.load(Path.."/Lig
 package.preload["shadows.Light"]				=	assert(love.filesystem.load(Path.."/Light.lua"))
 package.preload["shadows.Star"]				=	assert(love.filesystem.load(Path.."/Star.lua"))
 package.preload["shadows.Body"]				=	assert(love.filesystem.load(Path.."/Body.lua"))
+package.preload["shadows.BodyTransform"]				=	assert(love.filesystem.load(Path.."/BodyTransform.lua"))
 package.preload["shadows.OutputShadow"]	=	assert(love.filesystem.load(Path.."/OutputShadow.lua"))
 package.preload["shadows.PriorityQueue"]	=	assert(love.filesystem.load(Path.."/PriorityQueue.lua"))
 

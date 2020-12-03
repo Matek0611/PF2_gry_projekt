@@ -99,14 +99,16 @@ function Button:initialize(x, y, w, h, text)
     self.__state = "normal"
     self.down = false
     self.candown = false
-    self.colors = BTN_WHITE_THEME
+    self.colors = dup2tab(BTN_WHITE_THEME)
     self.fontname = "header"
+    self.fontsize = 20
     self.checkbox = false
     self.textpos = "center"
     self.downeffect = true
     self.checked = false
     self.prevlclick = false
     self.clicksound = true
+    self.static = false
 end
 
 function Button:toggle()
@@ -132,7 +134,7 @@ function Button:draw()
     local oldf = love.graphics.getFont()
     local curc = {face=gray(1,1), font=gray(0,1)}
     local state = self.__state
-    setFont(self.fontname, 20)
+    setFont(self.fontname, self.fontsize)
     local f = love.graphics.getFont()
     local _, lines = f:getWrap(self.text, self.width - (self.checkbox and 35 or 0))
     local fh = f:getHeight()
@@ -189,6 +191,8 @@ function Button:update(dt)
     
     if not self.enabled then
         self.__state = "disabled"
+    elseif self.static then
+        self.__state = "normal"
     elseif self.checkbox then 
         if inb and not leftclick and self.prevlclick then
             self.checked = not self.checked
