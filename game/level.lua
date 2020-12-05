@@ -23,12 +23,12 @@ function Level:initialize(nr_level, world)
 end
 
 function Level:generateRoom(posx, posy)
-    if self.current_room_count >= self.rooms_count then return end
+    if self.current_room_count >= self.rooms_count or self.rooms[posx][posy] ~= "X"  then return end
 
     self.rooms[posx][posy] = RectangleRoom:new(self.world, 0, 0, 0, 0)
     self.current_room_count = self.current_room_count + 1
 
-    local a, b, c, d = love.math.random(0, 1), love.math.random(0, 1), love.math.random(0, 1), love.math.random(0, 1)
+    local a, b, c, d = love.math.random(0, 3), love.math.random(0, 3), love.math.random(0, 3), love.math.random(0, 3)
     if not (a or b or c or d) then 
         local e = love.math.random(1, 4)
         if e == 1 then 

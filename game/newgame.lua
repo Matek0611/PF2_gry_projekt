@@ -7,13 +7,23 @@ local gamemode = require("gamemode")
 local Hero = require("libs/objects/hero")
 local herosdesc = require("libs/heros/herosdesc")
 local hSieska = require("libs/heros/sieska")
+local hMyniek = require("libs/heros/myniek")
+local hAntywola = require("libs/heros/antywola")
+local hPusia = require("libs/heros/pusia")
 local translation = require("translation")
 local world = require("world")
 
 local wSieska = hSieska:new()
 wSieska.canmove = false
+local wMyniek = hMyniek:new()
+wMyniek.canmove = false
+local wAntywola = hAntywola:new()
+wAntywola.canmove = false
+local wPusia = hPusia:new()
+wPusia.canmove = false
 
-local aktywna = wSieska
+local wHeroes = {wSieska, wMyniek, wAntywola, wPusia}
+local wHero = 1
 
 local btnReturn = Button:new(0, 0, 50, 50, "<<")
 btnReturn.rx, btnReturn.ry = 25, 25
@@ -37,11 +47,38 @@ btnStart.onClick = (function(sender)
     gm = GM_MAP
 end)
 
-lbHeroName = Button:new(0, 0, 280, 80, aktywna.name)
-lbHeroName.rx, lbHeroName.ry = 10, 10
+lbHeroName = Button:new(0, 0, 280, 80, wHeroes[wHero].name)
 lbHeroName.shadow = false
 lbHeroName.static = true
 lbHeroName.fontsize = 30
+
+btnPrevHero = Button:new(0, 0, 90, 80, "<")
+btnPrevHero.rx, btnPrevHero.ry = 10, 10
+btnPrevHero.colors = dup2tab(BTN_BLACK_THEME_ACCENT)
+btnPrevHero.shadow = false
+btnPrevHero.downeffect = false
+btnPrevHero.fontname = "text"
+btnPrevHero.onClick = (function (sender) 
+    if wHero == 1 then 
+        wHero = #wHeroes
+    else
+        wHero = wHero - 1
+    end 
+end)
+
+btnNextHero = Button:new(0, 0, 90, 80, ">")
+btnNextHero.rx, btnNextHero.ry = 10, 10
+btnNextHero.colors = dup2tab(BTN_BLACK_THEME_ACCENT)
+btnNextHero.fontname = "text"
+btnNextHero.shadow = false
+btnNextHero.downeffect = false
+btnNextHero.onClick = (function (sender) 
+    if wHero == #wHeroes then 
+        wHero = 1
+    else
+        wHero = wHero + 1
+    end 
+end)
 
 local PARTICLES_1 = love.graphics.newParticleSystem(love.graphics.newImage("assets/img/particle1.png"), 100)
 PARTICLES_1:setParticleLifetime(1, 8)
@@ -62,7 +99,11 @@ local function NewGameSceneDraw()
     setFont("header", 35)
     love.graphics.printf(TEXT_NEWGAME_HEADER, 0, 15, love.graphics.getWidth(), "center")
 
+    btnPrevHero:draw()
+    btnNextHero:draw()
     lbHeroName:draw()
+
+    wHeroes[wHero]:draw()
 
     love.graphics.setColor(pc)
 
@@ -75,15 +116,21 @@ local function NewGameSceneUpdate(dt)
     btnStart:update(dt)
     PARTICLES_1:update(dt or 0)
 
-    aktywna:update(dt)
-    lbHeroName.text = aktywna.name
+    wHeroes[wHero]:update(dt)
+    
+    btnPrevHero:update(dt)
+    btnNextHero:update(dt)
+    lbHeroName.text = wHeroes[wHero].name
     lbHeroName:update(dt)
 end
 
 local function NewGameSceneiUpdate()
     btnReturn:setPosition(45, love.graphics.getHeight() / 2)
     btnStart:setPosition(love.graphics.getWidth() / 2, love.graphics.getHeight() - 110 + GlobalTextItemEffect.currenty)
-    lbHeroName:setPosition(love.graphics.getWidth() / 2, 200)
+    
+    lbHeroName:setPosition(love.graphics.getWidth() / 2, 150)
+    btnPrevHero:setPosition((love.graphics.getWidth() - lbHeroName.width - btnPrevHero.width) / 2 + 20, lbHeroName.position.y)
+    btnNextHero:setPosition((love.graphics.getWidth() + lbHeroName.width + btnNextHero.width) / 2 - 20, lbHeroName.position.y)
 end
 
 NewGameScene = Scene:new("newgame", NewGameSceneDraw, NewGameSceneUpdate, NewGameSceneiUpdate)
