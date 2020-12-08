@@ -36,6 +36,7 @@ end
 
 function WholeWorld:updateSize()
     self.world:Resize(love.graphics.getWidth(), love.graphics.getHeight())
+    self.levels[self.level]:updateSize()
 end
 
 ActiveWorld = nil

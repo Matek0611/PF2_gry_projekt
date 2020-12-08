@@ -39,6 +39,7 @@ function Loading:initialize()
     self.custompos = 3
     self.stw = nil
     self.onFinish = nil
+    self.onUpdate = nil
     self.dots = ""
     self.rotation = 0
     self:reset()
@@ -98,12 +99,16 @@ function Loading:update(dt)
         else
             self.active = false
             if self.onFinish ~= nil then 
-                self.onFinish()
+                self.onFinish(self)
             end
             self:reset() 
             self.isClosing = false
         end
     else
+        if self.onUpdate ~= nil then 
+            self.onUpdate(self)
+        end
+
         self.data.position = self.data.position - love.math.random() / 70
         __dot_delay = (__dot_delay + 1) % 20
         if __dot_delay == 0 then
@@ -141,7 +146,7 @@ function Loading:reset()
     if self.iscustompos then
         self.defpos = self.custompos
     else
-        self.defpos = love.math.random(1, 4.5)
+        self.defpos = love.math.random(4, 10)
     end
     self.data.position = self.defpos
     self.data.alpha = 1
@@ -157,7 +162,7 @@ function Loading:isLoading()
 end
 
 function Loading:setLoading(value)
-    self.active = value
+    self.active = value or false
     self:reset()
 end
 

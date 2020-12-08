@@ -4,6 +4,7 @@ local Scene = require("libs/basics/Scene")
 local Scenes = require("libs/basics/Scenes")
 local globals = require("globals")
 local gamemode = require("gamemode")
+local music = require("music")
 local Hero = require("libs/objects/hero")
 local herosdesc = require("libs/heros/herosdesc")
 local hSieska = require("libs/heros/sieska")
@@ -41,10 +42,20 @@ btnStart.colors.font = {
     down = gray(255, 1),
     disabled = gray(0, 1)
 }
-btnStart.onClick = (function(sender) 
+btnStart.onClick = (function(sender)
     ActiveWorld = world:new()
-    ActiveWorld:newLevel()
-    gm = GM_MAP
+    ActiveWorld:generateLevels()
+
+    LoadingScreen.onUpdate = (function (sender)
+        ManageMusic:setVolume( 0.1)
+    end)
+    LoadingScreen.onFinish = (function (sender) 
+        gm = GM_MAP
+        ManageMusic.volume = ManageMusic.defvolume
+        ManageMusic:play("level1")
+        sender.onUpdate = nil
+    end)
+    LoadingScreen:setLoading(true)
 end)
 
 lbHeroName = Button:new(0, 0, 280, 80, wHeroes[wHero].name)

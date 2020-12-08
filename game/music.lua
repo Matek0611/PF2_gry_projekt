@@ -12,7 +12,12 @@ function Music:initialize()
 
     self.click = love.audio.newSource(self.path .. "Pen Clicking.mp3", "stream")
 
-    self.volume = 0.9
+    self.level1 = love.audio.newSource(self.path .. "Pluckandplay - Kwon.mp3", "stream")
+
+    self.active = nil
+
+    self.defvolume = 0.9
+    self.volume = self.defvolume
 end
 
 function Music:play(what)
@@ -27,14 +32,27 @@ function Music:play(what)
     elseif what == "click" then
         m = self.click
         issound = true
+    elseif what == "level1" then
+        m = self.level1
     end
 
     if m ~= nil then 
         if not issound then self:stop() end
 
+        self.active = m
+
         m:setVolume(self.volume)
         m:play()
+    else
+        self.active = nil
     end
+end
+
+function Music:setVolume(value)
+    value = value or self.defvolume
+    if value > 1 or value < 0 or self.active == nil then return end
+
+    self.active:setVolume(value)
 end
 
 function Music:stop()
