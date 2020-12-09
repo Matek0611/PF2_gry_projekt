@@ -39,8 +39,6 @@ function love.quit()
 end
 
 function love.draw()
-    blurEffect.resize(love.graphics.getWidth(), love.graphics.getHeight())
-
     if LoadingScreen:isLoading() then
         LoadingScreen:draw()
     elseif gm == GM_SPLASH and SPLASH_VISIBLE then

@@ -45,6 +45,14 @@ function Loading:initialize()
     self:reset()
 end
 
+local gradient_bg = {} 
+for i = 0, 10 do
+    gradient_bg[i] = gradientMesh("vertical", gray(30, i / 10.0), color(35, 21, 0, i / 10.0))
+end
+
+local imgflame = love.graphics.newImage("assets/img/flame.png")
+local imgload = love.graphics.newImage("assets/img/ladowanie.png")
+
 function Loading:draw()
     if not self.active then return end
 
@@ -56,19 +64,20 @@ function Loading:draw()
         al = self.data.alpha
     end
 
-    love.graphics.draw(gradientMesh("vertical", gray(30, al), color(35, 21, 0, al)), 0, 0, 0, love.graphics.getDimensions())
+    love.graphics.draw(gradient_bg[math.round(al * 10)], 0, 0, 0, love.graphics.getDimensions())
 
     PARTICLES_1:setColors(al, al, al, al, al, al, al, 0)
     love.graphics.draw(PARTICLES_1, love.graphics.getWidth() / 2, love.graphics.getHeight())
 
-    love.graphics.setColor(color(255, 163, 22, al))
+    local col1 = color(255, 163, 22, al)
+    love.graphics.setColor(col1)
     drawLargeLogo(love.graphics.getWidth() / 2, love.graphics.getHeight() / 3, false)
 
-    love.graphics.setColor(gray(200, al))
+    local col2 = gray(200, al)
+    love.graphics.setColor(col2)
     setFont("text", 18)
     love.graphics.printf(LoadingHints[__hint_id], (love.graphics.getWidth() - love.graphics.getWidth() / 3) / 2, love.graphics.getHeight() - love.graphics.getFont():getHeight()*4 - 15, love.graphics.getWidth() / 3, "center")
 
-    local imgload = love.graphics.newImage("assets/img/ladowanie.png")
     love.graphics.draw(imgload, love.graphics.getWidth() - 300*0.2, love.graphics.getHeight() - 300*0.2, math.deg(self.rotation), 0.2, 0.2, 0.5*300, 0.5*300)
 
     if not self.isClosing then
@@ -77,7 +86,6 @@ function Loading:draw()
         love.graphics.setColor(ccc)
     end
     
-    local imgflame = love.graphics.newImage("assets/img/flame.png")
     love.graphics.draw(imgflame, love.graphics.getWidth() - 300*0.2 - 0.125*121*0.5, love.graphics.getHeight() - 300*0.2 - 0.125*158*0.5, 0, 0.125, 0.125)
 
     love.graphics.setColor(pc)

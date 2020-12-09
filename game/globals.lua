@@ -11,11 +11,8 @@ LOADSCR_TEXT1 = "Ładowanie"
 
 LoadingHints = {}
 
-function math.round(x, n)
-    n = math.pow(10, n or 0)
-    x = x * n
-    if x >= 0 then x = math.floor(x + 0.5) else x = math.ceil(x - 0.5) end
-    return x / n
+function math.round(x)
+    return math.floor(x + 0.5)
 end
 
 local ItemEffect = require("libs/basics/ItemEffect")
@@ -27,18 +24,35 @@ function scale(value)
     return love.window.toPixels(value)
 end
 
+FontHeader = {}
+for i = 1, 100 do
+    FontHeader[#FontHeader + 1] = love.graphics.newFont("assets/font/sansitaswashed.ttf", i)
+end
+FontText = {}
+for i = 1, 100 do
+    FontText[#FontText + 1] = love.graphics.newFont("assets/font/roboto.ttf", i)
+end
+FontMath = {}
+for i = 1, 100 do
+    FontMath[#FontMath + 1] = love.graphics.newFont("assets/font/lmroman10.otf", i)
+end
+FontDef = {}
+for i = 1, 100 do
+    FontDef[#FontDef + 1] = love.graphics.newFont(i)
+end
+
 function setFont(name, size)
     size = size or 16
     local afont = nil
 
     if name == "header" then
-        afont = love.graphics.newFont("assets/font/sansitaswashed.ttf", size)
+        afont = FontHeader[size]
     elseif name == "text" then
-        afont = love.graphics.newFont("assets/font/roboto.ttf", size)
+        afont = FontText[size]
     elseif name == "math" then 
-        afont = love.graphics.newFont("assets/font/lmroman10.otf", size)
+        afont = FontMath[size]
     else
-        afont = love.graphics.newFont(size)
+        afont = FontDef[size]
     end
 
     love.graphics.setFont(afont)
@@ -147,10 +161,6 @@ function split(pString, pPattern)
     end
     return Table
 end
-
-local moonshine = require("libs/moonshine")
-
-blurEffect = moonshine(moonshine.effects.boxblur)
 
 __mpx, __mpy = -1, -1
 

@@ -46,9 +46,6 @@ btnStart.onClick = (function(sender)
     ActiveWorld = world:new()
     ActiveWorld:generateLevels()
 
-    LoadingScreen.onUpdate = (function (sender)
-        ManageMusic:setVolume( 0.1)
-    end)
     LoadingScreen.onFinish = (function (sender) 
         gm = GM_MAP
         ManageMusic.volume = ManageMusic.defvolume
@@ -99,8 +96,10 @@ PARTICLES_1:setSizeVariation(0.2)
 PARTICLES_1:setLinearAcceleration(-50, -50, 50, 50)
 PARTICLES_1:setColors(1, 1, 1, 1, 1, 1, 1, 0)
 
+local gradient_bg = gradientMesh("vertical", gray(45, 1), gray(30, 1))
+
 local function NewGameSceneDraw()
-    love.graphics.draw(gradientMesh("vertical", gray(45, 1), gray(30, 1)), 0, 0, 0, love.graphics.getDimensions())
+    love.graphics.draw(gradient_bg, 0, 0, 0, love.graphics.getDimensions())
 
     love.graphics.draw(PARTICLES_1, love.graphics.getWidth() * 0.5, love.graphics.getHeight() - 100 - 10)
 
