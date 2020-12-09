@@ -13,6 +13,7 @@ function Music:initialize()
     self.click = love.audio.newSource(self.path .. "Pen Clicking.mp3", "stream")
 
     self.level1 = love.audio.newSource(self.path .. "Pluckandplay - Kwon.mp3", "stream")
+    self.level1:setLooping(true)
 
     self.active = nil
 

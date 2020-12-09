@@ -138,10 +138,28 @@ function changealpha(c, alpha)
     return {r, g, b, a} 
 end
 
+function colordarken(c, x) 
+    local r, g, b, a = c[1], c[2], c[3], c[4]
+    return {r - x, g - x, b - x, a} 
+end
+
+function colorlighten(c, x) 
+    local r, g, b, a = c[1], c[2], c[3], c[4]
+    return {r + x, g + x, b + x, a} 
+end
+
+function colorlight(c, x) 
+    local r, g, b, a = c[1], c[2], c[3], c[4]
+    return {r * x, g * x, b * x, a} 
+end
+
 function getPrevColor()
     local r, g, b, a = love.graphics.getColor()
     return {r, g, b, a}
 end
+
+clBlack = gray(0, 1)
+clWhite = gray(255, 1)
 
 function split(pString, pPattern)
     local Table = {}  

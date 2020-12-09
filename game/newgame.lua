@@ -47,6 +47,7 @@ btnStart.onClick = (function(sender)
     ActiveWorld:generateLevels()
 
     LoadingScreen.onFinish = (function (sender) 
+        ActiveWorld:updateSize()
         gm = GM_MAP
         ManageMusic.volume = ManageMusic.defvolume
         ManageMusic:play("level1")

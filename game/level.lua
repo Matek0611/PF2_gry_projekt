@@ -10,13 +10,48 @@ local lightworld = require("libs/shadows.lightworld")
 local RectangleRoom = require("libs/shadows.Room.RectangleRoom")
 local Light = require("libs/shadows.Light")
 local Star = require("libs/shadows.Star")
+local moonshine = require("libs/moonshine")
 
 local Level = Class("Level")
+
+local bgEffect = moonshine.chain(moonshine.effects.fog)
+bgEffect.fog.speed = {0.8, 0.9}
+local time = 0
+
+-- 1..9
+local room_colors = {
+    color(53, 31, 27, 1), 
+    color(76, 61, 55, 1), 
+    color(0, 0, 0, 1), 
+    color(0, 0, 0, 1), 
+    color(0, 0, 0, 1), 
+    color(0, 0, 0, 1), 
+    color(0, 0, 0, 1), 
+    color(0, 0, 0, 1), 
+    color(0, 0, 0, 1), 
+    color(0, 0, 0, 1)
+}
+
+local room_colors_dark = {}
+for i = 1, #room_colors do 
+    room_colors_dark[i] = colorlight(room_colors[i], 0.65)
+end
+
+local room_colors_dark2 = {}
+for i = 1, #room_colors do 
+    room_colors_dark2[i] = colorlight(room_colors[i], 0.85)
+end
+
+local shVignette = moonshine.chain(moonshine.effects.vignette)
 
 function Level:initialize(nr_level, world)
     self.world = world
     self.nr = nr_level
     self.current_room = {x = 0, y = 0}
+
+    self.clRoomMain, self.clRoomBorder, self.clRoomWalls = room_colors[self.nr], room_colors_dark[self.nr], room_colors_dark2[self.nr]
+
+    bgEffect.fog.fog_color = {self.clRoomMain[1], self.clRoomMain[2], self.clRoomMain[3]}
 
     self:generateRooms()
     self:generateMinimap()
@@ -27,12 +62,13 @@ end
 
 function Level:newRoom(posx, posy)
     room = RectangleRoom:new(self.world, 0, 0, 0, 0)
-    room:SetColor(gray(255, 1))
+    -- room:SetColor(gray(255, 1))
     room.xgrid, room.ygrid = posx, posy
     room.walls = {}
     room.surrounded = false
+    room.id = 0
 
-    self.rooms[#self.rooms + 1] = room
+    table.insert(self.rooms, room)
     self.grid[posx][posy] = room
 end
 
@@ -147,7 +183,7 @@ function Level:selectAdjacentSpot(room_index)
 end
 
 function Level:generateRoom(posx, posy)
-    self:newRoom(0, 0)
+    self:newRoom(posx, posy)
 
     for i = 2, self.rooms_count do
         openroom = self:selectOpenRoom()
@@ -172,30 +208,134 @@ function Level:generateRooms()
 
     self:generateRoom(self.start_room_index, self.start_room_index)
 
+    for i = -self.rooms_count, self.rooms_count do 
+        for j = -self.rooms_count, self.rooms_count do 
+            if self.grid[i][j] ~= nil and self.grid[i][j] ~= "block" then
+                if i == self.start_room_index then 
+                    self.grid[i][j].id = 0 
+                else
+                    local rand_id = 0
+                    local surr = {top = false, bottom = false, left = false, right = false}
+                    local x, y = i, j
+
+                    if self.grid[x - 1][y] ~= nil and self.grid[x - 1][y] ~= "block" then
+                        surr.left = true
+                    end
+                    if self.grid[x + 1][y] ~= nil and self.grid[x + 1][y] ~= "block" then
+                        surr.right = true
+                    end
+                    if self.grid[x][y - 1] ~= nil and self.grid[x][y - 1] ~= "block" then
+                        surr.top = true
+                    end
+                    if self.grid[x][y + 1] ~= nil and self.grid[x][y + 1] ~= "block" then
+                        surr.bottom = true
+                    end
+
+                    if surr.top and surr.bottom and surr.left and surr.right then
+                        -- ze wszystkich czterech stron jest
+                        rand_id = love.math.random(1, 99)
+                    elseif not surr.top then
+                        -- górnego nie ma
+                        rand_id = love.math.random(100, 199)
+                    elseif not surr.bottom then 
+                        -- dolnego nie ma
+                        rand_id = love.math.random(200, 299)
+                    elseif not surr.left then
+                        -- lewego nie ma
+                        rand_id = love.math.random(300, 399)
+                    else
+                        -- prawego nie ma
+                        rand_id = love.math.random(400, 499)
+                    end
+
+                    self.grid[i][j].id = rand_id
+                end
+
+                self:setObjectsForRoom(i, j)
+            end
+        end
+    end
+
     self.current_room = {x = self.start_room_index, y = self.start_room_index}
+end
+
+function Level:setObjectsForRoom(i, j)
+    local room = self.grid[i][j]
+    local id = room.id
+
+    
+end
+
+function Level:getRoomFromGrid(room_id)
+    return self.grid[self.rooms[room_id].gridx][self.rooms[room_id].gridy]
 end
 
 function Level:getRoom()
     return self.grid[self.current_room.x][self.current_room.y] 
 end
 
+function Level:roomDraw()
+    love.graphics.setColor(self.clRoomWalls)
+    love.graphics.rectangle("fill", self.left, self.top, self.gridsize * 16, self.gridsize * 9)
+
+    love.graphics.setColor(self.clRoomMain)
+    love.graphics.rectangle("fill", self.left + self.gridsize, self.top + self.gridsize, self.gridsize * 14, self.gridsize * 7)
+
+    love.graphics.setColor(self.clRoomBorder)
+    love.graphics.setLineWidth(4)
+    love.graphics.rectangle("line", self.left + 2, self.top + 2, self.gridsize * 16 - 4, self.gridsize * 9 - 4)
+
+    love.graphics.setColor(self.clRoomBorder)
+    love.graphics.setLineWidth(3)
+    love.graphics.rectangle("line", self.left + self.gridsize + 1, self.top + self.gridsize + 1, self.gridsize * 14 - 3, self.gridsize * 7 - 3)
+
+    love.graphics.line(self.left + 2, self.top + 2, self.left + self.gridsize + 2, self.top + self.gridsize + 2)
+    love.graphics.line(self.left + 2, self.top + self.gridsize * 16 - 2, self.left + self.gridsize + 2, self.top + self.gridsize * 15 - 2)
+    love.graphics.line(self.left + self.gridsize * 16 - 2, self.top + 2, self.left + self.gridsize * 15 - 2, self.top + self.gridsize + 2)
+    love.graphics.line(self.left + self.gridsize * 16 - 2, self.top + self.gridsize * 9 + 2, self.left + self.gridsize * 15 - 2, self.top + self.gridsize * 8 - 2)
+end
+
+function Level:bgDraw()
+    bgEffect.draw(function()
+        love.graphics.setColor(clBlack)
+        love.graphics.rectangle("fill", 0, 0, self.world.Width, self.world.Height)
+    end)
+end
+
+function Level:bgUpdate(dt)
+    time = time + dt 
+	bgEffect.fog.time = time % 100
+end
+
+function Level:drawLastEffects()
+    
+end
+
+function Level:updateLastEffects(dt)
+
+end
+
 function Level:draw() 
     if self:getRoom() == nil then return end
 
-    self:getRoom():Draw()
-    self:drawMinimap()
-end
-
-function Level:drawMinimap()
     local plc = getPrevColor()
 
+    self:bgDraw()
+    self:getRoom():Draw()
+    self:roomDraw()
+    self:drawMinimap()
+
+    love.graphics.setColor(plc)
+end
+
+local colfr1, colfr2, colrm1 = gray(0, 0.4), gray(0, 1), gray(50, 1)
+
+function Level:drawMinimap()
     local rectw = 0.2 * self.gridsize
     local totalw = 9 * rectw + 4
     local totalh = 9 * rectw + 4
     local leftx = self.world.Width - totalw - 1
     local topy = 1
-
-    local colfr1, colfr2, colrm1 = gray(0, 0.4), gray(0, 1), gray(50, 1)
 
     love.graphics.setColor(colfr1)
     love.graphics.rectangle("fill", leftx, topy, totalw, totalh)
@@ -216,6 +356,10 @@ function Level:drawMinimap()
                 if self.minimap[i][j] == "A" then roomcol = GAME_COLOR_ACCENT end
                 love.graphics.setColor(roomcol)
                 love.graphics.rectangle("fill", leftx + 5 + ii * rectw, topy + 5 + jj * rectw, rectw - 6, rectw - 6, 3, 3)
+
+                -- local red = color(255, 0, 0, 1)
+                -- love.graphics.setColor(red)
+                -- love.graphics.print("["..tostring(self.grid[i][j].id).."]", leftx + 2 + ii * rectw, topy + 2 + jj * rectw)
             end
             jj = jj + 1
         end
@@ -230,8 +374,6 @@ function Level:drawMinimap()
     --         end
     --     end
     -- end
-
-    love.graphics.setColor(plc)
 end
 
 function Level:generateMinimap()
@@ -264,6 +406,8 @@ function Level:update(dt)
     if self:getRoom() == nil then return end
 
     self:getRoom():Update()
+    self:bgUpdate(dt)
+    self:updateLastEffects(dt)
 end
 
 function Level:updateRoom(i, j)
@@ -294,6 +438,9 @@ function Level:updateSize()
     self.gridsize = math.min(self.world.Width / 16, self.world.Height / 9)
     self.left = (self.world.Width - self.gridsize * 16) / 2
     self.top = (self.world.Height - self.gridsize * 9) / 2
+
+    bgEffect.resize(self.world.Width, self.world.Height)
+    shVignette.resize(self.world.Width, self.world.Height)
 
     self:updateRooms()
 end

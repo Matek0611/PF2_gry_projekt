@@ -8,8 +8,12 @@ local music = require("music")
 local shadows = require("libs/shadows")
 local lightworld = require("libs/shadows.lightworld")
 local Level = require("level")
+local Button = require("libs/basics/Button")
 
 local WholeWorld = Class("WholeWorld")
+
+local BTN_WIDTH = 32
+local btnMenu = Button:new(love.graphics.getWidth() / 2, 0, BTN_WIDTH, BTN_WIDTH, "...")
 
 function WholeWorld:initialize()
     self.hero = nil
@@ -27,16 +31,22 @@ end
 
 function WholeWorld:draw()
     self.levels[self.level]:draw()
+    
+    btnMenu:draw()
 end
 
 function WholeWorld:update(dt)
     self.world:Update()
     self.levels[self.level]:update(dt)
+    
+    btnMenu:update(dt)
 end
 
 function WholeWorld:updateSize()
     self.world:Resize(love.graphics.getWidth(), love.graphics.getHeight())
     self.levels[self.level]:updateSize()
+    
+    btnMenu:setPosition(love.graphics.getWidth() - BTN_WIDTH / 2 - 5, love.graphics.getHeight() - BTN_WIDTH / 2 - 5)
 end
 
 ActiveWorld = nil
