@@ -3,6 +3,11 @@ local Creature = require("libs/objects/creature")
 
 local Hero = Class("Hero", Creature)
 
+sprite_hero_s = love.graphics.newQuad(0, 0, 400, 100, 400, 400)
+sprite_hero_w = love.graphics.newQuad(0, 100, 400, 100, 400, 400)
+sprite_hero_e = love.graphics.newQuad(0, 200, 400, 100, 400, 400)
+sprite_hero_n = love.graphics.newQuad(0, 300, 400, 100, 400, 400)
+
 function Hero:initialize()
     Creature.initialize(self, "", "")
     self.luck = 0
@@ -15,6 +20,19 @@ function Hero:initialize()
     self.heart_s = 0
     self.heart_tc = 0 
     self.lives = 1
+
+    self.sprite = sprite_hero_s
+    self.spritetop = (function () 
+        if self.sprite == sprite_hero_s then 
+            return 0
+        elseif self.sprite == sprite_hero_w then
+            return 100
+        elseif self.sprite == sprite_hero_e then 
+            return 200
+        else 
+            return 300
+        end
+    end)
 end
 
 function Hero:calcLife()

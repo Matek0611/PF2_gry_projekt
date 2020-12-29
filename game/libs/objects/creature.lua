@@ -23,6 +23,12 @@ function Creature:initialize(defname, defdescription)
     self.damage = 0.5
     self.fly = false
     self.canmove = true
+    self.direction = "s"
+    self.ismoving = false
+    self.position = {x = 0, y = 0}
+    self.scalefrom = 100
+    self.scaleto = 100
+    self.getscale = (function () return self.scalefrom / self.scaleto end)
 end
 
 function Creature:draw()
@@ -43,6 +49,11 @@ function Creature:update(dt)
             self.deftxt = {n = str[1] or "", d = str[2] or ""}
         end
     end
+end
+
+function Creature:setCenterPosition(x, y)
+    self.position.x = x - self.scaleto / 2
+    self.position.y = y - self.scaleto / 2
 end
 
 return Creature
