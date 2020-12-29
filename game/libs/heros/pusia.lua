@@ -12,7 +12,8 @@ function Pusia:initialize()
     self.onUpdateStrings = (function(n, d) return {HERO_PUSIA.NAME, HERO_PUSIA.DESC} end)
     self.heartc_k = 0
     self.heart_k = 0
-    self.heart_tm = 8
+    self.heart_tc = 8
+    self.lives = 9
     self.onDraw = (function() 
         
     end)
