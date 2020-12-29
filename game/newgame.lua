@@ -13,6 +13,7 @@ local hAntywola = require("libs/heros/antywola")
 local hPusia = require("libs/heros/pusia")
 local translation = require("translation")
 local world = require("world")
+local activeworld = require("activeworld")
 
 local wSieska = hSieska:new()
 wSieska.canmove = false
@@ -43,8 +44,17 @@ btnStart.colors.font = {
     disabled = gray(0, 1)
 }
 btnStart.onClick = (function(sender)
-    ActiveWorld = world:new()
-    ActiveWorld:generateLevels()
+    local h
+    if wHeroes[wHero] == wSieska then
+        h = hSieska:new()
+    elseif wHeroes[wHero] == wMyniek then
+        h = hMyniek:new()
+    elseif wHeroes[wHero] == wAntywola then
+        h = hAntywola:new()
+    else
+        h = hPusia:new()
+    end
+    ActiveWorld = world:new(h)
 
     LoadingScreen.onFinish = (function (sender) 
         ActiveWorld:updateSize()
@@ -114,9 +124,9 @@ local function NewGameSceneDraw()
     btnNextHero:draw()
     lbHeroName:draw()
 
-    wHeroes[wHero]:draw()
-
     love.graphics.setColor(pc)
+
+    wHeroes[wHero]:draw()
 
     btnReturn:draw()
     btnStart:draw()
@@ -142,6 +152,10 @@ local function NewGameSceneiUpdate()
     lbHeroName:setPosition(love.graphics.getWidth() / 2, 150)
     btnPrevHero:setPosition((love.graphics.getWidth() - lbHeroName.width - btnPrevHero.width) / 2 + 20, lbHeroName.position.y)
     btnNextHero:setPosition((love.graphics.getWidth() + lbHeroName.width + btnNextHero.width) / 2 - 20, lbHeroName.position.y)
+
+    for i = 1, #wHeroes do 
+        wHeroes[i].setCenterPosition(love.graphics.getWidth() / 2, love.graphics.getHeight() / 2)
+    end
 end
 
 NewGameScene = Scene:new("newgame", NewGameSceneDraw, NewGameSceneUpdate, NewGameSceneiUpdate)

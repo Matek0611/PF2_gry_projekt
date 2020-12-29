@@ -15,8 +15,8 @@ local WholeWorld = Class("WholeWorld")
 local BTN_WIDTH = 32
 local btnMenu = Button:new(love.graphics.getWidth() / 2, 0, BTN_WIDTH, BTN_WIDTH, "...")
 
-function WholeWorld:initialize()
-    self.hero = nil
+function WholeWorld:initialize(hero)
+    self.hero = hero
     self.world = lightworld:new()
     self.level = 1
     self:generateLevels()
@@ -48,7 +48,5 @@ function WholeWorld:updateSize()
     
     btnMenu:setPosition(love.graphics.getWidth() - BTN_WIDTH / 2 - 5, love.graphics.getHeight() - BTN_WIDTH / 2 - 5)
 end
-
-ActiveWorld = nil
 
 return WholeWorld

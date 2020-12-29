@@ -8,7 +8,7 @@ local loading = require("loading")
 local options = require("options")
 local newgame = require("newgame")
 local music = require("music")
-local world = require("world")
+local activeworld = require("activeworld")
 
 function love.load() 
     math.randomseed(os.time())

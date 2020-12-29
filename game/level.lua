@@ -323,6 +323,7 @@ function Level:draw()
     self:bgDraw()
     self:getRoom():Draw()
     self:roomDraw()
+    self.world.hero:draw()
     self:drawMinimap()
 
     love.graphics.setColor(plc)
@@ -407,6 +408,7 @@ function Level:update(dt)
 
     self:getRoom():Update()
     self:bgUpdate(dt)
+    self.world.hero.update(dt)
     self:updateLastEffects(dt)
 end
 
@@ -438,6 +440,8 @@ function Level:updateSize()
     self.gridsize = math.min(self.world.Width / 16, self.world.Height / 9)
     self.left = (self.world.Width - self.gridsize * 16) / 2
     self.top = (self.world.Height - self.gridsize * 9) / 2
+
+    self.world.hero.scalefrom = self.gridsize
 
     bgEffect.resize(self.world.Width, self.world.Height)
     shVignette.resize(self.world.Width, self.world.Height)
