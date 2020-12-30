@@ -52,8 +52,8 @@ function Creature:update(dt)
 end
 
 function Creature:setCenterPosition(x, y)
-    self.position.x = x - self.scaleto / 2
-    self.position.y = y - self.scaleto / 2
+    self.position.x = (x or 0) - self.scalefrom / 2
+    self.position.y = (y or 0) - self.scalefrom / 2
 end
 
 return Creature
