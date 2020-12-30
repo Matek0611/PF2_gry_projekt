@@ -62,7 +62,6 @@ end
 
 function Level:newRoom(posx, posy)
     room = RectangleRoom:new(self.world, 0, 0, 0, 0)
-    -- room:SetColor(gray(255, 1))
     room.xgrid, room.ygrid = posx, posy
     room.walls = {}
     room.surrounded = false
@@ -275,6 +274,8 @@ function Level:getRoom()
 end
 
 function Level:roomDraw()
+    local pc = getPrevColor()
+
     love.graphics.setColor(self.clRoomWalls)
     love.graphics.rectangle("fill", self.left, self.top, self.gridsize * 16, self.gridsize * 9)
 
@@ -293,6 +294,10 @@ function Level:roomDraw()
     love.graphics.line(self.left + 2, self.top + self.gridsize * 16 - 2, self.left + self.gridsize + 2, self.top + self.gridsize * 15 - 2)
     love.graphics.line(self.left + self.gridsize * 16 - 2, self.top + 2, self.left + self.gridsize * 15 - 2, self.top + self.gridsize + 2)
     love.graphics.line(self.left + self.gridsize * 16 - 2, self.top + self.gridsize * 9 + 2, self.left + self.gridsize * 15 - 2, self.top + self.gridsize * 8 - 2)
+
+    love.graphics.setColor(pc)
+
+    self.world.hero:draw()
 end
 
 function Level:bgDraw()
@@ -323,7 +328,6 @@ function Level:draw()
     self:bgDraw()
     self:getRoom():Draw()
     self:roomDraw()
-    self.world.hero:draw()
     self:drawMinimap()
 
     love.graphics.setColor(plc)
@@ -408,7 +412,7 @@ function Level:update(dt)
 
     self:getRoom():Update()
     self:bgUpdate(dt)
-    self.world.hero.update(dt)
+    self.world.hero:update(dt)
     self:updateLastEffects(dt)
 end
 

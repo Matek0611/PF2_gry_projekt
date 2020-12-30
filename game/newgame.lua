@@ -14,6 +14,11 @@ local hPusia = require("libs/heros/pusia")
 local translation = require("translation")
 local world = require("world")
 local activeworld = require("activeworld")
+local ItemEffect = require("libs/basics/ItemEffect")
+
+local ceffect = ItemEffect:new(0, 0, 0, 0, 1, 30)
+ceffect.ds = 1
+ceffect:start()
 
 local wSieska = hSieska:new()
 wSieska.canmove = false
@@ -107,12 +112,21 @@ PARTICLES_1:setSizeVariation(0.2)
 PARTICLES_1:setLinearAcceleration(-50, -50, 50, 50)
 PARTICLES_1:setColors(1, 1, 1, 1, 1, 1, 1, 0)
 
+local PARTICLES_2 = love.graphics.newParticleSystem(love.graphics.newImage("assets/img/particle_cursor.png"), 100)
+PARTICLES_2:setParticleLifetime(1, 8)
+PARTICLES_2:setEmissionRate(30)
+PARTICLES_2:setSizes(2, 1.8, 1.6, 1.5, 1.3, 1.2, 1)
+PARTICLES_2:setSizeVariation(0.2)
+PARTICLES_2:setLinearAcceleration(-50, -50, 50, 50)
+PARTICLES_2:setColors(1, 1, 1, 1, 1, 1, 1, 0)
+
 local gradient_bg = gradientMesh("vertical", gray(45, 1), gray(30, 1))
 
 local function NewGameSceneDraw()
     love.graphics.draw(gradient_bg, 0, 0, 0, love.graphics.getDimensions())
 
     love.graphics.draw(PARTICLES_1, love.graphics.getWidth() * 0.5, love.graphics.getHeight() - 100 - 10)
+    love.graphics.draw(PARTICLES_2, wHeroes[wHero].position.x + wHeroes[wHero].scalefrom / 2, wHeroes[wHero].position.y + wHeroes[wHero].scalefrom / 2)
 
     local pc = getPrevColor()
 
@@ -123,6 +137,10 @@ local function NewGameSceneDraw()
     btnPrevHero:draw()
     btnNextHero:draw()
     lbHeroName:draw()
+
+    love.graphics.setColor(clWhite)
+    setFont("text", 20)
+    love.graphics.printf(wHeroes[wHero].description, 0, 210, love.graphics.getWidth(), "center")
 
     love.graphics.setColor(pc)
 
@@ -136,6 +154,9 @@ local function NewGameSceneUpdate(dt)
     btnReturn:update(dt)
     btnStart:update(dt)
     PARTICLES_1:update(dt or 0)
+    PARTICLES_2:update(dt or 0)
+
+    ceffect:update(dt)
 
     wHeroes[wHero]:update(dt)
     
@@ -154,7 +175,8 @@ local function NewGameSceneiUpdate()
     btnNextHero:setPosition((love.graphics.getWidth() + lbHeroName.width + btnNextHero.width) / 2 - 20, lbHeroName.position.y)
 
     for i = 1, #wHeroes do 
-        wHeroes[i].setCenterPosition(love.graphics.getWidth() / 2, love.graphics.getHeight() / 2)
+        wHeroes[i].scalefrom = math.round(love.graphics.getHeight() / 720 * 100)
+        wHeroes[i]:setCenterPosition(love.graphics.getWidth() / 2, love.graphics.getHeight() / 2 + 20)
     end
 end
 

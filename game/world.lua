@@ -16,8 +16,8 @@ local BTN_WIDTH = 32
 local btnMenu = Button:new(love.graphics.getWidth() / 2, 0, BTN_WIDTH, BTN_WIDTH, "...")
 
 function WholeWorld:initialize(hero)
-    self.hero = hero
     self.world = lightworld:new()
+    self.world.hero = hero
     self.level = 1
     self:generateLevels()
 end
