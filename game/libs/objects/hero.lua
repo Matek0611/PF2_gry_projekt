@@ -4,9 +4,13 @@ local Creature = require("libs/objects/creature")
 local Hero = Class("Hero", Creature)
 
 sprite_hero_s = love.graphics.newQuad(0, 0, 400, 100, 400, 400)
+sprite_hero_s:setViewport(0, 0, 100, 100);
 sprite_hero_w = love.graphics.newQuad(0, 100, 400, 100, 400, 400)
+sprite_hero_w:setViewport(0, 0, 100, 100);
 sprite_hero_e = love.graphics.newQuad(0, 200, 400, 100, 400, 400)
+sprite_hero_e:setViewport(0, 0, 100, 100);
 sprite_hero_n = love.graphics.newQuad(0, 300, 400, 100, 400, 400)
+sprite_hero_n:setViewport(0, 0, 100, 100);
 
 function Hero:initialize()
     Creature.initialize(self, "", "")
@@ -21,6 +25,12 @@ function Hero:initialize()
     self.heart_tc = 0 
     self.lives = 1
 
+    self.fps = 15
+    self.anim_timer = 1 / self.fps
+    self.frame = 0
+    self.frames = 3
+    self.xoffset = 0
+
     self.sprite = sprite_hero_s
     self.spritetop = (function () 
         if self.sprite == sprite_hero_s then 
@@ -33,6 +43,50 @@ function Hero:initialize()
             return 300
         end
     end)
+end
+
+function Hero:updateEx(dt)
+    if not self.canmove then return end
+
+    local go = GLOBAL_OPTIONS
+    local k = love.keyboard
+
+    if k.isDown(go.HERO_LEFT) then
+        self:move("left")
+        self.sprite = sprite_hero_w
+    end
+    if k.isDown(go.HERO_RIGHT) then
+        self:move("right")
+        self.sprite = sprite_hero_e
+    end
+    if k.isDown(go.HERO_UP) then
+        self:move("up")
+        self.sprite = sprite_hero_n
+    end
+    if k.isDown(go.HERO_DOWN) then
+        self:move("down")
+        self.sprite = sprite_hero_s
+    end
+
+    dt = dt or 0
+    if self.ismoving then
+        if dt > 0.035 then return end
+
+        self.anim_timer = self.anim_timer - dt
+        if self.anim_timer <= 0 then 
+            self.anim_timer = 1 / self.fps
+            self.frame = self.frame + 1
+            if self.frame > self.frames then self.frame = 1 end
+            self.xoffset = 100 * self.frame
+            self.sprite:setViewport(self.xoffset, self.spritetop(), 100, 100)
+        end
+    else
+        self.frame = 0
+        self.xoffset = 0
+        self.sprite:setViewport(self.xoffset, self.spritetop(), 100, 100)
+    end
+
+    self.ismoving = false
 end
 
 function Hero:calcLife()
