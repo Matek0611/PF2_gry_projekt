@@ -81,6 +81,25 @@ BTN_BLACK_THEME_ACCENT = {
     }
 }
 
+BTN_TRANSPARENT_THEME = {
+    face = {
+        normal = clTransparent,
+        hover = clTransparent,
+        down = clTransparent,
+        disabled = clTransparent,
+        check = clTransparent
+    },
+    font = {
+        normal = gray(255, 0.6),
+        hover = clTransparent,
+        down = clTransparent,
+        disabled = clTransparent
+    },
+    shadow = {
+        default = clTransparent
+    }
+}
+
 local function mouseInPoint(self, mx, my)
     return mx >= self.position.x - self.width / 2 and mx <= self.position.x + self.width / 2 and my >= self.position.y - self.height / 2 and my <= self.position.y + self.height / 2
 end
@@ -138,7 +157,7 @@ function Button:draw()
     local f = love.graphics.getFont()
     local _, lines = f:getWrap(self.text, self.width - (self.checkbox and 35 or 0))
     local fh = f:getHeight()
-    local EXHVAL = 1.5
+    local EXHVAL = 2
     local exh = 0
     
     if state == "disabled" then
