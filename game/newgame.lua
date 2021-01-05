@@ -67,6 +67,7 @@ btnStart.onClick = (function(sender)
         ManageMusic.volume = ManageMusic.defvolume
         ManageMusic:play("level1")
         sender.onUpdate = nil
+        ActiveWorld:startTimer()
     end)
     LoadingScreen:setLoading(true)
 end)

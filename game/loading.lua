@@ -122,7 +122,7 @@ function Loading:update(dt)
         if __dot_delay == 0 then
             self.dots = randdots()           
         end
-        __hint_delay = (__hint_delay + 1) % 250
+        __hint_delay = (__hint_delay + 1) % 200
         if __hint_delay == 0 then 
             local hd = love.math.random(1, #LoadingHints)
             while hd == __hint_id do hd = love.math.random(1, #LoadingHints) end
@@ -154,7 +154,7 @@ function Loading:reset()
     if self.iscustompos then
         self.defpos = self.custompos
     else
-        self.defpos = love.math.random(4, 10)
+        self.defpos = love.math.random(5, 10)
     end
     self.data.position = self.defpos
     self.data.alpha = 1

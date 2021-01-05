@@ -11,6 +11,8 @@ LOADSCR_TEXT1 = "Ładowanie"
 
 LoadingHints = {}
 
+TEXT_LEVEL_NAME = "Poziom"
+
 function math.round(x)
     return math.floor(x + 0.5)
 end
@@ -160,6 +162,7 @@ end
 
 clBlack = gray(0, 1)
 clWhite = gray(255, 1)
+clTransparent = gray(0, 0)
 
 function split(pString, pPattern)
     local Table = {}  

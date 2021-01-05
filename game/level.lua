@@ -58,6 +58,8 @@ function Level:initialize(nr_level, world)
     self:updateSize()
     self:updateCurrentRoom()
     self:update(0)
+
+    self:setHeroPosition("center")
 end
 
 function Level:newRoom(posx, posy)
@@ -66,6 +68,11 @@ function Level:newRoom(posx, posy)
     room.walls = {}
     room.surrounded = false
     room.id = 0
+    room.closed = true
+    room.surr = {top = false, bottom = false, left = false, right = false}
+    room.prepare = (function () 
+        
+    end)
 
     table.insert(self.rooms, room)
     self.grid[posx][posy] = room
@@ -210,45 +217,43 @@ function Level:generateRooms()
     for i = -self.rooms_count, self.rooms_count do 
         for j = -self.rooms_count, self.rooms_count do 
             if self.grid[i][j] ~= nil and self.grid[i][j] ~= "block" then
-                if i == self.start_room_index then 
-                    self.grid[i][j].id = 0 
-                else
-                    local rand_id = 0
-                    local surr = {top = false, bottom = false, left = false, right = false}
-                    local x, y = i, j
+                local rand_id = 0
+                local x, y = i, j
 
-                    if self.grid[x - 1][y] ~= nil and self.grid[x - 1][y] ~= "block" then
-                        surr.left = true
-                    end
-                    if self.grid[x + 1][y] ~= nil and self.grid[x + 1][y] ~= "block" then
-                        surr.right = true
-                    end
-                    if self.grid[x][y - 1] ~= nil and self.grid[x][y - 1] ~= "block" then
-                        surr.top = true
-                    end
-                    if self.grid[x][y + 1] ~= nil and self.grid[x][y + 1] ~= "block" then
-                        surr.bottom = true
-                    end
-
-                    if surr.top and surr.bottom and surr.left and surr.right then
-                        -- ze wszystkich czterech stron jest
-                        rand_id = love.math.random(1, 99)
-                    elseif not surr.top then
-                        -- górnego nie ma
-                        rand_id = love.math.random(100, 199)
-                    elseif not surr.bottom then 
-                        -- dolnego nie ma
-                        rand_id = love.math.random(200, 299)
-                    elseif not surr.left then
-                        -- lewego nie ma
-                        rand_id = love.math.random(300, 399)
-                    else
-                        -- prawego nie ma
-                        rand_id = love.math.random(400, 499)
-                    end
-
-                    self.grid[i][j].id = rand_id
+                if self.grid[x - 1][y] ~= nil and self.grid[x - 1][y] ~= "block" then
+                    self.grid[i][j].surr.left = true
                 end
+                if self.grid[x + 1][y] ~= nil and self.grid[x + 1][y] ~= "block" then
+                    self.grid[i][j].surr.right = true
+                end
+                if self.grid[x][y - 1] ~= nil and self.grid[x][y - 1] ~= "block" then
+                    self.grid[i][j].surr.top = true
+                end
+                if self.grid[x][y + 1] ~= nil and self.grid[x][y + 1] ~= "block" then
+                    self.grid[i][j].surr.bottom = true
+                end
+
+                if i == self.start_room_index then
+                    rand_id = 0
+                    self.grid[i][j].closed = false
+                elseif self.grid[i][j].surr.top and self.grid[i][j].surr.bottom and self.grid[i][j].surr.left and self.grid[i][j].surr.right then
+                    -- ze wszystkich czterech stron jest
+                    rand_id = love.math.random(1, 99)
+                elseif not self.grid[i][j].surr.top then
+                    -- górnego nie ma
+                    rand_id = love.math.random(100, 199)
+                elseif not self.grid[i][j].surr.bottom then 
+                    -- dolnego nie ma
+                    rand_id = love.math.random(200, 299)
+                elseif not self.grid[i][j].surr.left then
+                    -- lewego nie ma
+                    rand_id = love.math.random(300, 399)
+                else
+                    -- prawego nie ma
+                    rand_id = love.math.random(400, 499)
+                end
+
+                self.grid[i][j].id = rand_id
 
                 self:setObjectsForRoom(i, j)
             end
@@ -274,10 +279,62 @@ function Level:getRoom()
 end
 
 function Level:roomDraw()
+    if self:getRoom() == nil then return end
+
     local pc = getPrevColor()
 
     love.graphics.setColor(self.clRoomWalls)
     love.graphics.rectangle("fill", self.left, self.top, self.gridsize * 16, self.gridsize * 9)
+
+    local s = self:getRoom().surr
+    if s.left then 
+        if self:getRoom().closed then 
+            love.graphics.setColor(self.clRoomMain)
+            love.graphics.ellipse("fill", self.left + self.gridsize * 0.7, self.top + self.gridsize * 4.5, self.gridsize * 0.5 , self.gridsize * 0.5)
+            love.graphics.setColor(self.clRoomBorder)
+            love.graphics.ellipse("line", self.left + self.gridsize * 0.7, self.top + self.gridsize * 4.5, self.gridsize * 0.5 , self.gridsize * 0.5)
+            love.graphics.line(self.left + self.gridsize * 0.2, self.top + self.gridsize * 4.5, self.left + self.gridsize * 1.2, self.top + self.gridsize * 4.5)
+        else
+            love.graphics.setColor(self.clRoomBorder)
+            love.graphics.ellipse("fill", self.left + self.gridsize * 0.7, self.top + self.gridsize * 4.5, self.gridsize * 0.5 , self.gridsize * 0.5)
+        end
+    end
+    if s.right then
+        if self:getRoom().closed then 
+            love.graphics.setColor(self.clRoomMain)
+            love.graphics.ellipse("fill", self.left + self.gridsize * 15.3, self.top + self.gridsize * 4.5, self.gridsize * 0.5 , self.gridsize * 0.5)
+            love.graphics.setColor(self.clRoomBorder)
+            love.graphics.ellipse("line", self.left + self.gridsize * 15.3, self.top + self.gridsize * 4.5, self.gridsize * 0.5 , self.gridsize * 0.5)
+            love.graphics.line(self.left + self.gridsize * 14.2, self.top + self.gridsize * 4.5, self.left + self.gridsize * 15.8, self.top + self.gridsize * 4.5)
+        else
+            love.graphics.setColor(self.clRoomBorder)
+            love.graphics.ellipse("fill", self.left + self.gridsize * 15.3, self.top + self.gridsize * 4.5, self.gridsize * 0.5 , self.gridsize * 0.5)
+        end
+    end
+    if s.top then
+        if self:getRoom().closed then 
+            love.graphics.setColor(self.clRoomMain)
+            love.graphics.ellipse("fill", self.left + self.gridsize * 8, self.top + self.gridsize * 0.7, self.gridsize * 0.5 , self.gridsize * 0.5)
+            love.graphics.setColor(self.clRoomBorder)
+            love.graphics.ellipse("line", self.left + self.gridsize * 8, self.top + self.gridsize * 0.7, self.gridsize * 0.5 , self.gridsize * 0.5)
+            love.graphics.line(self.left + self.gridsize * 8, self.top + self.gridsize * 0.2, self.left + self.gridsize * 8, self.top + self.gridsize * 1)
+        else
+            love.graphics.setColor(self.clRoomBorder)
+            love.graphics.ellipse("fill", self.left + self.gridsize * 8, self.top + self.gridsize * 0.7, self.gridsize * 0.5 , self.gridsize * 0.5)
+        end
+    end
+    if s.bottom then 
+        if self:getRoom().closed then 
+            love.graphics.setColor(self.clRoomMain)
+            love.graphics.ellipse("fill", self.left + self.gridsize * 8, self.top + self.gridsize * 8.3, self.gridsize * 0.5 , self.gridsize * 0.5)
+            love.graphics.setColor(self.clRoomBorder)
+            love.graphics.ellipse("line", self.left + self.gridsize * 8, self.top + self.gridsize * 8.3, self.gridsize * 0.5 , self.gridsize * 0.5)
+            love.graphics.line(self.left + self.gridsize * 8, self.top + self.gridsize * 7.8, self.left + self.gridsize * 8, self.top + self.gridsize * 8.8)
+        else
+            love.graphics.setColor(self.clRoomBorder)
+            love.graphics.ellipse("fill", self.left + self.gridsize * 8, self.top + self.gridsize * 8.3, self.gridsize * 0.5 , self.gridsize * 0.5)
+        end
+    end
 
     love.graphics.setColor(self.clRoomMain)
     love.graphics.rectangle("fill", self.left + self.gridsize, self.top + self.gridsize, self.gridsize * 14, self.gridsize * 7)
@@ -291,13 +348,14 @@ function Level:roomDraw()
     love.graphics.rectangle("line", self.left + self.gridsize + 1, self.top + self.gridsize + 1, self.gridsize * 14 - 3, self.gridsize * 7 - 3)
 
     love.graphics.line(self.left + 2, self.top + 2, self.left + self.gridsize + 2, self.top + self.gridsize + 2)
-    love.graphics.line(self.left + 2, self.top + self.gridsize * 16 - 2, self.left + self.gridsize + 2, self.top + self.gridsize * 15 - 2)
+    love.graphics.line(self.left + 2, self.top + self.gridsize * 9 - 2, self.left + self.gridsize + 2, self.top + self.gridsize * 8 - 2)
     love.graphics.line(self.left + self.gridsize * 16 - 2, self.top + 2, self.left + self.gridsize * 15 - 2, self.top + self.gridsize + 2)
     love.graphics.line(self.left + self.gridsize * 16 - 2, self.top + self.gridsize * 9 + 2, self.left + self.gridsize * 15 - 2, self.top + self.gridsize * 8 - 2)
 
     love.graphics.setColor(pc)
 
     self.world.hero:draw()
+    self.world.hero:drawHearts(10, 10)
 end
 
 function Level:bgDraw()
@@ -326,8 +384,11 @@ function Level:draw()
     local plc = getPrevColor()
 
     self:bgDraw()
+    love.graphics.setColor(plc)
     self:getRoom():Draw()
+    love.graphics.setColor(plc)
     self:roomDraw()
+    love.graphics.setColor(plc)
     self:drawMinimap()
 
     love.graphics.setColor(plc)
@@ -339,8 +400,8 @@ function Level:drawMinimap()
     local rectw = 0.2 * self.gridsize
     local totalw = 9 * rectw + 4
     local totalh = 9 * rectw + 4
-    local leftx = self.world.Width - totalw - 1
-    local topy = 1
+    local leftx = self.world.Width - totalw - 1 - 10
+    local topy = 1 + 10
 
     love.graphics.setColor(colfr1)
     love.graphics.rectangle("fill", leftx, topy, totalw, totalh)
@@ -370,15 +431,6 @@ function Level:drawMinimap()
         end
         ii = ii + 1
     end
-
-    -- for i = -self.rooms_count, self.rooms_count do 
-    --     for j = -self.rooms_count, self.rooms_count do 
-    --         if self.grid[i][j] ~= nil and self.grid[i][j] ~= "block" then
-    --             love.graphics.setColor(colfr2)
-    --             love.graphics.rectangle("fill", self.rooms_count * rectw + 2 + (i - 1) * rectw, self.rooms_count * rectw + 2 + (j - 1) * rectw, rectw, rectw)
-    --         end
-    --     end
-    -- end
 end
 
 function Level:generateMinimap()
@@ -414,6 +466,36 @@ function Level:update(dt)
     self:bgUpdate(dt)
     self.world.hero:update(dt)
     self:updateLastEffects(dt)
+
+    if self:getRoom().closed then return end
+    local h = self.world.hero
+    local p = h.position
+    if p.x == h.rectlimits.left and p.y >= self.left + self.gridsize * 4 and p.y <= self.left + self.gridsize * 5 then
+        self:changeRoom(self.current_room.x - 1, self.current_room.y, "left")
+    end
+end
+
+function Level:changeRoom(i, j, d) 
+    d = d or "center"
+    if self.grid[i][j] ~= nil and self.grid[i][j] ~= "block" then 
+        self.current_room.x = i
+        self.current_room.y = j
+
+        self:updateMinimap()
+
+        if d == "left" then 
+            self:setHeroPosition("e")
+        elseif d == "right" then
+            self:setHeroPosition("w")
+        elseif d == "top" then
+            self:setHeroPosition("s")
+        elseif d == "bottom" then 
+            self:setHeroPosition("n")
+        else
+            self:setHeroPosition("center")
+        end
+        self:getRoom().prepare()
+    end
 end
 
 function Level:updateRoom(i, j)
@@ -441,16 +523,37 @@ function Level:updateCurrentRoom()
 end
 
 function Level:updateSize()
+    local pgs = self.gridsize or math.min(self.world.Width / 16, self.world.Height / 9)
+    
     self.gridsize = math.min(self.world.Width / 16, self.world.Height / 9)
     self.left = (self.world.Width - self.gridsize * 16) / 2
     self.top = (self.world.Height - self.gridsize * 9) / 2
 
     self.world.hero.scalefrom = self.gridsize
+    self.world.hero:setPosition(self.world.hero.position.x * (self.gridsize / pgs), self.world.hero.position.y * (self.gridsize / pgs))
 
     bgEffect.resize(self.world.Width, self.world.Height)
     shVignette.resize(self.world.Width, self.world.Height)
 
     self:updateRooms()
+end
+
+function Level:setHeroPosition(gx, gy)
+    local pos
+    if gx == "s" then
+        pos = {8 * self.gridsize, 8 * self.gridsize}
+    elseif gx == "n" then
+        pos = {8 * self.gridsize, 1 * self.gridsize}
+    elseif gx == "w" then
+        pos = {1 * self.gridsize, 4.5 * self.gridsize}
+    elseif gx == "e" then
+        pos = {15 * self.gridsize, 4.5 * self.gridsize}
+    elseif gx == "center" then
+        pos = {8 * self.gridsize, 4.5 * self.gridsize}
+    else
+        pos = {gx * self.gridsize, gy * self.gridsize}
+    end
+    self.world.hero:setCenterPosition(self.left + pos[1], self.top + pos[2]) 
 end
 
 return Level

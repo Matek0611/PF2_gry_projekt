@@ -13,7 +13,11 @@ GLOBAL_OPTIONS = {
     
     OPTS_FPS_ON = false,
     OPTS_LANG = "pl",
-    OPTS_
+    
+    HERO_UP = "w",
+    HERO_DOWN = "s",
+    HERO_LEFT = "a",
+    HERO_RIGHT = "d"
 }
 
 -- klasa zarządzania opcjami

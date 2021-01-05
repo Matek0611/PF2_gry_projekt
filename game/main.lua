@@ -75,3 +75,9 @@ function love.resize(w, h)
         ActiveWorld:updateSize()
     end
 end
+
+function love.keypressed(key, scancode, isrepeat)
+    if gm == GM_MAP then
+        ActiveWorld:keypressed(key, scancode, isrepeat)
+    end
+end
