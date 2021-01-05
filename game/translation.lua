@@ -39,7 +39,7 @@ function translateAll(lang)
             "The choice of your character will affect the beginning of the game.",
             "You don't have to enter all the rooms, it's important to reach the end room.",
             "In the options menu there are some useful functions. I know you know but you know.",
-            "You can't turn back time so pay attention to not die.",
+            "You can't turn back time so pay attention not to die.",
             "In the Pirenees! You can't cheat? - Yep",
             "OK",
             "Lead your character with due respect!",
