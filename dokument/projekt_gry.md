@@ -151,7 +151,9 @@ Będzie 10 poziomów, gdzie po każdym będzie wielki pokój zagadek.
 - [x] ekran ładowania
 - [x] menu główne
 - [ ] menu opcji
-- [ ] interfejs bohatera
-- [ ] shadery
-- [ ] generowanie losowego świata
-
+- [x] interfejs bohatera
+- [x] shadery
+- [x] generowanie losowego świata
+- [ ] zagadki
+- [ ] przeciwnicy
+- [X] pokoje
