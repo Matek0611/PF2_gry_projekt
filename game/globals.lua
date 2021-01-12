@@ -2,6 +2,7 @@ GAME_PRINT_NAME = "Koglomoglowy Uciekinier"
 GAME_PRINT_NAME_SP = "Koglomoglowy,Uciekinier"
 GAME_VERSION = "1.7 alpha"
 GAME_AUTHOR = "Marcin Stefanowicz"
+GAME_HELP = "Aleksandra Łukasik, Mateusz Szkoła"
 GAME_MUSIC = "Dan Henig\nDJ Freedem\nPatrick Patrikios\nDJ Williams\nKwon\nVans in Japan"
 
 STR_VERSION = "wersja"

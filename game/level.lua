@@ -11,6 +11,7 @@ local RectangleRoom = require("libs/shadows.Room.RectangleRoom")
 local Light = require("libs/shadows.Light")
 local Star = require("libs/shadows.Star")
 local moonshine = require("libs/moonshine")
+local Riddle = require("riddles")
 
 local Level = Class("Level")
 
@@ -68,7 +69,7 @@ function Level:newRoom(posx, posy)
     room.walls = {}
     room.surrounded = false
     room.id = 0
-    room.closed = true
+    room.closed = false --true
     room.surr = {top = false, bottom = false, left = false, right = false}
     room.prepare = (function () 
         
@@ -236,21 +237,8 @@ function Level:generateRooms()
                 if i == self.start_room_index then
                     rand_id = 0
                     self.grid[i][j].closed = false
-                elseif self.grid[i][j].surr.top and self.grid[i][j].surr.bottom and self.grid[i][j].surr.left and self.grid[i][j].surr.right then
-                    -- ze wszystkich czterech stron jest
-                    rand_id = love.math.random(1, 99)
-                elseif not self.grid[i][j].surr.top then
-                    -- górnego nie ma
-                    rand_id = love.math.random(100, 199)
-                elseif not self.grid[i][j].surr.bottom then 
-                    -- dolnego nie ma
-                    rand_id = love.math.random(200, 299)
-                elseif not self.grid[i][j].surr.left then
-                    -- lewego nie ma
-                    rand_id = love.math.random(300, 399)
                 else
-                    -- prawego nie ma
-                    rand_id = love.math.random(400, 499)
+                    rand_id = love.math.random(1, RIDDLES_COUNT)
                 end
 
                 self.grid[i][j].id = rand_id
@@ -267,7 +255,7 @@ function Level:setObjectsForRoom(i, j)
     local room = self.grid[i][j]
     local id = room.id
 
-    
+    room.riddle = Riddle:new(room, self)
 end
 
 function Level:getRoomFromGrid(room_id)
@@ -353,6 +341,10 @@ function Level:roomDraw()
     love.graphics.line(self.left + self.gridsize * 16 - 2, self.top + self.gridsize * 9 + 2, self.left + self.gridsize * 15 - 2, self.top + self.gridsize * 8 - 2)
 
     love.graphics.setColor(pc)
+
+    if self:getRoom().riddle ~= nil then
+        self:getRoom().riddle:draw()
+    end
 
     self.world.hero:draw()
     self.world.hero:drawHearts(10, 10)
@@ -462,6 +454,8 @@ end
 function Level:update(dt)
     if self:getRoom() == nil then return end
 
+    translateRiddles()
+
     self:getRoom():Update()
     self:bgUpdate(dt)
     self.world.hero:update(dt)
@@ -470,8 +464,14 @@ function Level:update(dt)
     if self:getRoom().closed then return end
     local h = self.world.hero
     local p = h.position
-    if p.x == h.rectlimits.left and p.y >= self.left + self.gridsize * 4 and p.y <= self.left + self.gridsize * 5 then
+    if p.x == h.rectlimits.left and p.y >= self.top + self.gridsize * 3 and p.y <= self.top + self.gridsize * 4 then
         self:changeRoom(self.current_room.x - 1, self.current_room.y, "left")
+    elseif p.x == h.rectlimits.right and p.y >= self.top + self.gridsize * 3 and p.y <= self.top + self.gridsize * 4 then
+        self:changeRoom(self.current_room.x + 1, self.current_room.y, "right")
+    elseif p.y == h.rectlimits.top and p.x >= self.left + self.gridsize * 7 and p.x <= self.left + self.gridsize * 8 then
+        self:changeRoom(self.current_room.x, self.current_room.y - 1, "top")
+    elseif p.y == h.rectlimits.bottom and p.x >= self.left + self.gridsize * 7 and p.x <= self.left + self.gridsize * 8 then
+        self:changeRoom(self.current_room.x, self.current_room.y + 1, "bottom")
     end
 end
 
@@ -532,6 +532,8 @@ function Level:updateSize()
     self.world.hero.scalefrom = self.gridsize
     self.world.hero:setPosition(self.world.hero.position.x * (self.gridsize / pgs), self.world.hero.position.y * (self.gridsize / pgs))
 
+    self.temp_scale = (self.gridsize / pgs)
+
     bgEffect.resize(self.world.Width, self.world.Height)
     shVignette.resize(self.world.Width, self.world.Height)
 
@@ -541,9 +543,9 @@ end
 function Level:setHeroPosition(gx, gy)
     local pos
     if gx == "s" then
-        pos = {8 * self.gridsize, 8 * self.gridsize}
+        pos = {8 * self.gridsize, 7 * self.gridsize}
     elseif gx == "n" then
-        pos = {8 * self.gridsize, 1 * self.gridsize}
+        pos = {8 * self.gridsize, 2 * self.gridsize}
     elseif gx == "w" then
         pos = {1 * self.gridsize, 4.5 * self.gridsize}
     elseif gx == "e" then

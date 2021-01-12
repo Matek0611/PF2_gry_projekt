@@ -169,17 +169,26 @@ local function menuAboutDraw()
     setFont("header", 35)
     love.graphics.printf(GAME_PRINT_NAME .. "  " .. GAME_VERSION, 110, 90, love.graphics.getWidth() - 220, "center")
     love.graphics.setColor(GAME_COLOR_ACCENT)
+
     setFont("header", 30)
     love.graphics.printf(TEXT_ABOUT_AUTHOR, 110, 90 + 35 + 30 + GlobalTextItemEffect.currenty, love.graphics.getWidth() - 220, "center")
     love.graphics.setColor(gray(0, 1))
     setFont("text", 20)
     love.graphics.printf(GAME_AUTHOR, 110, 205, love.graphics.getWidth() - 220, "center")
     love.graphics.setColor(GAME_COLOR_ACCENT)
+
     setFont("header", 30)
-    love.graphics.printf(TEXT_ABOUT_MUSIC, 110, 225 + 30 + GlobalTextItemEffect.currenty, love.graphics.getWidth() - 220, "center")
+    love.graphics.printf(TEXT_ABOUT_HELP, 110, 225 + GlobalTextItemEffect.currenty, love.graphics.getWidth() - 220, "center")
     love.graphics.setColor(gray(0, 1))
     setFont("text", 20)
-    love.graphics.printf(GAME_MUSIC, 110, 255 + 30*2, love.graphics.getWidth() - 220, "center")
+    love.graphics.printf(GAME_HELP, 110, 205 + 30*2 + 10, love.graphics.getWidth() - 220, "center")
+    love.graphics.setColor(GAME_COLOR_ACCENT)
+
+    setFont("header", 30)
+    love.graphics.printf(TEXT_ABOUT_MUSIC, 110, 225 + 30 + 20*2 + GlobalTextItemEffect.currenty, love.graphics.getWidth() - 220, "center")
+    love.graphics.setColor(gray(0, 1))
+    setFont("text", 20)
+    love.graphics.printf(GAME_MUSIC, 110, 255 + 30*3, love.graphics.getWidth() - 220, "center")
 
     love.graphics.setColor(MENU_BG_COLOR)
 

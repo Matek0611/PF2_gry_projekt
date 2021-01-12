@@ -30,6 +30,7 @@ function translateAll(lang)
         --about
         TEXT_ABOUT_AUTHOR = "Author"
         TEXT_ABOUT_MUSIC = "Music"
+        TEXT_ABOUT_HELP = "Acknowledgments"
 
         --globals
         STR_VERSION = "version"
@@ -101,6 +102,7 @@ function translateAll(lang)
         --about
         TEXT_ABOUT_AUTHOR = "Autor"
         TEXT_ABOUT_MUSIC = "Muzyka"
+        TEXT_ABOUT_HELP = "Podziękowania"
 
         --globals
         STR_VERSION = "wersja"
