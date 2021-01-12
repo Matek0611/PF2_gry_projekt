@@ -157,3 +157,4 @@ Będzie 10 poziomów, gdzie po każdym będzie wielki pokój zagadek.
 - [ ] zagadki
 - [ ] przeciwnicy
 - [X] pokoje
+- [ ] przedmioty
