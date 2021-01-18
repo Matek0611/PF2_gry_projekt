@@ -15,7 +15,7 @@ local Riddle = require("riddles")
 
 local Level = Class("Level")
 
-local bgEffect = moonshine.chain(moonshine.effects.fog)
+bgEffect = moonshine.chain(moonshine.effects.fog)
 bgEffect.fog.speed = {0.8, 0.9}
 local time = 0
 
@@ -23,15 +23,29 @@ local time = 0
 local room_colors = {
     color(53, 31, 27, 1), 
     color(76, 61, 55, 1), 
-    color(0, 0, 0, 1), 
-    color(0, 0, 0, 1), 
-    color(0, 0, 0, 1), 
-    color(0, 0, 0, 1), 
-    color(0, 0, 0, 1), 
-    color(0, 0, 0, 1), 
-    color(0, 0, 0, 1), 
-    color(0, 0, 0, 1)
+    color(0, 121, 107, 1), 
+    color(255, 143, 0, 1), 
+    color(0, 151, 167, 1), 
+    color(85, 139, 47, 1), 
+    color(78, 52, 46, 1), 
+    color(55, 71, 79, 1), 
+    color(66, 66, 66, 1), 
+    color(183, 28, 28, 1)
 }
+
+portal_colors = {
+    color(135, 13, 78), -- normal
+    color(187, 70, 122), -- light
+    color(85, 0, 38) -- dark
+}
+
+local PARTICLES_1 = love.graphics.newParticleSystem(love.graphics.newImage("assets/img/particle_cursor.png"), 100)
+PARTICLES_1:setParticleLifetime(1, 5)
+PARTICLES_1:setEmissionRate(5)
+PARTICLES_1:setSizes(1, 0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3)
+PARTICLES_1:setSizeVariation(0.2)
+PARTICLES_1:setLinearAcceleration(-5, -5, 5, 5)
+PARTICLES_1:setColors(1, 1, 1, 1, 1, 1, 1, 0)
 
 local room_colors_dark = {}
 for i = 1, #room_colors do 
@@ -45,14 +59,15 @@ end
 
 local shVignette = moonshine.chain(moonshine.effects.vignette)
 
-function Level:initialize(nr_level, world)
+function Level:initialize(nr_level, world, activeworld)
     self.world = world
+    self.activeworld = activeworld
     self.nr = nr_level
     self.current_room = {x = 0, y = 0}
 
     self.clRoomMain, self.clRoomBorder, self.clRoomWalls = room_colors[self.nr], room_colors_dark[self.nr], room_colors_dark2[self.nr]
 
-    bgEffect.fog.fog_color = {self.clRoomMain[1], self.clRoomMain[2], self.clRoomMain[3]}
+    self.effectcolor = {self.clRoomMain[1], self.clRoomMain[2], self.clRoomMain[3]}
 
     self:generateRooms()
     self:generateMinimap()
@@ -242,6 +257,7 @@ function Level:generateRooms()
                     self.grid[i][j].closed = false
                 elseif ile == self.rooms_count then
                     rand_id = 100;
+                    self.grid[i][j].closed = false
                 else
                     rand_id = love.math.random(1, RIDDLES_COUNT)
                 end
@@ -345,6 +361,12 @@ function Level:roomDraw()
     love.graphics.line(self.left + self.gridsize * 16 - 2, self.top + 2, self.left + self.gridsize * 15 - 2, self.top + self.gridsize + 2)
     love.graphics.line(self.left + self.gridsize * 16 - 2, self.top + self.gridsize * 9 + 2, self.left + self.gridsize * 15 - 2, self.top + self.gridsize * 8 - 2)
 
+    if self:getRoom().id == 100 then
+        love.graphics.draw(PARTICLES_1, self.left + self.gridsize * 8, self.top + self.gridsize * 4.5)
+        love.graphics.setColor(portal_colors[3])
+        love.graphics.ellipse("fill", self.left + self.gridsize * 8, self.top + self.gridsize * 4.5, self.gridsize, self.gridsize)
+    end
+
     love.graphics.setColor(pc)
 
     if self:getRoom().riddle ~= nil then
@@ -410,7 +432,7 @@ function Level:drawMinimap()
     local ii, jj = 0, 0
     for i = self.current_room.x - 4, self.current_room.x + 4 do 
         jj = 0
-        for j = self.current_room.x - 4, self.current_room.x + 4 do 
+        for j = self.current_room.y - 4, self.current_room.y + 4 do 
             if self.minimap[i][j] ~= "X" and self.minimap[i][j] ~= nil then 
                 love.graphics.setColor(colfr2)
                 love.graphics.rectangle("fill", leftx + 2 + ii * rectw, topy + 2 + jj * rectw, rectw, rectw)
@@ -419,10 +441,6 @@ function Level:drawMinimap()
                 if self.minimap[i][j] == "A" then roomcol = GAME_COLOR_ACCENT end
                 love.graphics.setColor(roomcol)
                 love.graphics.rectangle("fill", leftx + 5 + ii * rectw, topy + 5 + jj * rectw, rectw - 6, rectw - 6, 3, 3)
-
-                -- local red = color(255, 0, 0, 1)
-                -- love.graphics.setColor(red)
-                -- love.graphics.print("["..tostring(self.grid[i][j].id).."]", leftx + 2 + ii * rectw, topy + 2 + jj * rectw)
             end
             jj = jj + 1
         end
@@ -466,10 +484,16 @@ function Level:update(dt)
     self.world.hero:update(dt)
     self:updateLastEffects(dt)
 
+    if self:getRoom().id == 100 then PARTICLES_1:update(dt or 0) end
+
     if self:getRoom().closed then return end
     local h = self.world.hero
     local p = h.position
-    if p.x == h.rectlimits.left and p.y >= self.top + self.gridsize * 3 and p.y <= self.top + self.gridsize * 4 then
+    local sx = self.left + self.gridsize * 8
+    local sy = self.top + self.gridsize * 4.5
+    if (math.pow(p.x - sx, 2) + math.pow(p.y - sy, 2) < math.pow(self.gridsize, 2)) and (self:getRoom().id == 100) then
+        self.activeworld:nextLevel()
+    elseif p.x == h.rectlimits.left and p.y >= self.top + self.gridsize * 3 and p.y <= self.top + self.gridsize * 4 then
         self:changeRoom(self.current_room.x - 1, self.current_room.y, "left")
     elseif p.x == h.rectlimits.right and p.y >= self.top + self.gridsize * 3 and p.y <= self.top + self.gridsize * 4 then
         self:changeRoom(self.current_room.x + 1, self.current_room.y, "right")

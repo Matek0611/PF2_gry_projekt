@@ -33,7 +33,7 @@ function translateRiddles()
         RIDDLES[7].content = "If %s has less money than %s and %s has more money than %s, then %s has less money than %s. True or False?"
         RIDDLES[8].content = "Which number does not match the rest?\n%d, %d, %d, %d, %d, %d, %d"
         RIDDLES[9].content = "Calculate (%d - (- %d)) / 3 / (- %d + 2 * %d)."
-        RIDDLES[10].content = "Do both equations give the same result?\nx - log%d1 = 1\n%d⁰ = x + 0!"
+        RIDDLES[10].content = "Do both equations give the same result?\nx - log%d1 = 1\n%d^0 = x + 0!"
     else
         RIDDLES[1].content = "Jaka liczba będzie następna w tym ciągu?\n0, %d, %d, %d, %d, %d, ?"
         RIDDLES[2].content = "Jaka liczba będzie następna w tym ciągu?\n%d, %d, %d, %d, %d, %d, ?"
@@ -44,7 +44,7 @@ function translateRiddles()
         RIDDLES[7].content = "Jeśli %s ma mniej pieniędzy niż %s, a %s ma więcej pieniędzy niż %s, to %s ma mniej pieniędzy niż %s. Prawda czy fałsz?"
         RIDDLES[8].content = "Która liczba nie pasuje do pozostałych?\n%d, %d, %d, %d, %d, %d, %d"
         RIDDLES[9].content = "Oblicz (%d - (- %d)) / 3 / (- %d + 2 * %d)."
-        RIDDLES[10].content = "Czy oba równania dają taki sam wynik?\nx - log(%d, 1) = 1\n%d⁰ = x + 0!"
+        RIDDLES[10].content = "Czy oba równania dają taki sam wynik?\nx - log(%d, 1) = 1\n%d^0 = x + 0!"
     end
 end
 

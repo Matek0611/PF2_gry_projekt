@@ -325,11 +325,47 @@ end),
     btnPLose.position.x = left
 end))
 
+btnEGame = Button:new(love.graphics.getWidth() / 2, BTN_TOPEX+160, BTN_WIDTH*2, BTN_HEIGHT)
+btnEGame.onClick = (function (sender) 
+    ActiveWorld:stopTimer()
+    ActiveWorld = nil
+    ManageMusic:play("menu")
+    LoadingScreen.onFinish = (function (sender) 
+        GamePauseMenuScenes:setActive(1)
+        MenuScenes:setActive(2)
+        gm = GM_MENU
+    end)
+    LoadingScreen:setLoading(true)
+end)
+
+GameEndScene = Scene:new("game_end", (function () 
+    local pc = getPrevColor()
+
+    love.graphics.setColor(color(85, 0, 38))
+    love.graphics.rectangle("fill", 0, 0, love.graphics.getWidth(), love.graphics.getHeight())
+    
+    love.graphics.setColor(GAME_COLOR_ACCENT)
+    setFont("header", 50)
+    love.graphics.printf(TEXT_END, 0, 100, love.graphics.getWidth(), "center")
+    btnEGame:draw()
+
+    love.graphics.setColor(pc)
+end),
+(function (dt) 
+    btnEGame:update(dt)
+end),
+(function () 
+    local left = love.graphics.getWidth() / 2
+    btnEGame.position.x = left
+end))
+
 function pausemenuInit()
     PauseScene.canDrawAll = true
     GamePauseMenuScenes:addScene(PauseScene)
 
     GamePauseMenuScenes:addScene(OptionsScene)
+
+    GamePauseMenuScenes:addScene(GameEndScene)
 
     GamePauseMenuScenes:setActive(1)
 end
@@ -347,4 +383,6 @@ function menuTranslate()
     btnPContinue.text = TEXT_PAUSED_CONTINUE
     btnPOptions.text = TEXT_BTN_OPTS
     btnPLose.text = TEXT_PAUSED_LOSE
+
+    btnEGame.text = TEXT_END_BTN
 end

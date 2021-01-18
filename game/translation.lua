@@ -31,6 +31,9 @@ function translateAll(lang)
         TEXT_PAUSED_CONTINUE = "Continue"
         TEXT_PAUSED_LOSE = "Lose"
 
+        TEXT_END_BTN = "Back To Main Menu"
+        TEXT_END = "It's The End, My Dear!"
+
         --about
         TEXT_ABOUT_AUTHOR = "Author"
         TEXT_ABOUT_MUSIC = "Music"
@@ -109,6 +112,9 @@ function translateAll(lang)
         TEXT_PAUSED = "Pauza"
         TEXT_PAUSED_CONTINUE = "Kontunnuj"
         TEXT_PAUSED_LOSE = "Przegraj"
+
+        TEXT_END_BTN = "Jadymy do menu głównego"
+        TEXT_END = "To ju kuniec kochanieńki!"
 
         --about
         TEXT_ABOUT_AUTHOR = "Autor"

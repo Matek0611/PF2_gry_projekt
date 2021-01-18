@@ -14,10 +14,18 @@ function Music:initialize()
 
     self.level1 = love.audio.newSource(self.path .. "Pluckandplay - Kwon.mp3", "stream")
     self.level1:setLooping(true)
+    self.level3 = love.audio.newSource(self.path .. "Forget Me Not - Patrick Patrikios.mp3", "stream")
+    self.level3:setLooping(true)
+    self.level5 = love.audio.newSource(self.path .. "The Emperor's New Nikes - DJ Williams.mp3", "stream")
+    self.level5:setLooping(true)
+    self.level7 = love.audio.newSource(self.path .. "Body And Attitude - DJ Freedem.mp3", "stream")
+    self.level7:setLooping(true)
+    self.level9 = love.audio.newSource(self.path .. "Danger Snow - Dan Henig.mp3", "stream")
+    self.level9:setLooping(true)
 
     self.active = nil
 
-    self.defvolume = 0.1
+    self.defvolume = 0.2
     self.volume = self.defvolume
 end
 
@@ -33,8 +41,16 @@ function Music:play(what)
     elseif what == "click" then
         m = self.click
         issound = true
-    elseif what == "level1" then
+    elseif what == "level1" or what == "level2" then
         m = self.level1
+    elseif what == "level3" or what == "level4" then
+        m = self.level3
+    elseif what == "level5" or what == "level6" then
+        m = self.level5
+    elseif what == "level7" or what == "level8" then
+        m = self.level7
+    elseif what == "level9" or what == "level10" then
+        m = self.level9
     end
 
     if m ~= nil then 

@@ -154,7 +154,7 @@ function Loading:reset()
     if self.iscustompos then
         self.defpos = self.custompos
     else
-        self.defpos = love.math.random(5, 10)
+        self.defpos = love.math.random(5, 8)
     end
     self.data.position = self.defpos
     self.data.alpha = 1
