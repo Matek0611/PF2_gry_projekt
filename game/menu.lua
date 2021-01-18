@@ -77,6 +77,7 @@ end
 local function buttonsInit()
     btnPlay = Button:new(love.graphics.getWidth() / 2, BTN_TOPEX+100, BTN_WIDTH, BTN_HEIGHT)
     btnPlay.enabled = false
+    btnPlay.visible = false
     btnNewGame = Button:new(love.graphics.getWidth() / 2, BTN_TOPEX+160, BTN_WIDTH, BTN_HEIGHT)
     btnStats = Button:new(love.graphics.getWidth() / 2, BTN_TOPEX+220, BTN_WIDTH, BTN_HEIGHT)
     btnOpts = Button:new(love.graphics.getWidth() / 2, BTN_TOPEX+280, BTN_WIDTH, BTN_HEIGHT)
@@ -132,7 +133,7 @@ local function bgDraw()
 end
 
 local function menuHomeDraw()
-    love.graphics.draw(PARTICLES_1, love.graphics.getWidth() * 0.5, BTN_TOPEX+100)
+    -- love.graphics.draw(PARTICLES_1, love.graphics.getWidth() * 0.5, BTN_TOPEX+100)
     love.graphics.draw(PARTICLES_2, love.graphics.getWidth() * 0.5, BTN_TOPEX+160)
     love.graphics.draw(PARTICLES_3, love.graphics.getWidth() * 0.5, BTN_TOPEX+220)
     love.graphics.draw(PARTICLES_4, love.graphics.getWidth() * 0.5, BTN_TOPEX+280)
@@ -144,7 +145,7 @@ local function menuHomeDraw()
 end
 
 local function menuHomeUpdate(dt)
-    PARTICLES_1:update(dt or 0)
+    -- PARTICLES_1:update(dt or 0)
     PARTICLES_2:update(dt or 0)
     PARTICLES_3:update(dt or 0)
     PARTICLES_4:update(dt or 0)
@@ -162,31 +163,31 @@ btnReturn.onClick = (function(sender)
 end)
 
 local function menuAboutDraw()
-    love.graphics.setColor(gray(255, 1))
+    love.graphics.setColor(clWhite)
     love.graphics.rectangle("fill", 100, 80, love.graphics.getWidth() - 200, love.graphics.getHeight() - 200, 10, 10)
     
-    love.graphics.setColor(gray(0, 1))
+    love.graphics.setColor(clBlack)
     setFont("header", 35)
     love.graphics.printf(GAME_PRINT_NAME .. "  " .. GAME_VERSION, 110, 90, love.graphics.getWidth() - 220, "center")
     love.graphics.setColor(GAME_COLOR_ACCENT)
 
     setFont("header", 30)
     love.graphics.printf(TEXT_ABOUT_AUTHOR, 110, 90 + 35 + 30 + GlobalTextItemEffect.currenty, love.graphics.getWidth() - 220, "center")
-    love.graphics.setColor(gray(0, 1))
+    love.graphics.setColor(clBlack)
     setFont("text", 20)
     love.graphics.printf(GAME_AUTHOR, 110, 205, love.graphics.getWidth() - 220, "center")
     love.graphics.setColor(GAME_COLOR_ACCENT)
 
     setFont("header", 30)
     love.graphics.printf(TEXT_ABOUT_HELP, 110, 225 + GlobalTextItemEffect.currenty, love.graphics.getWidth() - 220, "center")
-    love.graphics.setColor(gray(0, 1))
+    love.graphics.setColor(clBlack)
     setFont("text", 20)
     love.graphics.printf(GAME_HELP, 110, 205 + 30*2 + 10, love.graphics.getWidth() - 220, "center")
     love.graphics.setColor(GAME_COLOR_ACCENT)
 
     setFont("header", 30)
     love.graphics.printf(TEXT_ABOUT_MUSIC, 110, 225 + 30 + 20*2 + GlobalTextItemEffect.currenty, love.graphics.getWidth() - 220, "center")
-    love.graphics.setColor(gray(0, 1))
+    love.graphics.setColor(clBlack)
     setFont("text", 20)
     love.graphics.printf(GAME_MUSIC, 110, 255 + 30*3, love.graphics.getWidth() - 220, "center")
 
@@ -204,26 +205,23 @@ local function menuAboutiUpdate()
 end
 
 local function menuStatsDraw()
+    local pc = getPrevColor()
+
     love.graphics.setColor(gray(255, 1))
     love.graphics.rectangle("fill", 100, 80, love.graphics.getWidth() - 200, love.graphics.getHeight() - 200, 10, 10)
     
-    love.graphics.setColor(gray(0, 1))
-    -- setFont("header", 35)
-    -- love.graphics.printf(GAME_PRINT_NAME .. "  " .. GAME_VERSION, 110, 90, love.graphics.getWidth() - 220, "center")
-    -- love.graphics.setColor(GAME_COLOR_ACCENT)
-    -- setFont("header", 30)
-    -- love.graphics.printf(TEXT_ABOUT_AUTHOR, 110, 90 + 35 + 30, love.graphics.getWidth() - 220, "center")
-    -- love.graphics.setColor(gray(0, 1))
-    -- setFont("text", 20)
-    -- love.graphics.printf(GAME_AUTHOR, 110, 205, love.graphics.getWidth() - 220, "center")
-    -- love.graphics.setColor(GAME_COLOR_ACCENT)
-    -- setFont("header", 30)
-    -- love.graphics.printf(TEXT_ABOUT_MUSIC, 110, 225 + 30, love.graphics.getWidth() - 220, "center")
-    -- love.graphics.setColor(gray(0, 1))
-    -- setFont("text", 20)
-    -- love.graphics.printf(GAME_MUSIC, 110, 255 + 30*2, love.graphics.getWidth() - 220, "center")
+    love.graphics.setColor(GAME_COLOR_ACCENT)
+    setFont("header", 35)
+    love.graphics.printf(TEXT_BTN_STATS, 110, 90 + GlobalTextItemEffect.currenty, love.graphics.getWidth() - 220, "center")
 
-    love.graphics.setColor(MENU_BG_COLOR)
+    love.graphics.setColor(clBlack)
+    setFont("header", 30)
+    local sek = math.floor(GLOBAL_OPTIONS.BEST_TIME) % 60
+    local min = math.floor(math.floor(GLOBAL_OPTIONS.BEST_TIME) / 60)
+    local godz = math.floor(math.floor(GLOBAL_OPTIONS.BEST_TIME) / 3600)
+    love.graphics.printf(STATS_TIME .. " - " .. string.format("%02d:%02d:%02d", godz, min, sek), 110, 90 + 35 + 30, love.graphics.getWidth() - 220, "center")
+
+    love.graphics.setColor(pc)
 
     btnReturn:draw()
 end
@@ -267,6 +265,77 @@ function menuUpdate(dt)
     MenuScenes:update(dt)
 end
 
+GamePauseMenuScenes = Scenes:new()
+GamePauseMenuScenes.drawAll = true
+
+TEXT_PAUSED = "Pauza"
+TEXT_PAUSED_CONTINUE = "Kontunnuj"
+TEXT_PAUSED_LOSE = "Przegraj"
+
+btnPContinue = Button:new(love.graphics.getWidth() / 2, BTN_TOPEX+160, BTN_WIDTH, BTN_HEIGHT)
+btnPOptions = Button:new(love.graphics.getWidth() / 2, BTN_TOPEX+220, BTN_WIDTH, BTN_HEIGHT)
+btnPOptions.onClick = (function (sender)
+    GamePauseMenuScenes:setActive(3)
+    btnOptsBack.onClick = (function()
+        GamePauseMenuScenes:setActive(2)
+        btnOptsBack.onClick = btnOptsBackMenuClick
+    end)
+end)
+btnPLose = Button:new(love.graphics.getWidth() / 2, BTN_TOPEX+280, BTN_WIDTH, BTN_HEIGHT)
+
+btnPContinue.onClick = (function (sender)
+    GamePauseMenuScenes:setActive(1)
+    ActiveWorld:resumeTimer()
+end)
+
+btnPLose.onClick = (function (sender)
+    ActiveWorld:stopTimer()
+    -- GLOBAL_OPTIONS.BEST_TIME = math.max(ActiveWorld.timer, GLOBAL_OPTIONS.BEST_TIME)
+    ActiveWorld = nil
+    ManageMusic:play("menu")
+    LoadingScreen.onFinish = (function (sender) 
+        GamePauseMenuScenes:setActive(1)
+        MenuScenes:setActive(2)
+        gm = GM_MENU
+    end)
+    LoadingScreen:setLoading(true)
+end)
+
+PauseScene = Scene:new("paused", (function () 
+    love.graphics.setColor(gray(127, 0.5))
+    love.graphics.rectangle("fill", 0, 0, love.graphics.getWidth(), love.graphics.getHeight())
+
+    love.graphics.setColor(GAME_COLOR_ACCENT)
+    setFont("header", 50)
+    love.graphics.printf(TEXT_PAUSED, 0, 100, love.graphics.getWidth(), "center")
+
+    btnPContinue:draw()
+    btnPOptions:draw()
+    btnPLose:draw()
+end),
+(function (dt)
+    btnPContinue:update(dt)
+    btnPOptions:update(dt)
+    btnPLose:update(dt)
+end),
+(function ()
+    local left = love.graphics.getWidth() / 2
+    btnPContinue.position.x = left
+    btnPOptions.position.x = left
+    btnPLose.position.x = left
+end))
+
+function pausemenuInit()
+    PauseScene.canDrawAll = true
+    GamePauseMenuScenes:addScene(PauseScene)
+
+    GamePauseMenuScenes:addScene(OptionsScene)
+
+    GamePauseMenuScenes:setActive(1)
+end
+
+pausemenuInit()
+
 function menuTranslate()
     btnPlay.text = TEXT_BTN_CONTINUE
     btnNewGame.text = TEXT_BTN_NEWGAME
@@ -274,4 +343,8 @@ function menuTranslate()
     btnOpts.text = TEXT_BTN_OPTS
     btnAbout.text = TEXT_BTN_ABOUT
     btnExit.text = TEXT_BTN_EXIT
+
+    btnPContinue.text = TEXT_PAUSED_CONTINUE
+    btnPOptions.text = TEXT_BTN_OPTS
+    btnPLose.text = TEXT_PAUSED_LOSE
 end

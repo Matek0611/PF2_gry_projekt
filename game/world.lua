@@ -12,8 +12,8 @@ local Button = require("libs/basics/Button")
 
 local WholeWorld = Class("WholeWorld")
 
-local BTN_WIDTH = 32
-local btnMenu = Button:new(love.graphics.getWidth() / 2, 0, BTN_WIDTH, BTN_WIDTH, "...")
+local BTN_WIDTH = 32 
+btnMenu = Button:new(love.graphics.getWidth() / 2, 0, BTN_WIDTH, BTN_WIDTH, "...")
 
 local lbLevel = Button:new(love.graphics.getWidth() / 2, love.graphics.getHeight() - 5 - 45 / 2, 150, 45, TEXT_LEVEL_NAME)
 lbLevel.static = true
@@ -52,13 +52,19 @@ function WholeWorld:draw()
     btnMenu:draw()
     lbLevel:draw()
     lbTime:draw()
+
+    if (GamePauseMenuScenes.active > 1) then 
+        local pc = getPrevColor()
+        GamePauseMenuScenes:draw()
+        love.graphics.setColor(pc) 
+    end
 end
 
 function WholeWorld:update(dt)
-    self.world:Update()
-    self.levels[self.level]:update(dt)
+    if not self.paused then  
+        self.world:Update()
+        self.levels[self.level]:update(dt)
 
-    if not self.paused then 
         self.timer = self.timer + (dt or 0)
         local sek = math.floor(self.timer) % 60
         local min = math.floor(math.floor(self.timer) / 60)
@@ -70,6 +76,8 @@ function WholeWorld:update(dt)
     btnMenu:update(dt)
     lbLevel.text = TEXT_LEVEL_NAME .. " " .. tostring(self.level)
     lbLevel:update(dt)
+
+    if (GamePauseMenuScenes.active > 1) then GamePauseMenuScenes:update(dt) end
 end
 
 function WholeWorld:updateSize()
@@ -97,6 +105,10 @@ end
 
 function WholeWorld:startTimer()
     self:resetTimer()
+    self.paused = false
+end
+
+function WholeWorld:resumeTimer()
     self.paused = false
 end
 

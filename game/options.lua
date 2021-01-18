@@ -17,7 +17,9 @@ GLOBAL_OPTIONS = {
     HERO_UP = "w",
     HERO_DOWN = "s",
     HERO_LEFT = "a",
-    HERO_RIGHT = "d"
+    HERO_RIGHT = "d",
+
+    BEST_TIME = 0
 }
 
 -- klasa zarządzania opcjami

@@ -27,10 +27,17 @@ function translateAll(lang)
         TEXT_BTN_ABOUT = "About"
         TEXT_BTN_EXIT = "Exit"
 
+        TEXT_PAUSED = "Paused"
+        TEXT_PAUSED_CONTINUE = "Continue"
+        TEXT_PAUSED_LOSE = "Lose"
+
         --about
         TEXT_ABOUT_AUTHOR = "Author"
         TEXT_ABOUT_MUSIC = "Music"
         TEXT_ABOUT_HELP = "Acknowledgments"
+
+        --stats
+        STATS_TIME = "Best Time"
 
         --globals
         STR_VERSION = "version"
@@ -99,10 +106,17 @@ function translateAll(lang)
         TEXT_BTN_ABOUT = "O grze"
         TEXT_BTN_EXIT = "Wyjdź z gry"
 
+        TEXT_PAUSED = "Pauza"
+        TEXT_PAUSED_CONTINUE = "Kontunnuj"
+        TEXT_PAUSED_LOSE = "Przegraj"
+
         --about
         TEXT_ABOUT_AUTHOR = "Autor"
         TEXT_ABOUT_MUSIC = "Muzyka"
         TEXT_ABOUT_HELP = "Podziękowania"
+
+        --stats
+        STATS_TIME = "Najlepszy czas"
 
         --globals
         STR_VERSION = "wersja"

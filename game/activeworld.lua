@@ -15,3 +15,9 @@ local translation = require("translation")
 local world = require("world")
 
 ActiveWorld = nil
+
+btnMenu.onClick = (function (sender)
+    GamePauseMenuScenes:setActive(2)
+    ActiveWorld:stopTimer()
+end)
+

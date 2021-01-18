@@ -17,7 +17,7 @@ function Music:initialize()
 
     self.active = nil
 
-    self.defvolume = 0.9
+    self.defvolume = 0.1
     self.volume = self.defvolume
 end
 

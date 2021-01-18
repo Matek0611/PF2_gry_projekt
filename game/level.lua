@@ -215,11 +215,14 @@ function Level:generateRooms()
 
     self:generateRoom(self.start_room_index, self.start_room_index)
 
+    local ile = 0
+
     for i = -self.rooms_count, self.rooms_count do 
         for j = -self.rooms_count, self.rooms_count do 
             if self.grid[i][j] ~= nil and self.grid[i][j] ~= "block" then
                 local rand_id = 0
                 local x, y = i, j
+                ile = ile + 1
 
                 if self.grid[x - 1][y] ~= nil and self.grid[x - 1][y] ~= "block" then
                     self.grid[i][j].surr.left = true
@@ -234,9 +237,11 @@ function Level:generateRooms()
                     self.grid[i][j].surr.bottom = true
                 end
 
-                if i == self.start_room_index then
+                if i == self.start_room_index and j == self.start_room_index then
                     rand_id = 0
                     self.grid[i][j].closed = false
+                elseif ile == self.rooms_count then
+                    rand_id = 100;
                 else
                     rand_id = love.math.random(1, RIDDLES_COUNT)
                 end
