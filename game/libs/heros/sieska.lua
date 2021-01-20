@@ -8,10 +8,7 @@ img_hero_Sieska = love.graphics.newImage("assets/img/postacie/projekt_postaci_si
 
 function Sieska:initialize()
     Hero.initialize(self)
-    self.deftxt = {n = HERO_SIESKA.NAME, d = HERO_SIESKA.DESC}
-    self.name = HERO_SIESKA.NAME
-    self.description = HERO_SIESKA.DESC
-    self.onUpdateStrings = (function(n, d) return {HERO_SIESKA.NAME, HERO_SIESKA.DESC} end)
+    self.strings = HERO_SIESKA
     self.heartc_k = 3
     self.heart_k = 3
 

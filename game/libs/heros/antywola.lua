@@ -6,10 +6,7 @@ local Antywola = Class("Antywola", Hero)
 
 function Antywola:initialize()
     Hero.initialize(self)
-    self.deftxt = {n = HERO_ANTYWOLA.NAME, d = HERO_ANTYWOLA.DESC}
-    self.name = HERO_ANTYWOLA.NAME
-    self.description = HERO_ANTYWOLA.DESC
-    self.onUpdateStrings = (function(n, d) return {HERO_ANTYWOLA.NAME, HERO_ANTYWOLA.DESC} end)
+    self.strings = HERO_ANTYWOLA
     self.heartc_k = 0
     self.heart_k = 0
     self.heart_tm = 8

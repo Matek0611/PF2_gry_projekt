@@ -6,13 +6,10 @@ local Myniek = Class("Myniek", Hero)
 
 function Myniek:initialize()
     Hero.initialize(self)
-    self.deftxt = {n = HERO_MYNIEK.NAME, d = HERO_MYNIEK.DESC}
-    self.name = HERO_MYNIEK.NAME
-    self.description = HERO_MYNIEK.DESC
-    self.onUpdateStrings = (function(n, d) return {HERO_MYNIEK.NAME, HERO_MYNIEK.DESC} end)
+    self.strings = HERO_MYNIEK
     self.heartc_k = 2
-    self.heart_k = 2
-    self.heart_b = 1
+    self.heart_k = 0
+    self.heart_b = 0
     self.onDraw = (function() 
         
     end)
