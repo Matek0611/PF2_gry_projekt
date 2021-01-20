@@ -1,6 +1,6 @@
 local utf8 = require("utf8")
-local menu = require("menu")
 local globals = require("globals")
+local menu = require("menu")
 local gamemode = require("gamemode")
 local splash = require("splash")
 local translation = require("translation")
@@ -17,7 +17,8 @@ function love.load()
     love.window.setIcon(love.image.newImageData("assets/img/ikona1.png"))
     love.graphics.setDefaultFilter("nearest", "nearest")
     love.graphics.setBackgroundColor(gray(255, 1))
-    -- love.window.setFullscreen(true, "exclusive")
+
+    loadShaders()
 
     ManageOpts:load()
 

@@ -72,7 +72,7 @@ btnStart.onClick = (function(sender)
     LoadingScreen:setLoading(true)
 end)
 
-lbHeroName = Button:new(0, 0, 280, 80, wHeroes[wHero].name)
+lbHeroName = Button:new(0, 0, 280, 80, wHeroes[wHero].strings.NAME)
 lbHeroName.shadow = false
 lbHeroName.static = true
 lbHeroName.fontsize = 30
@@ -141,7 +141,7 @@ local function NewGameSceneDraw()
 
     love.graphics.setColor(clWhite)
     setFont("text", 20)
-    love.graphics.printf(wHeroes[wHero].description, 0, 210, love.graphics.getWidth(), "center")
+    love.graphics.printf(wHeroes[wHero].strings.DESC, 0, 210, love.graphics.getWidth(), "center")
 
     love.graphics.setColor(pc)
 
@@ -163,19 +163,34 @@ local function NewGameSceneUpdate(dt)
     
     btnPrevHero:update(dt)
     btnNextHero:update(dt)
-    lbHeroName.text = wHeroes[wHero].name
+    lbHeroName.text = wHeroes[wHero].strings.NAME
     lbHeroName:update(dt)
 end
 
 local function NewGameSceneiUpdate()
     btnReturn:setPosition(45, love.graphics.getHeight() / 2)
     btnStart:setPosition(love.graphics.getWidth() / 2, love.graphics.getHeight() - 110 + GlobalTextItemEffect.currenty)
+    if btnStart.text ~= TEXT_NEWGAME_TITLE then
+        btnStart.text = TEXT_NEWGAME_TITLE
+    end
     
     lbHeroName:setPosition(love.graphics.getWidth() / 2, 150)
     btnPrevHero:setPosition((love.graphics.getWidth() - lbHeroName.width - btnPrevHero.width) / 2 + 20, lbHeroName.position.y)
     btnNextHero:setPosition((love.graphics.getWidth() + lbHeroName.width + btnNextHero.width) / 2 - 20, lbHeroName.position.y)
 
     for i = 1, #wHeroes do 
+        local h = ""
+        if i == 1 then 
+            h = HERO_SIESKA
+        elseif i == 2 then 
+            h = HERO_MYNIEK
+        elseif i == 3 then
+            h = HERO_ANTYWOLA
+        else
+            h = HERO_PUSIA
+        end
+        wHeroes[i].strings = h
+
         wHeroes[i].scalefrom = math.round(love.graphics.getHeight() / 720 * 100)
         wHeroes[i]:setCenterPosition(love.graphics.getWidth() / 2, love.graphics.getHeight() / 2 + 20)
     end

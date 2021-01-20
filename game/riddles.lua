@@ -11,43 +11,6 @@ local RectangleRoom = require("libs/shadows.Room.RectangleRoom")
 
 local Riddle = Class("Riddle")
 
-RIDDLES_COUNT = 10
-RIDDLES_LANG = ""
-
-RIDDLES = {}
-for i = 1, RIDDLES_COUNT do 
-    RIDDLES[i] = {}
-    RIDDLES[i].content = ""
-end
-
-function translateRiddles()
-    if GLOBAL_OPTIONS.OPTS_LANG == RIDDLES_LANG then return end
-
-    if GLOBAL_OPTIONS.OPTS_LANG == "en" then 
-        RIDDLES[1].content = "What number will be next in this sequence?\n0, %d, %d, %d, %d, %d, ?"
-        RIDDLES[2].content = "What number will be next in this sequence?\n%d, %d, %d, %d, %d, %d, ?"
-        RIDDLES[3].content = "In the last %d matches, Adam scored %d, Wojtek scored %d, and Maciek half the number of goals scored by Adam and Wojtek together. How many goals have they scored in total?"
-        RIDDLES[4].content = "%d people pick up their coats after the party. But it's a mess there. If %d people have their own coat, what is the probability that person number %d has someone else's coat?"
-        RIDDLES[5].content = "If log(x, ⁡%d) = log(x, ⁡%d) + log(x, ⁡%d), x = e is true."
-        RIDDLES[6].content = "Arrange the numbers in ascending order.\n%d, %d, %d, %d, %d, %d"
-        RIDDLES[7].content = "If %s has less money than %s and %s has more money than %s, then %s has less money than %s. True or False?"
-        RIDDLES[8].content = "Which number does not match the rest?\n%d, %d, %d, %d, %d, %d, %d"
-        RIDDLES[9].content = "Calculate (%d - (- %d)) / 3 / (- %d + 2 * %d)."
-        RIDDLES[10].content = "Do both equations give the same result?\nx - log%d1 = 1\n%d^0 = x + 0!"
-    else
-        RIDDLES[1].content = "Jaka liczba będzie następna w tym ciągu?\n0, %d, %d, %d, %d, %d, ?"
-        RIDDLES[2].content = "Jaka liczba będzie następna w tym ciągu?\n%d, %d, %d, %d, %d, %d, ?"
-        RIDDLES[3].content = "W ostatnich %d meczach Adam strzelił %d bramek, Wojtek strzelił %d, a Maciek połowę liczby bramek uzyskanych przez Adama i Wojtka razem. Ile goli zdobyli łącznie?"
-        RIDDLES[4].content = "%d osób odbiera swoje płaszcze po przyjęciu. Panuje tam jednak bałagan. Jeżeli %d osób ma swój płaszcz, to jakie jest prawdopodobieństwo, że osoba numer %d ma cudzy płaszcz?"
-        RIDDLES[5].content = "Jeżeli log(x, ⁡%d) = log(x, ⁡%d) + log(x, ⁡%d), to x = e jest prawdziwe."
-        RIDDLES[6].content = "Uporządkuj liczby od najmniejszej do największej.\n%d, %d, %d, %d, %d, %d"
-        RIDDLES[7].content = "Jeśli %s ma mniej pieniędzy niż %s, a %s ma więcej pieniędzy niż %s, to %s ma mniej pieniędzy niż %s. Prawda czy fałsz?"
-        RIDDLES[8].content = "Która liczba nie pasuje do pozostałych?\n%d, %d, %d, %d, %d, %d, %d"
-        RIDDLES[9].content = "Oblicz (%d - (- %d)) / 3 / (- %d + 2 * %d)."
-        RIDDLES[10].content = "Czy oba równania dają taki sam wynik?\nx - log(%d, 1) = 1\n%d^0 = x + 0!"
-    end
-end
-
 function Riddle:initialize(room, level)
     self.room = room
     self.level = level

@@ -18,6 +18,22 @@ function math.round(x)
     return math.floor(x + 0.5)
 end
 
+local moonshine = require("libs/moonshine")
+
+-- shadery
+function loadShaders()
+    bgEffect = moonshine.chain(moonshine.effects.fog)
+    bgEffect.fog.speed = {0.8, 0.9}
+
+    shBgEffect = moonshine.chain(moonshine.effects.vignette)
+    shBgEffect.vignette.opacity = 0.4
+    shRays = moonshine.chain(moonshine.effects.godsray)
+    shRays.godsray.exposure = 0.08
+
+    levelBlur = moonshine.chain(moonshine.effects.fastgaussianblur)
+    levelBlur.fastgaussianblur.taps = 13
+end
+
 local ItemEffect = require("libs/basics/ItemEffect")
 
 GlobalTextItemEffect = ItemEffect:new(0, 0, 0, 10, 1, 1)

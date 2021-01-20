@@ -10,12 +10,8 @@ local lightworld = require("libs/shadows.lightworld")
 local Level = require("level")
 local Button = require("libs/basics/Button")
 local ItemEffect = require("libs/basics/ItemEffect")
-local moonshine = require("libs/moonshine")
 
 local WholeWorld = Class("WholeWorld")
-
-levelBlur = moonshine.chain(moonshine.effects.fastgaussianblur)
-levelBlur.fastgaussianblur.taps = 13
 
 local BTN_WIDTH = 32 
 btnMenu = Button:new(love.graphics.getWidth() / 2, 0, BTN_WIDTH, BTN_WIDTH, "...")
@@ -171,7 +167,15 @@ function WholeWorld:updateSize()
 end
 
 function WholeWorld:keypressed(key, scancode, isrepeat)
-    
+    if self.finished then return end
+
+    if key == "escape" then
+        if self.paused then
+            btnPContinue.onClick(btnPContinue)
+        else
+            btnMenu.onClick(btnMenu)
+        end
+    end
 end
 
 function WholeWorld:resetTimer()

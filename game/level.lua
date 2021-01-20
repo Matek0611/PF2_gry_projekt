@@ -12,11 +12,10 @@ local Light = require("libs/shadows.Light")
 local Star = require("libs/shadows.Star")
 local moonshine = require("libs/moonshine")
 local Riddle = require("riddles")
+local ItemEffect = require("libs/basics/ItemEffect")
 
 local Level = Class("Level")
 
-bgEffect = moonshine.chain(moonshine.effects.fog)
-bgEffect.fog.speed = {0.8, 0.9}
 local time = 0
 
 -- 1..9
@@ -40,11 +39,11 @@ portal_colors = {
 }
 
 local PARTICLES_1 = love.graphics.newParticleSystem(love.graphics.newImage("assets/img/particle_cursor.png"), 100)
-PARTICLES_1:setParticleLifetime(1, 5)
-PARTICLES_1:setEmissionRate(5)
+PARTICLES_1:setParticleLifetime(1, 7)
+PARTICLES_1:setEmissionRate(25)
 PARTICLES_1:setSizes(1, 0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3)
 PARTICLES_1:setSizeVariation(0.2)
-PARTICLES_1:setLinearAcceleration(-5, -5, 5, 5)
+PARTICLES_1:setLinearAcceleration(-50, -50, 50, 50)
 PARTICLES_1:setColors(1, 1, 1, 1, 1, 1, 1, 0)
 
 local room_colors_dark = {}
@@ -56,8 +55,6 @@ local room_colors_dark2 = {}
 for i = 1, #room_colors do 
     room_colors_dark2[i] = colorlight(room_colors[i], 0.85)
 end
-
-local shVignette = moonshine.chain(moonshine.effects.vignette)
 
 function Level:initialize(nr_level, world, activeworld)
     self.world = world
@@ -362,9 +359,10 @@ function Level:roomDraw()
     love.graphics.line(self.left + self.gridsize * 16 - 2, self.top + self.gridsize * 9 + 2, self.left + self.gridsize * 15 - 2, self.top + self.gridsize * 8 - 2)
 
     if self:getRoom().id == 100 then
+        love.graphics.setColor(pc)
         love.graphics.draw(PARTICLES_1, self.left + self.gridsize * 8, self.top + self.gridsize * 4.5)
-        love.graphics.setColor(portal_colors[3])
-        love.graphics.ellipse("fill", self.left + self.gridsize * 8, self.top + self.gridsize * 4.5, self.gridsize, self.gridsize)
+        love.graphics.setColor(clWhite)
+        love.graphics.ellipse("fill", self.left + self.gridsize * 8, self.top + self.gridsize * 4.5, self.gridsize / 2, self.gridsize / 2)
     end
 
     love.graphics.setColor(pc)
@@ -374,7 +372,6 @@ function Level:roomDraw()
     end
 
     self.world.hero:draw()
-    self.world.hero:drawHearts(10, 10)
 end
 
 function Level:bgDraw()
@@ -400,17 +397,35 @@ end
 function Level:draw() 
     if self:getRoom() == nil then return end
 
-    local plc = getPrevColor()
+    shBgEffect.draw(function () 
+        local plc = getPrevColor()
 
-    self:bgDraw()
-    love.graphics.setColor(plc)
-    self:getRoom():Draw()
-    love.graphics.setColor(plc)
-    self:roomDraw()
-    love.graphics.setColor(plc)
-    self:drawMinimap()
+        if self:getRoom().id ~= 100 then 
+            self:bgDraw()
+            love.graphics.setColor(plc)
+            self:getRoom():Draw()
+            love.graphics.setColor(plc)
+            self:roomDraw()
+            love.graphics.setColor(plc)
+            self.world.hero:drawHearts(10, 10)
+            love.graphics.setColor(plc)
+            self:drawMinimap()
+        else
+            shRays.draw(function () 
+                self:bgDraw()
+                love.graphics.setColor(plc)
+                self:getRoom():Draw()
+                love.graphics.setColor(plc)
+                self:roomDraw()
+            end)
+            love.graphics.setColor(plc)
+            self.world.hero:drawHearts(10, 10)
+            love.graphics.setColor(plc)
+            self:drawMinimap()
+        end
 
-    love.graphics.setColor(plc)
+        love.graphics.setColor(plc)
+    end)
 end
 
 local colfr1, colfr2, colrm1 = gray(0, 0.4), gray(0, 1), gray(50, 1)
@@ -476,9 +491,7 @@ end
 
 function Level:update(dt)
     if self:getRoom() == nil then return end
-
-    translateRiddles()
-
+    
     self:getRoom():Update()
     self:bgUpdate(dt)
     self.world.hero:update(dt)
@@ -564,7 +577,8 @@ function Level:updateSize()
     self.temp_scale = (self.gridsize / pgs)
 
     bgEffect.resize(self.world.Width, self.world.Height)
-    shVignette.resize(self.world.Width, self.world.Height)
+    shBgEffect.resize(self.world.Width, self.world.Height)
+    shRays.resize(self.world.Width, self.world.Height)
 
     self:updateRooms()
 end

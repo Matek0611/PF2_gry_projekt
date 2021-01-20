@@ -380,6 +380,8 @@ function menuTranslate()
     btnAbout.text = TEXT_BTN_ABOUT
     btnExit.text = TEXT_BTN_EXIT
 
+    btnReturn.text = OPTS_BTN_BACK
+
     btnPContinue.text = TEXT_PAUSED_CONTINUE
     btnPOptions.text = TEXT_BTN_OPTS
     btnPLose.text = TEXT_PAUSED_LOSE

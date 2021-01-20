@@ -1,5 +1,30 @@
 local globals = require("globals")
 local options = require("options")
+local herosdesc = require("libs/heros/herosdesc")
+
+--Sieśka
+HERO_SIESKA = {
+    NAME = "Sieśka",
+    DESC = "Najzwyklejsza postać z krwi i kości."
+}
+
+--Myniek
+HERO_MYNIEK = {
+    NAME = "Myniek",
+    DESC = "Uwielbia słodkie zagadki."
+}
+
+--Antywola
+HERO_ANTYWOLA = {
+    NAME = "Antywola",
+    DESC = "Jemu nic się nie chce."
+}
+
+--Pusia del Bejduls
+HERO_PUSIA = {
+    NAME = "Pusia del Bejduls",
+    DESC = "Kot jak to kot ma 9 żyć."
+}
 
 TEXT_BTN_CONTINUE = "Kontynuuj"
 TEXT_BTN_NEWGAME = "Nowa ucieczka"
@@ -10,6 +35,40 @@ TEXT_BTN_EXIT = "Wyjdź z gry"
 
 TEXT_NEWGAME_TITLE = "Rozpocznij nową ucieczkę"
 TEXT_NEWGAME_HEADER = "Z którym bohaterem zaczniesz dziś nową ucieczkę?"
+
+RIDDLES_COUNT = 10
+
+RIDDLES = {}
+for i = 1, RIDDLES_COUNT do 
+    RIDDLES[i] = {}
+    RIDDLES[i].content = ""
+end
+
+onTranslateRiddles = (function ()
+    if GLOBAL_OPTIONS.OPTS_LANG == "en" then 
+        RIDDLES[1].content = "What number will be next in this sequence?\n0, %d, %d, %d, %d, %d, ?"
+        RIDDLES[2].content = "What number will be next in this sequence?\n%d, %d, %d, %d, %d, %d, ?"
+        RIDDLES[3].content = "In the last %d matches, Adam scored %d, Wojtek scored %d, and Maciek half the number of goals scored by Adam and Wojtek together. How many goals have they scored in total?"
+        RIDDLES[4].content = "%d people pick up their coats after the party. But it's a mess there. If %d people have their own coat, what is the probability that person number %d has someone else's coat?"
+        RIDDLES[5].content = "If log(x, ⁡%d) = log(x, ⁡%d) + log(x, ⁡%d), x = e is true."
+        RIDDLES[6].content = "Arrange the numbers in ascending order.\n%d, %d, %d, %d, %d, %d"
+        RIDDLES[7].content = "If %s has less money than %s and %s has more money than %s, then %s has less money than %s. True or False?"
+        RIDDLES[8].content = "Which number does not match the rest?\n%d, %d, %d, %d, %d, %d, %d"
+        RIDDLES[9].content = "Calculate (%d - (- %d)) / 3 / (- %d + 2 * %d)."
+        RIDDLES[10].content = "Do both equations give the same result?\nx - log%d1 = 1\n%d^0 = x + 0!"
+    else
+        RIDDLES[1].content = "Jaka liczba będzie następna w tym ciągu?\n0, %d, %d, %d, %d, %d, ?"
+        RIDDLES[2].content = "Jaka liczba będzie następna w tym ciągu?\n%d, %d, %d, %d, %d, %d, ?"
+        RIDDLES[3].content = "W ostatnich %d meczach Adam strzelił %d bramek, Wojtek strzelił %d, a Maciek połowę liczby bramek uzyskanych przez Adama i Wojtka razem. Ile goli zdobyli łącznie?"
+        RIDDLES[4].content = "%d osób odbiera swoje płaszcze po przyjęciu. Panuje tam jednak bałagan. Jeżeli %d osób ma swój płaszcz, to jakie jest prawdopodobieństwo, że osoba numer %d ma cudzy płaszcz?"
+        RIDDLES[5].content = "Jeżeli log(x, ⁡%d) = log(x, ⁡%d) + log(x, ⁡%d), to x = e jest prawdziwe."
+        RIDDLES[6].content = "Uporządkuj liczby od najmniejszej do największej.\n%d, %d, %d, %d, %d, %d"
+        RIDDLES[7].content = "Jeśli %s ma mniej pieniędzy niż %s, a %s ma więcej pieniędzy niż %s, to %s ma mniej pieniędzy niż %s. Prawda czy fałsz?"
+        RIDDLES[8].content = "Która liczba nie pasuje do pozostałych?\n%d, %d, %d, %d, %d, %d, %d"
+        RIDDLES[9].content = "Oblicz (%d - (- %d)) / 3 / (- %d + 2 * %d)."
+        RIDDLES[10].content = "Czy oba równania dają taki sam wynik?\nx - log(%d, 1) = 1\n%d^0 = x + 0!"
+    end
+end)
 
 function translateAll(lang)
     lang = lang or "pl"
@@ -71,12 +130,24 @@ function translateAll(lang)
         OPTS_PAGE_VIDEO = "VIDEO"
         OPTS_PAGE_AUDIO = "AUDIO"
 
+        OPTS_PAGE_GAME_BTN_FPS = "Show Frames Per Second"
+
+        OPTS_PAGE_CONTR_LB_MOVEUP = "Move Up"
+        OPTS_PAGE_CONTR_LB_MOVEDOWN = "Move Down"
+        OPTS_PAGE_CONTR_LB_MOVELEFT = "Move Left"
+        OPTS_PAGE_CONTR_LB_MOVERIGHT = "Move Right"
+
+        OPTS_PAGE_VID_LB_LANG = "Language"
+
+        OPTS_PAGE_AUD_LB_VOL = "Global Volume"
+
         --heros
         --Sieśka
         HERO_SIESKA = {
             NAME = "Sieśka",
             DESC = "The most ordinary creature of flesh and blood."
         }
+
         --Myniek
         HERO_MYNIEK = {
             NAME = "Myniek",
@@ -96,6 +167,7 @@ function translateAll(lang)
         --new game
         TEXT_NEWGAME_TITLE = "Start a New Escape"
         TEXT_NEWGAME_HEADER = "Who are you going to start a new escape with today?"
+        TEXT_LEVEL_NAME = "Level"
     else --if lang == "pl" then
         --game
         -- GAME_PRINT_NAME = "Koglomoglowy Uciekinier"
@@ -153,6 +225,17 @@ function translateAll(lang)
         OPTS_PAGE_VIDEO = "OBRAZ"
         OPTS_PAGE_AUDIO = "DŹWIĘK"
 
+        OPTS_PAGE_GAME_BTN_FPS = "Pokazuj ilość klatek na sekundę"
+
+        OPTS_PAGE_CONTR_LB_MOVEUP = "Idź w górę"
+        OPTS_PAGE_CONTR_LB_MOVEDOWN = "Idź w dół"
+        OPTS_PAGE_CONTR_LB_MOVELEFT = "Idź w lewo"
+        OPTS_PAGE_CONTR_LB_MOVERIGHT = "Idź w prawo"
+
+        OPTS_PAGE_VID_LB_LANG = "Język"
+
+        OPTS_PAGE_AUD_LB_VOL = "Ogólna głośność"
+
         --heros
         --Sieśka
         HERO_SIESKA = {
@@ -178,7 +261,10 @@ function translateAll(lang)
         --new game
         TEXT_NEWGAME_TITLE = "Rozpocznij nową ucieczkę"
         TEXT_NEWGAME_HEADER = "Z którym bohaterem zaczniesz dziś nową ucieczkę?"
+        TEXT_LEVEL_NAME = "Poziom"
     end
+
+    onTranslateRiddles()
 
     menuTranslate()
 

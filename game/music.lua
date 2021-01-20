@@ -25,7 +25,7 @@ function Music:initialize()
 
     self.active = nil
 
-    self.defvolume = 0.2
+    self.defvolume = 0.8
     self.volume = self.defvolume
 end
 
@@ -66,10 +66,14 @@ function Music:play(what)
 end
 
 function Music:setVolume(value)
-    value = value or self.defvolume
-    if value > 1 or value < 0 or self.active == nil then return end
+    if self.active == nil or type(value) ~= "number" then return end
 
+    if value > 1 then self.volume = 1 end
+    if value < 0 then self.volume = 0 end 
+
+    love.audio.setVolume(value)
     self.active:setVolume(value)
+    self.volume = value
 end
 
 function Music:stop()
