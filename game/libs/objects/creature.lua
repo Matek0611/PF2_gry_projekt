@@ -6,9 +6,7 @@ local Creature = Class("Creature", BasicObject)
 function Creature:initialize(defname, defdescription)
     BasicObject.initialize(self, "")
     self.name = ""
-    self.description = ""
-    self.deftxt = {n = defname or "", d = defdescription or ""}
-    self.onUpdateStrings = nil
+    self.strings = {NAME = "", DESC = ""}
     
     self.onDraw = nil
     self.onUpdate = nil
@@ -43,14 +41,6 @@ function Creature:update(dt)
     self:updateEx(dt)
     if self.onUpdate ~= nil then
         self.onUpdate(dt)
-    end
-    if self.onUpdateStrings ~= nil then
-        if self.name ~= self.deftxt.n or self.description ~= self.deftxt.d then
-            local str = self.onUpdateStrings(n, d)
-            self.name = str[1] or ""
-            self.description = str[2] or ""
-            self.deftxt = {n = str[1] or "", d = str[2] or ""}
-        end
     end
 end
 
