@@ -24,6 +24,7 @@ function Hero:initialize()
     self.heart_s = 0
     self.heart_tc = 0 
     self.lives = 1
+    self.dead = false
 
     self.fps = 15
     self.anim_timer = 1 / self.fps
@@ -47,6 +48,10 @@ end
 
 function Hero:updateEx(dt)
     if not self.canmove then return end
+
+    if self.heart_k < 0.5 or self.heart_k > self.heartc_k then 
+        self:hurt()
+    end
 
     local go = GLOBAL_OPTIONS
     local k = love.keyboard
@@ -93,6 +98,28 @@ function Hero:calcLife()
     self.life = self.heart_k + self.heart_b + self.heart_tm + self.heart_s + self.heart_tc 
 end
 
+function Hero:hurt()
+    local Music = require("music")
+
+    if self.heart_k < 0.5 and self.lives == 1 then 
+        self.dead = true
+        ManageMusic:play("bum")
+    else
+        if self.heart_k < 0.5 then 
+            self.lives = self.lives - 1
+            self.heart_k = self.heartc_k
+        else
+            self.heart_k = math.max(self.heart_k - 0.5, 0)
+        end
+    end
+end
+
+function Hero:cure()
+    if self.heart_k == self.heartc_k then return end
+
+    self.heart_k = self.heart_k + 0.5
+end
+
 img_serce_k_puste = love.graphics.newImage("assets/img/serca/serce_k_puste.png")
 img_serce_k_pol = love.graphics.newImage("assets/img/serca/serce_k_pol.png")
 img_serce_k_pelne = love.graphics.newImage("assets/img/serca/serce_k_pelne.png")
@@ -128,6 +155,14 @@ function Hero:drawHearts(x, y)
                 lastx = lastx + img_serce_k_puste:getWidth() * img_serce_scale + img_serce_spacing
             end
         end
+    end
+
+    if self.lives > 1 then 
+        local globals = require("globals")
+
+        love.graphics.setColor(clWhite)
+        setFont("text", 20)
+        love.graphics.printf(string.format("x%d", self.lives), lastx + 10, y + 8, 100, "left")
     end
 end
 
