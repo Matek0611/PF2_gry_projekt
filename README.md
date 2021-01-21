@@ -3,6 +3,8 @@ Gra na projekt z przedmiotu PF2 Programowanie gier
 
 __Dokumentacja:__ [tutaj (dokument/projekt_gry.md)](/dokument/projekt_gry.md) 
 
+__Link do gotowej gry:__ https://drive.google.com/drive/folders/1q9dPk7oJv_AI0qLY9FNg730Y4AHueoC-?usp=sharing
+
 ---
 
 __Autor:__ Marcin Stefanowicz
