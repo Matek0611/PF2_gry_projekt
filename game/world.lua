@@ -110,12 +110,25 @@ function WholeWorld:update(dt)
 
     if PortalEffect.active then PortalEffect:update(dt) end
 
+    if self.world.hero.dead then
+        self.finished = true
+        self:stopTimer()
+        
+        GamePauseMenuScenes:setActive(4)
+    end
+
     if self.next and PortalEffect.currentscale > 1 then
         self.next = false
         PortalEffect:stop()
-        if self.level == 10 then
+        if self.level == 10 or self.world.hero.dead then
             self.finished = true
             self:stopTimer()
+
+            if GLOBAL_OPTIONS.BEST_TIME == 0 then 
+                GLOBAL_OPTIONS.BEST_TIME = self.timer
+            else
+                GLOBAL_OPTIONS.BEST_TIME = min(GLOBAL_OPTIONS.BEST_TIME, self.timer)
+            end
             
             GamePauseMenuScenes:setActive(4)
         else

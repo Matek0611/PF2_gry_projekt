@@ -36,7 +36,7 @@ TEXT_BTN_EXIT = "Wyjdź z gry"
 TEXT_NEWGAME_TITLE = "Rozpocznij nową ucieczkę"
 TEXT_NEWGAME_HEADER = "Z którym bohaterem zaczniesz dziś nową ucieczkę?"
 
-RIDDLES_COUNT = 10
+RIDDLES_COUNT = 11
 
 RIDDLES = {}
 for i = 1, RIDDLES_COUNT do 
@@ -56,6 +56,7 @@ onTranslateRiddles = (function ()
         RIDDLES[8].content = "Which number does not match the rest?\n%d, %d, %d, %d, %d, %d, %d"
         RIDDLES[9].content = "Calculate (%d - (- %d)) / 3 / (- %d + 2 * %d)."
         RIDDLES[10].content = "Do both equations give the same result?\nx - log%d1 = 1\n%d^0 = x + 0!"
+        RIDDLES[11].content = "'Well, the great-uncle of my second husband's brother-in-law (...), extremely handsome' bought %d eggs in the shop. He broke half a dozen eggs on his way home. There are still %d more eggs waiting for him in the fridge. How many total eggs does he have?"
     else
         RIDDLES[1].content = "Jaka liczba będzie następna w tym ciągu?\n0, %d, %d, %d, %d, %d, ?"
         RIDDLES[2].content = "Jaka liczba będzie następna w tym ciągu?\n%d, %d, %d, %d, %d, %d, ?"
@@ -67,6 +68,7 @@ onTranslateRiddles = (function ()
         RIDDLES[8].content = "Która liczba nie pasuje do pozostałych?\n%d, %d, %d, %d, %d, %d, %d"
         RIDDLES[9].content = "Oblicz (%d - (- %d)) / 3 / (- %d + 2 * %d)."
         RIDDLES[10].content = "Czy oba równania dają taki sam wynik?\nx - log(%d, 1) = 1\n%d^0 = x + 0!"
+        RIDDLES[11].content = ",,Otóż stryjeczny wuj szwagra mego drugiego męża (...), niesłychanie przystojny'' kupił w sklepie %d jajek. Wracając do domu rozbił pół tuzina jajek. W lodówce czeka na niego jeszcze %d jajek. Ile łącznie ma wszystkich jajek?"
     end
 end)
 
@@ -168,6 +170,12 @@ function translateAll(lang)
         TEXT_NEWGAME_TITLE = "Start a New Escape"
         TEXT_NEWGAME_HEADER = "Who are you going to start a new escape with today?"
         TEXT_LEVEL_NAME = "Level"
+
+        --inne
+        ODP_YES = "Yes"
+        ODP_NO = "No"
+        ODP_TRUE = "True"
+        ODP_FALSE = "False"
     else --if lang == "pl" then
         --game
         -- GAME_PRINT_NAME = "Koglomoglowy Uciekinier"
@@ -262,6 +270,12 @@ function translateAll(lang)
         TEXT_NEWGAME_TITLE = "Rozpocznij nową ucieczkę"
         TEXT_NEWGAME_HEADER = "Z którym bohaterem zaczniesz dziś nową ucieczkę?"
         TEXT_LEVEL_NAME = "Poziom"
+
+        --inne
+        ODP_YES = "Tak"
+        ODP_NO = "Nie"
+        ODP_TRUE = "Prawda"
+        ODP_FALSE = "Fałsz"
     end
 
     onTranslateRiddles()

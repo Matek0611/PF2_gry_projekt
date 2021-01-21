@@ -9,10 +9,11 @@ local music = require("music")
 -- zmienne globalne z opcjami
 
 GLOBAL_OPTIONS = {
-    DEBUG_MODE = true,
+    DEBUG_MODE = false,
     
     OPTS_FPS_ON = false,
     OPTS_LANG = "pl",
+    OPTS_VOL = 0.7,
     
     HERO_UP = "w",
     HERO_DOWN = "s",
@@ -33,7 +34,7 @@ function OptionsManagement:initialize()
 end
 
 function OptionsManagement:save()
-    --savedata.save(GLOBAL_OPTIONS, self.filename)
+    savedata.save(GLOBAL_OPTIONS, self.filename)
 end
 
 function OptionsManagement:load()
@@ -210,22 +211,32 @@ local sc4btnVolDownBtn = Button:new(-200, -200, 50, OPTS_ROW_H, "-")
 sc4btnVolDownBtn.colors = BTN_WHITE_THEME
 sc4btnVolDownBtn.fontname = "text"
 sc4btnVolDownBtn.onClick = (function (sender) 
-    if ManageMusic.volume == 0 then return end
-    if ManageMusic.volume == 0.2 then ManageMusic:setVolume(0.1) end -- poprawić buga 
-    ManageMusic:setVolume(ManageMusic.volume - 0.1)
+    if ManageMusic.volume < 0.1 then return end
+    ManageMusic:setVolume(math.max(0.1, ManageMusic.volume - 0.1))
+    GLOBAL_OPTIONS.OPTS_VOL = ManageMusic.volume
 end)
 local sc4btnVolUpBtn = Button:new(-200, -200, 50, OPTS_ROW_H, "+")
 sc4btnVolUpBtn.colors = BTN_WHITE_THEME
 sc4btnVolUpBtn.fontname = "text"
 sc4btnVolUpBtn.onClick = (function (sender) 
-    if ManageMusic.volume == 1 then return end
-    ManageMusic:setVolume(ManageMusic.volume + 0.1)
+    if ManageMusic.volume >= 1 then return end
+    ManageMusic:setVolume(math.min(ManageMusic.volume + 0.1, 1))
+    GLOBAL_OPTIONS.OPTS_VOL = ManageMusic.volume
 end)
 
 -- reszta
 
 loadDataFromOpts = (function () 
+    if GLOBAL_OPTIONS.OPTS_FPS_ON then sc1btnFPS.checked = true end
+    if GLOBAL_OPTIONS.OPTS_LANG ~= "pl" then sc3btnLangBtn.onClick(sc3btnLangBtn) end
+    
+    if GLOBAL_OPTIONS.HERO_UP ~= "w" then sc2btnMoveUpBtn.onClick(sc2btnMoveUpBtn) end
+    if GLOBAL_OPTIONS.HERO_DOWN ~= "s" then sc2btnMoveDownBtn.onClick(sc2btnMoveDownBtn) end
+    if GLOBAL_OPTIONS.HERO_LEFT ~= "a" then sc2btnMoveLeftBtn.onClick(sc2btnMoveLeftBtn) end
+    if GLOBAL_OPTIONS.HERO_RIGHT ~= "d" then sc2btnMoveRightBtn.onClick(sc2btnMoveRightBtn) end
 
+    ManageMusic:setVolume(math.max(0, math.min(GLOBAL_OPTIONS.OPTS_VOL or 0.7, 1)))
+    GLOBAL_OPTIONS.OPTS_VOL = ManageMusic.volume
 end)
 
 function updateExOpts()

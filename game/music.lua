@@ -9,8 +9,8 @@ function Music:initialize()
     self.loading_and_menu:setLooping(true)
 
     self.swoosh = love.audio.newSource(self.path .. "Swoosh.mp3", "stream")
-
     self.click = love.audio.newSource(self.path .. "Pen Clicking.mp3", "stream")
+    self.bum = love.audio.newSource(self.path .. "Big Explosion Cut Off.mp3", "stream")
 
     self.level1 = love.audio.newSource(self.path .. "Pluckandplay - Kwon.mp3", "stream")
     self.level1:setLooping(true)
@@ -37,6 +37,9 @@ function Music:play(what)
         m = self.loading_and_menu
     elseif what == "swoosh" then
         m = self.swoosh
+        issound = true
+    elseif what == "bum" then
+        m = self.bum
         issound = true
     elseif what == "click" then
         m = self.click

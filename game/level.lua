@@ -61,6 +61,7 @@ function Level:initialize(nr_level, world, activeworld)
     self.activeworld = activeworld
     self.nr = nr_level
     self.current_room = {x = 0, y = 0}
+    self.genlast = self.rooms_count
 
     self.clRoomMain, self.clRoomBorder, self.clRoomWalls = room_colors[self.nr], room_colors_dark[self.nr], room_colors_dark2[self.nr]
 
@@ -81,8 +82,9 @@ function Level:newRoom(posx, posy)
     room.walls = {}
     room.surrounded = false
     room.id = 0
-    room.closed = false --true
+    room.closed = true
     room.surr = {top = false, bottom = false, left = false, right = false}
+    room.level = self
     room.prepare = (function () 
         
     end)
@@ -363,6 +365,8 @@ function Level:roomDraw()
         love.graphics.draw(PARTICLES_1, self.left + self.gridsize * 8, self.top + self.gridsize * 4.5)
         love.graphics.setColor(clWhite)
         love.graphics.ellipse("fill", self.left + self.gridsize * 8, self.top + self.gridsize * 4.5, self.gridsize / 2, self.gridsize / 2)
+        love.graphics.setLineWidth(3)
+        love.graphics.ellipse("line", self.left + self.gridsize * 8, self.top + self.gridsize * 4.5, self.gridsize / 2, self.gridsize / 2)
     end
 
     love.graphics.setColor(pc)
@@ -499,11 +503,14 @@ function Level:update(dt)
 
     if self:getRoom().id == 100 then PARTICLES_1:update(dt or 0) end
 
+    self:getRoom().riddle:update(dt)
+    if self:getRoom().riddle.finished and self:getRoom().closed then self:getRoom().closed = false end
+
     if self:getRoom().closed then return end
     local h = self.world.hero
     local p = h.position
-    local sx = self.left + self.gridsize * 8
-    local sy = self.top + self.gridsize * 4.5
+    local sx = self.left + self.gridsize * 7.5
+    local sy = self.top + self.gridsize * 4
     if (math.pow(p.x - sx, 2) + math.pow(p.y - sy, 2) < math.pow(self.gridsize, 2)) and (self:getRoom().id == 100) then
         self.activeworld:nextLevel()
     elseif p.x == h.rectlimits.left and p.y >= self.top + self.gridsize * 3 and p.y <= self.top + self.gridsize * 4 then
