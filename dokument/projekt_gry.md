@@ -28,7 +28,7 @@ __Autor__: Marcin Stefanowicz
     
     2.7. [Świat](#27-świat)
     
-3. [Lista pomysłów i rzeczy wykonanych](#3-lista-pomysłów-i-rzeczy-wykonanych)
+3. **[Lista pomysłów i rzeczy wykonanych](#3-lista-pomysłów-i-rzeczy-wykonanych)**
 
 ----
 
@@ -154,7 +154,7 @@ Będzie 10 poziomów, gdzie po każdym będzie wielki pokój zagadek.
 - [x] interfejs bohatera
 - [x] shadery
 - [x] generowanie losowego świata
-- [ ] zagadki
-- [ ] przeciwnicy
-- [X] pokoje
-- [ ] przedmioty
+- [x] zagadki
+- [ ] przeciwnicy (nie ma)
+- [x] pokoje
+- [ ] przedmioty (nie ma)
